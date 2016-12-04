@@ -10,6 +10,8 @@ public class TweakConfig {
     private FileConfiguration configuration;
 
     private boolean armorStandArms;
+    private boolean canConvertDirt;
+    private boolean canSpreadGrass;
 
     public TweakConfig(VanillaTweaks plugin) {
         this.plugin = plugin;
@@ -30,9 +32,19 @@ public class TweakConfig {
 
     private void load() {
         armorStandArms = configuration.getBoolean("armor-stand-arms", true);
+        canConvertDirt = configuration.getBoolean("dirt-to-path", true);
+        canSpreadGrass = configuration.getBoolean("bonemeal-to-grass", true);
     }
 
     public boolean canAddArmorStandArms() {
         return armorStandArms;
+    }
+
+    public boolean canConvertDirt() {
+        return canConvertDirt;
+    }
+
+    public boolean canSpreadGrass() {
+        return canSpreadGrass;
     }
 }

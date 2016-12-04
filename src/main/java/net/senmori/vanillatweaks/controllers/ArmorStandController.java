@@ -13,14 +13,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -32,8 +29,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * This controller will handle the addition of arms to armor stands
  */
-public final class ArmorStandController implements Listener {
-    private final VanillaTweaks plugin;
+public final class ArmorStandController extends TweakController implements Listener {
     private final String ARM_LORE = ChatColor.GRAY + "" + ChatColor.ITALIC + "Has Arms";
     private final String SMALL_LORE = ChatColor.GRAY + "" + ChatColor.ITALIC + "Small";
 
@@ -41,7 +37,7 @@ public final class ArmorStandController implements Listener {
     private final ShapelessRecipe smallRecipe;
 
     public ArmorStandController(VanillaTweaks plugin) {
-        this.plugin = plugin;
+        super(plugin);
 
         // ArmorStand w/ arms
         ItemStack armorStand = new ItemStack(Material.ARMOR_STAND);
@@ -67,6 +63,7 @@ public final class ArmorStandController implements Listener {
 
     @EventHandler
     public void onCraft(CraftItemEvent event) {
+        if(!getPlugin().config.canAddArmorStandArms()) return;
         if(RecipeUtil.areEqual(event.getRecipe(), armsRecipe)) {
             setLore(ARM_LORE, event.getRecipe().getResult());
         }
@@ -85,22 +82,21 @@ public final class ArmorStandController implements Listener {
         loc.setYaw(event.getPlayer().getLocation().getYaw() - 180.0f);
         ArmorStand stand = (ArmorStand)event.getPlayer().getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
         stand.teleport(loc);
-        LogHandler.info("ARMS: " + hasLore(event.getItem(), ARM_LORE));
-        if(hasLore(event.getItem(), ARM_LORE)) {
+        //LogHandler.info("ARMS: " + hasLore(event.getItem(), ARM_LORE));
+        if(hasLore(event.getItem(), ARM_LORE) && getPlugin().config.canAddArmorStandArms()) {
             stand.setArms(true);
         }
-        LogHandler.info("SMALL: " + hasLore(event.getItem(), SMALL_LORE));
-        if(hasLore(event.getItem(), SMALL_LORE)) {
+        //LogHandler.info("SMALL: " + hasLore(event.getItem(), SMALL_LORE));
+        if(hasLore(event.getItem(), SMALL_LORE) && getPlugin().config.canAddArmorStandArms()) {
             stand.setSmall(true);
         }
         event.getItem().setAmount(event.getItem().getAmount() -1);
     }
 
     @EventHandler
-    public void onBreakArmorStand(EntityDamageByEntityEvent event) {
-       if(event.getEntity().getType() != EntityType.ARMOR_STAND) return;
-       if(event.getDamager() == null) return;
-       if(!(event.getDamager() instanceof Player )) return;
+    public void onBreakArmorStand(EntityDeathEvent event) {
+        if(!getPlugin().config.canAddArmorStandArms()) return;
+        LogHandler.info(event.getEntity().getType() + " has died.");
     }
 
 

@@ -1,1 +1,7 @@
-
+# Can users add arms to ArmorStands?
+# This also allows users to create 'small' ArmorStands.
+armor-stand-arms: true
+# Can users convert dirt to grass paths?
+dirt-to-path: true
+# Can wheat seeds convert dirt to grass?
+seed-convert-grass: true
