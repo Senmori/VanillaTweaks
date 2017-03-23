@@ -1,81 +1,78 @@
 package net.senmori.vanillatweaks.controllers;
 
+import com.google.common.collect.ImmutableMap;
+import java.util.WeakHashMap;
 import net.senmori.vanillatweaks.VanillaTweaks;
+import net.senmori.vanillatweaks.tasks.MinecartSpawnTask;
+import net.senmori.vanillatweaks.util.LogHandler;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Minecart;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class MinecartController extends TweakController implements Listener {
+
+    private final ImmutableMap<Material, EntityType> conversionMap;
+    private final WeakHashMap<Location, MinecartSpawnTask> tasks = new WeakHashMap<>();
+
     public MinecartController(VanillaTweaks plugin) {
         super(plugin);
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
+
+        conversionMap = new ImmutableMap.Builder<Material,EntityType>()
+                                .put(Material.CHEST, EntityType.MINECART_CHEST)
+                                .put(Material.TRAPPED_CHEST, EntityType.MINECART_CHEST)
+                                .put(Material.HOPPER, EntityType.MINECART_HOPPER)
+                                .put(Material.FURNACE, EntityType.MINECART_FURNACE)
+                                .put(Material.BURNING_FURNACE, EntityType.MINECART_FURNACE)
+                                .put(Material.TNT, EntityType.MINECART_TNT)
+                                .put(Material.COMMAND, EntityType.MINECART_COMMAND)
+                                .build();
     }
 
     @EventHandler
     public void changeMinecart(PlayerInteractAtEntityEvent event) {
-        if(!(event.getRightClicked() instanceof Minecart)) return;
-        event.setCancelled(true);
-        ItemStack held = event.getPlayer().getInventory().getItem(event.getPlayer().getInventory().getHeldItemSlot());
-        Location loc = event.getRightClicked().getLocation();
-        switch(held.getType()) {
-            case CHEST:
-            case TRAPPED_CHEST:
-                event.setCancelled(true);
-                event.getPlayer().getWorld().spawnEntity(loc, EntityType.MINECART_CHEST);
-                event.getPlayer().teleport(event.getPlayer().getLocation().add(0.0, -0.5, 1.0));
-                event.getRightClicked().remove();
-                return;
-            case HOPPER:
-                event.setCancelled(true);
-                event.getPlayer().getWorld().spawnEntity(loc, EntityType.MINECART_HOPPER);
-                event.getPlayer().teleport(event.getPlayer().getLocation().add(0.0, -0.5, 1.0));
-                event.getRightClicked().remove();
-                return;
-            case FURNACE:
-                event.setCancelled(true);
-                event.getPlayer().getWorld().spawnEntity(loc, EntityType.MINECART_FURNACE);
-                event.getPlayer().teleport(event.getPlayer().getLocation().add(0.0, -0.5, 1.0));
-                event.getRightClicked().remove();
-                return;
-            default:
-                return;
+        if(!getPlugin().getTweakConfig().canModifyMinecarts()) return;
+        if(! (event.getRightClicked() instanceof Minecart) ) return;
+        if(!event.getPlayer().isSneaking()) return;
+        if(!event.getRightClicked().getPassengers().isEmpty()) return; // ignore if minecart has passengers
+        event.getPlayer().sendMessage("Test");
+        ItemStack stack = event.getPlayer().getInventory().getItemInMainHand();
+
+        if(stack != null && conversionMap.containsKey(stack.getType())) {
+            event.setCancelled(true);
+            Location loc = event.getRightClicked().getLocation();
+            event.getRightClicked().remove();
+            spawn(loc, conversionMap.getOrDefault(stack.getType(), EntityType.MINECART));
+
+            if(event.getPlayer().getGameMode() != GameMode.CREATIVE) {
+                event.getPlayer().getInventory().getItemInMainHand().setAmount(stack.getAmount() - 1);
+
+                if(stack.getAmount() <= 0) {
+                    event.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR)); // remove itemstack
+                }
+            }
+
         }
     }
 
-    @EventHandler
-    public void onEnterVehicle(VehicleEnterEvent event) {
-        if(!(event.getEntered() instanceof Player)) return;
-        if(!(event.getVehicle() instanceof Minecart)) return;
-        if(!( (Player) event.getEntered() ).isSneaking()) return;
-
-        Player player = (Player)event.getEntered();
-        ItemStack held = player.getInventory().getItem(player.getInventory().getHeldItemSlot());
-        Location loc = event.getVehicle().getLocation();
-        switch(held.getType()) {
-            case CHEST:
-            case TRAPPED_CHEST:
-                event.setCancelled(true);
-                event.getEntered().getWorld().spawnEntity(loc, EntityType.MINECART_CHEST);
-                event.getVehicle().remove();
-                return;
-            case HOPPER:
-                event.setCancelled(true);
-                event.getEntered().getWorld().spawnEntity(loc, EntityType.MINECART_HOPPER);
-                event.getVehicle().remove();
-                return;
-            case FURNACE:
-                event.setCancelled(true);
-                event.getEntered().getWorld().spawnEntity(loc, EntityType.MINECART_FURNACE);
-                event.getVehicle().remove();
-                return;
-            default:
-                return;
+    private void spawn(Location loc, EntityType type) {
+        if(!tasks.containsKey(loc)) {
+            tasks.put(loc, new MinecartSpawnTask(getPlugin(), loc, type));
+            getPlugin().getServer().getScheduler().runTaskLater(getPlugin(), new BukkitRunnable() {
+                @Override
+                public void run() {
+                    tasks.remove(loc);
+                }
+            }, 1);
+        } else {
+            tasks.remove(loc);
         }
     }
 }

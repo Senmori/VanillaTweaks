@@ -5,3 +5,12 @@ armor-stand-arms: true
 dirt-to-path: true
 # Can wheat seeds convert dirt to grass?
 seed-convert-grass: true
+# Can users modify minecarts by right clicking on them with the appropriate blocks
+# (i.e. right clicking with a chest will produce a minecart chest)
+minecart-modification: true
+# Set the stack size for minecarts
+minecart-stack-size: 16
+# Set if clay blocks can be turned into 4 clay balls
+clay-conversion: true
+# Set if stone tools should be craftable via the stone variants
+stone-tool-variant: true

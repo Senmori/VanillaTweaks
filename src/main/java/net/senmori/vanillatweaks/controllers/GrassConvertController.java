@@ -23,6 +23,7 @@ public final class GrassConvertController extends TweakController implements Lis
         if(!event.hasItem()) return;
         if(event.getItem().getType() != SEEDS) return;
         if(event.getClickedBlock().getType() != Material.DIRT) return;
+        if(!getPlugin().getTweakConfig().canConvertDirt()) return;
 
         event.getItem().setAmount(event.getItem().getAmount() -1);
         event.getClickedBlock().setType(Material.GRASS);

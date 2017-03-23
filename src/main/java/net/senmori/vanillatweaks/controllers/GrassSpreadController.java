@@ -4,14 +4,12 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import java.util.Random;
 
-import net.md_5.bungee.api.ChatMessageType;
 import net.senmori.vanillatweaks.VanillaTweaks;
 
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -37,7 +35,6 @@ public class GrassSpreadController extends TweakController implements Listener {
         if(event.getItem().getType() != BONEMEAL.getType()) return;
         if(event.getItem().getData().getData() != BONEMEAL.getData().getData()) return;
         if(event.getClickedBlock().getType() != Material.GRASS) return;
-        boolean found = false;
         Block block = event.getClickedBlock();
         for(BlockFace face : faces) {
             if(block.getRelative(face).getType() == Material.DIRT && event.getPlayer().isSneaking()) {

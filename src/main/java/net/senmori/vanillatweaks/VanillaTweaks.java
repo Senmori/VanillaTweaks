@@ -3,10 +3,13 @@ package net.senmori.vanillatweaks;
 import java.util.logging.Logger;
 import net.senmori.vanillatweaks.commands.CommandManager;
 import net.senmori.vanillatweaks.controllers.ArmorStandController;
+import net.senmori.vanillatweaks.controllers.ConvertClayController;
 import net.senmori.vanillatweaks.controllers.GrassConvertController;
 import net.senmori.vanillatweaks.controllers.GrassPathController;
 import net.senmori.vanillatweaks.controllers.GrassSpreadController;
 import net.senmori.vanillatweaks.controllers.MinecartController;
+import net.senmori.vanillatweaks.controllers.StackableItemsController;
+import net.senmori.vanillatweaks.controllers.StonePickaxeController;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -45,6 +48,9 @@ public class VanillaTweaks extends JavaPlugin {
         new GrassConvertController(instance);
         new GrassSpreadController(instance);
         new MinecartController(instance);
+        new StackableItemsController(instance);
+        new ConvertClayController(instance);
+        new StonePickaxeController(instance);
     }
 
     public TweakConfig getTweakConfig() {

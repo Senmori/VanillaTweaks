@@ -9,10 +9,6 @@ public class TweakConfig {
 
     private FileConfiguration configuration;
 
-    private boolean armorStandArms;
-    private boolean canConvertDirt;
-    private boolean canSpreadGrass;
-
     public TweakConfig(VanillaTweaks plugin) {
         this.plugin = plugin;
         init();
@@ -30,21 +26,31 @@ public class TweakConfig {
         configuration = plugin.getConfig();
     }
 
-    private void load() {
-        armorStandArms = configuration.getBoolean("armor-stand-arms", true);
-        canConvertDirt = configuration.getBoolean("dirt-to-path", true);
-        canSpreadGrass = configuration.getBoolean("bonemeal-to-grass", true);
-    }
-
     public boolean canAddArmorStandArms() {
-        return armorStandArms;
+        return configuration.getBoolean("armor-stand-arms", true);
     }
 
     public boolean canConvertDirt() {
-        return canConvertDirt;
+        return configuration.getBoolean("dirt-to-path", true);
     }
 
     public boolean canSpreadGrass() {
-        return canSpreadGrass;
+        return configuration.getBoolean("bonemeal-to-grass", true);
+    }
+
+    public boolean canModifyMinecarts() {
+        return configuration.getBoolean("minecart-modification", true);
+    }
+
+    public boolean canConvertClay() {
+        return configuration.getBoolean("clay-conversion", true);
+    }
+
+    public boolean canCraftStoneTools() {
+        return configuration.getBoolean("stone-tool-variant", true);
+    }
+
+    public int getMinecartStackSize() {
+        return configuration.getInt("minecart-stack-size", 16);
     }
 }
