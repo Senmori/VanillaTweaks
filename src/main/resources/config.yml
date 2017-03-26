@@ -13,4 +13,7 @@ minecart-stack-size: 16
 # Set if clay blocks can be turned into 4 clay balls
 clay-conversion: true
 # Set if stone tools should be craftable via the stone variants
+# (i.e. diorite, andesite, granite can all be used to craft stone tools)
 stone-tool-variant: true
+# Can players edit signs by right-clicking on them
+editable-signs: true

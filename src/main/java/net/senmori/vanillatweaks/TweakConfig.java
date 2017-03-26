@@ -46,8 +46,12 @@ public class TweakConfig {
         return configuration.getBoolean("clay-conversion", true);
     }
 
-    public boolean canCraftStoneTools() {
+    public boolean doAddStoneToolVariants() {
         return configuration.getBoolean("stone-tool-variant", true);
+    }
+
+    public boolean canEditSigns() {
+        return configuration.getBoolean("editable-signs", true);
     }
 
     public int getMinecartStackSize() {
