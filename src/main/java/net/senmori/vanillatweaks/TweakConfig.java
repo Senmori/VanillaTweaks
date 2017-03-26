@@ -57,4 +57,12 @@ public class TweakConfig {
     public int getMinecartStackSize() {
         return configuration.getInt("minecart-stack-size", 16);
     }
+
+    public boolean getSuppressOut() {
+        return configuration.getBoolean("suppress-stdout", false);
+    }
+
+    public boolean getSuppressErr() {
+        return configuration.getBoolean("suppress-stderr", false);
+    }
 }

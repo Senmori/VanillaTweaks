@@ -14,7 +14,6 @@
  */
 package net.senmori.vanillatweaks;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import java.util.logging.Logger;
 import net.senmori.vanillatweaks.commands.CommandManager;
 import net.senmori.vanillatweaks.controllers.ArmorStandController;
@@ -24,6 +23,7 @@ import net.senmori.vanillatweaks.controllers.GrassConvertController;
 import net.senmori.vanillatweaks.controllers.GrassPathController;
 import net.senmori.vanillatweaks.controllers.GrassSpreadController;
 import net.senmori.vanillatweaks.controllers.MinecartController;
+import net.senmori.vanillatweaks.controllers.PrintController;
 import net.senmori.vanillatweaks.controllers.SignEditController;
 import net.senmori.vanillatweaks.controllers.StackableItemsController;
 import net.senmori.vanillatweaks.controllers.StonePickaxeController;
@@ -70,6 +70,7 @@ public class VanillaTweaks extends JavaPlugin {
         new StonePickaxeController(instance);
         new SignEditController(instance);
         new DyedItemNamesController(instance);
+        new PrintController(instance);
     }
 
     public TweakConfig getTweakConfig() {
