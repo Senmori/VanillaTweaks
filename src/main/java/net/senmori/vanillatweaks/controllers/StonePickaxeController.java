@@ -17,7 +17,7 @@ public class StonePickaxeController extends TweakController {
     public StonePickaxeController(VanillaTweaks plugin) {
         super(plugin);
 
-        if(getPlugin().getTweakConfig().canCraftStoneTools()) {
+        if(getPlugin().getTweakConfig().doAddStoneToolVariants()) {
             List<ItemStack> ingredients = Lists.newArrayList(STONE, GRANITE, DIORITE, ANDESITE, new ItemStack(Material.FLINT));
 
             String[][] patterns = new String[][] {{"XXX", " # ", " # "}, {"X", "#", "#"}, {"XX", "X#", " #"}, {"XX", " #", " #"}, {"X", "X", "#"}};
