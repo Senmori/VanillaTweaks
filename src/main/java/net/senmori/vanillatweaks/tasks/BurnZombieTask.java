@@ -3,15 +3,9 @@ package net.senmori.vanillatweaks.tasks;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.libs.joptsimple.internal.Strings;
-import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftZombie;
-import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
-import org.bukkit.entity.Boat;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,7 +16,7 @@ public class BurnZombieTask extends BukkitRunnable {
 
     final JavaPlugin plugin;
     final World world;
-    final int fireTicks; // 4 fireTicks removed per game tick; 6 ticks total = 24
+    final int fireTicks;
     public BurnZombieTask(JavaPlugin plugin, int fireTicks, World world) {
         this.plugin = plugin;
         this.world = world;
@@ -31,7 +25,6 @@ public class BurnZombieTask extends BukkitRunnable {
     }
     @Override
     public void run() {
-        net.minecraft.server.v1_11_R1.World nmsWorld = ((CraftWorld)world).getHandle();
         if(world.getTime() < 1000 || world.getTime() > 24000) {
             return; // ignore all this during nighttime
         }
@@ -41,7 +34,6 @@ public class BurnZombieTask extends BukkitRunnable {
                                        .filter(z -> !((CraftZombie)z).getHandle().isInWater())
                                        .filter(z -> z.getWorld().getBlockAt(z.getLocation()).getLightFromSky() == 15)
                                        .collect(Collectors.toList());
-
         zombies.forEach(z -> {
             boolean flag = true;
             ItemStack helmet = z.getEquipment().getHelmet();
@@ -59,9 +51,7 @@ public class BurnZombieTask extends BukkitRunnable {
 
 
             if(flag) {
-                if(z.getFireTicks() <= 0) {
-                    ((CraftZombie)z).getHandle().setOnFire(fireTicks);
-                }
+                ((CraftZombie)z).getHandle().setOnFire(fireTicks);
             }
         });
 

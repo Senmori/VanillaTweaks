@@ -1,14 +1,18 @@
-# Can users add arms to ArmorStands?
-# This also allows users to create 'small' ArmorStands.
 armor-stand:
+  # Armor Stands will show with arms when placed
   show-arms: true
+  # Armor Stands will show with the base plate when placed
   show-base-plate: true
+  # Can players quickly swap all armor quickly.
+  quick-swap: true
+  # Will the offhand slot get swapped as well
+  offhand-swap: true
 # Can users convert dirt to grass paths?
 dirt-to-path: true
 # Can wheat seeds convert dirt to grass?
 seed-convert-grass: true
-# Can bonemeal be used to force grass to spread
 grass-spread:
+  # Can bonemeal be used to force grass to spread within the given radius
   enabled: true
   # The radius to check for dirt blocks to convert
   radius: 6
@@ -23,7 +27,7 @@ clay-conversion: true
 # Set if stone tools should be craftable via the stone variants
 # (i.e. diorite, andesite, granite can all be used to craft stone tools)
 stone-tool-variant: true
-# Can players edit signs by right-clicking on them
+# Can players edit signs by right-clicking on them with an empty hand
 editable-signs: true
 suppress-output:
   # Will this plugin suppress any STDOUT  messages that are output by other plugins
@@ -31,7 +35,12 @@ suppress-output:
   #Will this plugin suppress any STDERR message that are output by other plugins
   stderr: true
 # Will baby zombies burn in the sunlight
-burn-baby-zombies: true
+burn-baby-zombies:
+  enabled: true
+  # How long the baby zombies will burn for (in seconds)
+  length: 1
 # Changes the dragon breath crafting recipe result to nothing.
 # Fixes the issue of using dragon's breath in brewing stands
 fix-dragon-breath: true
+# Will display all settings on loading
+verbose: true

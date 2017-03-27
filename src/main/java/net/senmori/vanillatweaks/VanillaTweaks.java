@@ -25,6 +25,7 @@ import net.senmori.vanillatweaks.controllers.DyedItemNamesController;
 import net.senmori.vanillatweaks.controllers.GrassConvertController;
 import net.senmori.vanillatweaks.controllers.GrassPathController;
 import net.senmori.vanillatweaks.controllers.GrassSpreadController;
+import net.senmori.vanillatweaks.controllers.QuickSwapController;
 import net.senmori.vanillatweaks.controllers.TweakController;
 import net.senmori.vanillatweaks.controllers.tasked.BurnBabyZombieController;
 import net.senmori.vanillatweaks.controllers.tasked.MinecartController;
@@ -49,7 +50,6 @@ public class VanillaTweaks extends JavaPlugin {
         getServer().getScheduler().cancelTasks(this);
         controllers.clear();
 
-        this.getTweakConfig().save();
         this.config = null;
         instance = null;
     }
@@ -85,6 +85,7 @@ public class VanillaTweaks extends JavaPlugin {
         controllers.add(new PrintController(instance));
         controllers.add(new BurnBabyZombieController(instance));
         controllers.add(new DragonBreathController(instance));
+        controllers.add(new QuickSwapController(instance));
     }
 
     public TweakConfig getTweakConfig() {

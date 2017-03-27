@@ -15,13 +15,15 @@ public class PrintController extends TweakController {
     public PrintController(VanillaTweaks plugin) {
         super(plugin);
         suppressOut = suppressError = false; // default to false;
-        suppressOut = getPlugin().getTweakConfig().getSuppressOut();
-        suppressError = getPlugin().getTweakConfig().getSuppressErr();
+        suppressOut = getPlugin().getTweakConfig().canSuppressOut();
+        suppressError = getPlugin().getTweakConfig().canSuppressErr();
+
+        suppressOutput();
     }
 
     private void suppressOutput() {
-        getPlugin().getLogger().warning("VanillaTweaks print suppression is enabled. Important info might be missing.");
-        getPlugin().getLogger().warning("Suppressing STDOUT=" + suppressOut + ", STDERR=" + suppressError);
+        getPlugin().getLogger().info("VanillaTweaks print suppression is enabled. Important info might be missing.");
+        getPlugin().getLogger().info("Suppressing STDOUT=" + suppressOut + ", STDERR=" + suppressError);
 
         if(suppressOut)
             suppress(System::setOut);
