@@ -2,13 +2,14 @@ package net.senmori.vanillatweaks;
 
 import java.io.File;
 import java.io.IOException;
-import net.senmori.vanillatweaks.util.FileUtil;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 public class TweakConfig {
     private VanillaTweaks plugin;
 
     private FileConfiguration configuration;
+    private File file;
 
     public TweakConfig(VanillaTweaks plugin) {
         this.plugin = plugin;
@@ -16,57 +17,66 @@ public class TweakConfig {
     }
 
     private void init() {
-        configuration = plugin.getConfig();
+        if(!plugin.getDataFolder().exists()) {
+            plugin.getDataFolder().mkdirs();
+        }
 
-        File file = new File(plugin.getDataFolder(), "config.yml");
+        file = new File(plugin.getDataFolder(), "config.yml");
 
         if(!file.exists()) {
-            file.getParentFile().mkdirs();
-            FileUtil.copyFile(plugin.getResource("config.yml"), file);
+            plugin.saveResource("config.yml", true);
         }
-        configuration = plugin.getConfig();
 
+        configuration = YamlConfiguration.loadConfiguration(file);
         load();
-    }
-
-    public void save() {
-        try {
-            configuration.save(new File(plugin.getDataFolder(), "config.yml"));
-        } catch(IOException e) {
-            plugin.getLogger().warning("Could not save configuration file for " + plugin.getName());
-        }
     }
 
     boolean canConvertDirt;
     boolean clayConversion;
     boolean stoneToolRecipes;
     boolean editableSigns;
-    boolean burnBabyZombies;
     boolean fixDragonBreath;
+    boolean verbose;
 
     private void load() {
+        verbose = configuration.getBoolean("verbose", false);
         loadArmorStand();
         loadGrassSpread();
         loadMinecarts();
         loadSuppressOutput();
+        loadZombies();
 
-        canConvertDirt = Boolean.valueOf(get("seed-convert-grass"));
-        clayConversion = Boolean.valueOf(get("clay-conversion"));
-        stoneToolRecipes = Boolean.valueOf(get("stone-tool-variant"));
-        editableSigns = Boolean.valueOf(get("editable-signs"));
-        burnBabyZombies = Boolean.valueOf(get("burn-baby-zombies"));
-        fixDragonBreath = Boolean.valueOf(get("fix-dragon-breath"));
+        canConvertDirt = getBool("seed-convert-grass");
+        display("Can Convert Dirt: " + canConvertDirt);
+
+        clayConversion = getBool("clay-conversion");
+        display("Can Convert Clay: " + clayConversion);
+
+        stoneToolRecipes = getBool("stone-tool-variant");
+        display("Stone Tool Recipes: " + stoneToolRecipes);
+
+        editableSigns = getBool("editable-signs");
+        display("Editable Signs: " + editableSigns);
+
+        fixDragonBreath = getBool("fix-dragon-breath");
+        display("Fix Dragon Breath: " + fixDragonBreath);
+    }
+
+    private void display(String str) {
+        if(!verbose) return;
+        plugin.getLogger().info(str);
     }
 
     private String get(String path) {
         return configuration.getString(path);
     }
 
-    boolean armorStandArms;
-    boolean armorStandPlate;
-    private void loadArmorStand() {
-        armorStandArms = Boolean.valueOf(get("armor-stand.show-arms"));
-        armorStandPlate = Boolean.valueOf(get("armor-stand.show-base-plate"));
+    private boolean getBool(String path) {
+        return Boolean.valueOf(get(path));
+    }
+
+    private int getInt(String path) {
+        return Integer.valueOf(get(path));
     }
 
     public boolean canConvertDirt() {
@@ -85,10 +95,6 @@ public class TweakConfig {
         return editableSigns;
     }
 
-    public boolean canBabyZombiesBurn() {
-        return burnBabyZombies;
-    }
-
     public boolean fixDragonBreath() {
         return fixDragonBreath;
     }
@@ -96,6 +102,23 @@ public class TweakConfig {
     /*
         ####### ARMOR STANDS #######
      */
+    boolean armorStandArms;
+    boolean armorStandPlate;
+    boolean canQuicklySwap;
+    boolean canSwapOffhand;
+    private void loadArmorStand() {
+        armorStandArms = getBool("armor-stand.show-arms");
+        display("Show Armor Stand Arms: " + armorStandArms);
+
+        armorStandPlate = getBool("armor-stand.show-base-plate");
+        display("Show Armor Stand Plate: " + armorStandPlate);
+
+        canQuicklySwap = getBool("armor-stand.quick-swap");
+        display("Can Quickly Swap: " + canQuicklySwap);
+
+        canSwapOffhand = getBool("armor-stand.offhand-swap");
+        display("Can Swap Offhand: " + canSwapOffhand);
+    }
     public boolean showArmorStandArms() {
         return armorStandArms;
     }
@@ -104,14 +127,25 @@ public class TweakConfig {
         return armorStandPlate;
     }
 
+    public boolean canQuicklySwap() {
+        return canQuicklySwap;
+    }
+
+    public boolean canSwapOffhand() {
+        return canSwapOffhand;
+    }
+
     /*
         ####### GRASS SPREAD #######
      */
     boolean canSpreadGrass;
     int grassSpreadRadius;
     private void loadGrassSpread() {
-        canSpreadGrass = Boolean.valueOf(get("grass-spread.enabled"));
-        grassSpreadRadius = Integer.valueOf(get("grass-spread.radius"));
+        canSpreadGrass = getBool("grass-spread.enabled");
+        display("Can Spread Grass: " + canSpreadGrass);
+
+        grassSpreadRadius = getInt("grass-spread.radius");
+        display("Grass Spread Radius: " + grassSpreadRadius);
     }
     public boolean canSpreadGrass() {
         return canSpreadGrass;
@@ -127,7 +161,19 @@ public class TweakConfig {
     boolean minecartModification;
     int minecartMaxStackSize;
     private void loadMinecarts() {
-        minecartModification = Boolean.valueOf(get("minecart.modification"));
+        minecartModification = getBool("minecart.modification");
+        display("Minecart Modification: " + minecartModification);
+
+        minecartMaxStackSize = getInt("minecart.stack-size");
+        display("Minecart Max Stack Size: " + minecartMaxStackSize);
+    }
+
+    public boolean canModifyMinecarts() {
+        return minecartModification;
+    }
+
+    public int getMinecartStackSize() {
+        return minecartMaxStackSize;
     }
 
     /*
@@ -136,8 +182,11 @@ public class TweakConfig {
     boolean suppressOut;
     boolean suppressErr;
     private void loadSuppressOutput() {
-        suppressOut = Boolean.valueOf(get("suppress-output.stdout"));
-        suppressErr = Boolean.valueOf(get("suppress-output.stderr"));
+        suppressOut = getBool("suppress-output.stdout");
+        display("Suppress STDOUT: " + suppressOut);
+
+        suppressErr = getBool("suppress-output.stderr");
+        display("Suppress STDERR: " + suppressErr);
     }
 
     public boolean canSuppressOut() {
@@ -146,5 +195,26 @@ public class TweakConfig {
 
     public boolean canSuppressErr() {
         return suppressErr;
+    }
+
+    /*
+        ####### BABY ZOMBIES #######
+     */
+    boolean burnBabyZombies;
+    int zombieBurnLength;
+    private void loadZombies() {
+        burnBabyZombies = getBool("burn-baby-zombies.enabled");
+        display("Burn Baby Zombies: " + burnBabyZombies);
+
+        zombieBurnLength = getInt("burn-baby-zombies.length");
+        display("Baby Zombie Burn Length: " + zombieBurnLength);
+    }
+
+    public boolean canBabyZombiesBurn() {
+        return burnBabyZombies;
+    }
+
+    public int getZombieBurnLength() {
+        return zombieBurnLength;
     }
 }
