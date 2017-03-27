@@ -3,9 +3,7 @@ package net.senmori.vanillatweaks.controllers;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.List;
 import net.senmori.vanillatweaks.VanillaTweaks;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Consumer;
 
 public class PrintController extends TweakController {
@@ -38,5 +36,6 @@ public class PrintController extends TweakController {
                // no output
             }
         });
+        consumer.accept(oppressedStream);
     }
 }
