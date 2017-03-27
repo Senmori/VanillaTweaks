@@ -1,7 +1,6 @@
 package net.senmori.vanillatweaks;
 
 import java.io.File;
-import java.io.IOException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -45,6 +44,7 @@ public class TweakConfig {
         loadMinecarts();
         loadSuppressOutput();
         loadZombies();
+        loadVillagers();
 
         canConvertDirt = getBool("seed-convert-grass");
         display("Can Convert Dirt: " + canConvertDirt);
@@ -216,5 +216,23 @@ public class TweakConfig {
 
     public int getZombieBurnLength() {
         return zombieBurnLength;
+    }
+
+    /*
+        ##### VILLAGERS ##########
+     */
+    String followBlock;
+    boolean villagersCanFollow;
+    private void loadVillagers() {
+        followBlock = get("villagers.follow-block");
+        villagersCanFollow = getBool("villagers.enabled");
+    }
+
+    public String getVillagerFollowBlock() {
+        return followBlock;
+    }
+
+    public boolean getVillagersShouldFollow() {
+        return villagersCanFollow;
     }
 }

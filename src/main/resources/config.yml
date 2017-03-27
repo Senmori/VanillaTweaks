@@ -42,5 +42,10 @@ burn-baby-zombies:
 # Changes the dragon breath crafting recipe result to nothing.
 # Fixes the issue of using dragon's breath in brewing stands
 fix-dragon-breath: true
+villagers:
+  # Should villagers follow players with the specified item
+  enabled: true
+  # What block villagers should follow
+  follow-block: emerald_block
 # Will display all settings on loading
 verbose: true

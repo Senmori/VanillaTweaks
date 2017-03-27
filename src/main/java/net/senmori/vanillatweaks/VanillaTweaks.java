@@ -25,14 +25,15 @@ import net.senmori.vanillatweaks.controllers.DyedItemNamesController;
 import net.senmori.vanillatweaks.controllers.GrassConvertController;
 import net.senmori.vanillatweaks.controllers.GrassPathController;
 import net.senmori.vanillatweaks.controllers.GrassSpreadController;
-import net.senmori.vanillatweaks.controllers.QuickSwapController;
-import net.senmori.vanillatweaks.controllers.TweakController;
-import net.senmori.vanillatweaks.controllers.tasked.BurnBabyZombieController;
-import net.senmori.vanillatweaks.controllers.tasked.MinecartController;
 import net.senmori.vanillatweaks.controllers.PrintController;
+import net.senmori.vanillatweaks.controllers.QuickSwapController;
 import net.senmori.vanillatweaks.controllers.SignEditController;
 import net.senmori.vanillatweaks.controllers.StackableItemsController;
 import net.senmori.vanillatweaks.controllers.StonePickaxeController;
+import net.senmori.vanillatweaks.controllers.TweakController;
+import net.senmori.vanillatweaks.controllers.VillagerController;
+import net.senmori.vanillatweaks.controllers.tasked.BurnBabyZombieController;
+import net.senmori.vanillatweaks.controllers.tasked.MinecartController;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -86,6 +87,7 @@ public class VanillaTweaks extends JavaPlugin {
         controllers.add(new BurnBabyZombieController(instance));
         controllers.add(new DragonBreathController(instance));
         controllers.add(new QuickSwapController(instance));
+        controllers.add(new VillagerController(instance));
     }
 
     public TweakConfig getTweakConfig() {
