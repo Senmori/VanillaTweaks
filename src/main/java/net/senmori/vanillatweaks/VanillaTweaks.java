@@ -25,6 +25,7 @@ import net.senmori.vanillatweaks.controllers.GrassConvertController;
 import net.senmori.vanillatweaks.controllers.GrassPathController;
 import net.senmori.vanillatweaks.controllers.GrassSpreadController;
 import net.senmori.vanillatweaks.controllers.TweakController;
+import net.senmori.vanillatweaks.controllers.tasked.BurnBabyZombieController;
 import net.senmori.vanillatweaks.controllers.tasked.MinecartController;
 import net.senmori.vanillatweaks.controllers.PrintController;
 import net.senmori.vanillatweaks.controllers.SignEditController;
@@ -80,6 +81,7 @@ public class VanillaTweaks extends JavaPlugin {
         controllers.add(new SignEditController(instance));
         controllers.add(new DyedItemNamesController(instance));
         controllers.add(new PrintController(instance));
+        controllers.add(new BurnBabyZombieController(instance));
     }
 
     public TweakConfig getTweakConfig() {
