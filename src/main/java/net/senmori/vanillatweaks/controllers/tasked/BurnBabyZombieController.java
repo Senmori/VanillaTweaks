@@ -15,7 +15,7 @@ public class BurnBabyZombieController extends TweakController implements Listene
     public BurnBabyZombieController(VanillaTweaks plugin) {
         super(plugin);
 
-        if(!plugin.getTweakConfig().getCanBabyZombiesBurn()) {
+        if(!plugin.getTweakConfig().canBabyZombiesBurn()) {
             return;
         }
         plugin.getServer().getWorlds().forEach(w -> new BurnZombieTask(plugin, 1, w));

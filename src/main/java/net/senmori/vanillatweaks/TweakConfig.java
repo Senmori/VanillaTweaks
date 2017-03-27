@@ -25,6 +25,8 @@ public class TweakConfig {
             FileUtil.copyFile(plugin.getResource("config.yml"), file);
         }
         configuration = plugin.getConfig();
+
+        load();
     }
 
     public void save() {
@@ -35,51 +37,114 @@ public class TweakConfig {
         }
     }
 
-    public boolean canAddArmorStandArms() {
-        return configuration.getBoolean("armor-stand-arms", true);
+    boolean canConvertDirt;
+    boolean clayConversion;
+    boolean stoneToolRecipes;
+    boolean editableSigns;
+    boolean burnBabyZombies;
+    boolean fixDragonBreath;
+
+    private void load() {
+        loadArmorStand();
+        loadGrassSpread();
+        loadMinecarts();
+        loadSuppressOutput();
+
+        canConvertDirt = Boolean.valueOf(get("seed-convert-grass"));
+        clayConversion = Boolean.valueOf(get("clay-conversion"));
+        stoneToolRecipes = Boolean.valueOf(get("stone-tool-variant"));
+        editableSigns = Boolean.valueOf(get("editable-signs"));
+        burnBabyZombies = Boolean.valueOf(get("burn-baby-zombies"));
+        fixDragonBreath = Boolean.valueOf(get("fix-dragon-breath"));
+    }
+
+    private String get(String path) {
+        return configuration.getString(path);
+    }
+
+    boolean armorStandArms;
+    boolean armorStandPlate;
+    private void loadArmorStand() {
+        armorStandArms = Boolean.valueOf(get("armor-stand.show-arms"));
+        armorStandPlate = Boolean.valueOf(get("armor-stand.show-base-plate"));
     }
 
     public boolean canConvertDirt() {
-        return configuration.getBoolean("dirt-to-path", true);
-    }
-
-    public boolean canSpreadGrass() {
-        return configuration.getBoolean("bonemeal-to-grass", true);
-    }
-
-    public boolean canModifyMinecarts() {
-        return configuration.getBoolean("minecart-modification", true);
+        return canConvertDirt;
     }
 
     public boolean canConvertClay() {
-        return configuration.getBoolean("clay-conversion", true);
+        return clayConversion;
     }
 
     public boolean doAddStoneToolVariants() {
-        return configuration.getBoolean("stone-tool-variant", true);
+        return stoneToolRecipes;
     }
 
     public boolean canEditSigns() {
-        return configuration.getBoolean("editable-signs", true);
+        return editableSigns;
     }
 
-    public int getMinecartStackSize() {
-        return configuration.getInt("minecart-stack-size", 16);
+    public boolean canBabyZombiesBurn() {
+        return burnBabyZombies;
     }
 
-    public boolean getSuppressOut() {
-        return configuration.getBoolean("suppress-stdout", false);
+    public boolean fixDragonBreath() {
+        return fixDragonBreath;
     }
 
-    public boolean getSuppressErr() {
-        return configuration.getBoolean("suppress-stderr", false);
+    /*
+        ####### ARMOR STANDS #######
+     */
+    public boolean showArmorStandArms() {
+        return armorStandArms;
     }
 
-    public boolean getCanBabyZombiesBurn() {
-        return configuration.getBoolean("burn-baby-zombies", true);
+    public boolean showArmorStandBasePlate() {
+        return armorStandPlate;
     }
 
-    public boolean shouldFixDragonBreath() {
-        return configuration.getBoolean("fix-dragon-breath", true);
+    /*
+        ####### GRASS SPREAD #######
+     */
+    boolean canSpreadGrass;
+    int grassSpreadRadius;
+    private void loadGrassSpread() {
+        canSpreadGrass = Boolean.valueOf(get("grass-spread.enabled"));
+        grassSpreadRadius = Integer.valueOf(get("grass-spread.radius"));
+    }
+    public boolean canSpreadGrass() {
+        return canSpreadGrass;
+    }
+
+    public int getGrassSpreadRadius() {
+        return grassSpreadRadius;
+    }
+
+    /*
+        ####### MINECARTS ######
+     */
+    boolean minecartModification;
+    int minecartMaxStackSize;
+    private void loadMinecarts() {
+        minecartModification = Boolean.valueOf(get("minecart.modification"));
+    }
+
+    /*
+        ####### SUPPRESS OUTPUT #######
+     */
+    boolean suppressOut;
+    boolean suppressErr;
+    private void loadSuppressOutput() {
+        suppressOut = Boolean.valueOf(get("suppress-output.stdout"));
+        suppressErr = Boolean.valueOf(get("suppress-output.stderr"));
+    }
+
+    public boolean canSuppressOut() {
+        return suppressOut;
+    }
+
+    public boolean canSuppressErr() {
+        return suppressErr;
     }
 }

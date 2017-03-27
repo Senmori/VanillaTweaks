@@ -1,15 +1,23 @@
 # Can users add arms to ArmorStands?
 # This also allows users to create 'small' ArmorStands.
-armor-stand-arms: true
+armor-stand:
+  show-arms: true
+  show-base-plate: true
 # Can users convert dirt to grass paths?
 dirt-to-path: true
 # Can wheat seeds convert dirt to grass?
 seed-convert-grass: true
-# Can users modify minecarts by right clicking on them with the appropriate blocks
-# (i.e. right clicking with a chest will produce a minecart chest)
-minecart-modification: true
-# Set the stack size for minecarts
-minecart-stack-size: 16
+# Can bonemeal be used to force grass to spread
+grass-spread:
+  enabled: true
+  # The radius to check for dirt blocks to convert
+  radius: 6
+minecart:
+  # Can users modify minecarts by right clicking on them with the appropriate blocks
+  # (i.e. right clicking with a chest will produce a minecart chest)
+  modification: true
+  # Set the stack size for minecarts
+  stack-size: 16
 # Set if clay blocks can be turned into 4 clay balls
 clay-conversion: true
 # Set if stone tools should be craftable via the stone variants
@@ -17,10 +25,11 @@ clay-conversion: true
 stone-tool-variant: true
 # Can players edit signs by right-clicking on them
 editable-signs: true
-# Will this plugin suppress any STDOUT  messages that are output by other plugins
-suppress-stdout: false
-# Will this plugin suppress any STDERR message that are output by other plugins
-suppress-stderr: false
+suppress-output:
+  # Will this plugin suppress any STDOUT  messages that are output by other plugins
+  stdout: true
+  #Will this plugin suppress any STDERR message that are output by other plugins
+  stderr: true
 # Will baby zombies burn in the sunlight
 burn-baby-zombies: true
 # Changes the dragon breath crafting recipe result to nothing.

@@ -8,7 +8,7 @@ public class DragonBreathController extends TweakController {
     public DragonBreathController(VanillaTweaks plugin) {
         super(plugin);
 
-        if(plugin.getTweakConfig().shouldFixDragonBreath()) {
+        if(plugin.getTweakConfig().fixDragonBreath()) {
             Items.DRAGON_BREATH.b(ItemStack.a);
         }
     }

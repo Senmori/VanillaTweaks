@@ -7,6 +7,7 @@ import java.util.Random;
 
 import net.senmori.vanillatweaks.VanillaTweaks;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -23,11 +24,15 @@ public class GrassSpreadController extends TweakController implements Listener {
     private final ItemStack BONEMEAL = new ItemStack(Material.INK_SACK, 1, DATA);
     private final Random random;
     private final ImmutableList<BlockFace> faces;
+    private int maxRadius;
     public GrassSpreadController(VanillaTweaks plugin) {
         super(plugin);
-        random = new Random(System.currentTimeMillis());
+        random = new Random();
         faces = ImmutableList.copyOf(Lists.newArrayList(BlockFace.values()));
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        if(plugin.getTweakConfig().canSpreadGrass()) {
+            maxRadius = plugin.getTweakConfig().getGrassSpreadRadius();
+        }
     }
 
     @EventHandler
@@ -38,13 +43,28 @@ public class GrassSpreadController extends TweakController implements Listener {
         if(event.getItem().getData().getData() != BONEMEAL.getData().getData()) return;
         if(event.getClickedBlock().getType() != Material.GRASS) return;
         Block block = event.getClickedBlock();
-        for(BlockFace face : faces) {
-            if(block.getRelative(face).getType() == Material.DIRT && event.getPlayer().isSneaking()) {
-                event.setCancelled(true);
-                block.getRelative(face).setType(Material.GRASS);
-                event.getPlayer().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation(), 3);
-                event.getItem().setAmount(event.getItem().getAmount() -1);
-                return;
+
+        Block next = block.getRelative(BlockFace.SELF);
+        int bx = block.getLocation().getBlockX();
+        int bz = block.getLocation().getBlockZ();
+        int by = block.getLocation().getBlockY();
+        boolean found = false;
+        Location loc = block.getLocation();
+        for(int x = -maxRadius; x < maxRadius; x++) {
+
+            if(found) {
+                break;
+            }
+
+            for(int z = -maxRadius; z < maxRadius; z++) {
+
+            }
+
+
+
+
+            if(!found) {
+                next = block.getRelative(bx + x, 0 , 0).getLightFromSky() != 15 ? loc.getWorld().getHighestBlockAt(loc.add( (double)(bx + x), 0, (double)bz)) : block.getRelative(bx + x, 0 , 0);
             }
         }
     }
