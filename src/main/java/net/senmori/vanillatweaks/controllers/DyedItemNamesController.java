@@ -1,6 +1,7 @@
 package net.senmori.vanillatweaks.controllers;
 
 import com.google.common.collect.ImmutableMap;
+import java.util.List;
 import net.senmori.vanillatweaks.VanillaTweaks;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -12,6 +13,7 @@ import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Dye;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class DyedItemNamesController extends TweakController implements Listener {
 
@@ -30,6 +32,21 @@ public class DyedItemNamesController extends TweakController implements Listener
                 .build();
 
         getPlugin().getServer().getPluginManager().registerEvents(this, plugin);
+    }
+
+    @Override
+    public boolean requiresRestart() {
+        return true;
+    }
+
+    @Override
+    public boolean hasTasks() {
+        return false;
+    }
+
+    @Override
+    public List<BukkitRunnable> getTasks() {
+        return null;
     }
 
     @EventHandler

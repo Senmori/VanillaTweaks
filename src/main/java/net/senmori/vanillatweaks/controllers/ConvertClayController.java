@@ -1,9 +1,11 @@
 package net.senmori.vanillatweaks.controllers;
 
+import java.util.List;
 import net.senmori.vanillatweaks.VanillaTweaks;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class ConvertClayController extends TweakController {
 
@@ -13,5 +15,20 @@ public class ConvertClayController extends TweakController {
         if(getPlugin().getTweakConfig().canConvertClay()) {
             getPlugin().getServer().addRecipe(new ShapelessRecipe(new ItemStack(Material.CLAY_BALL, 4)).addIngredient(Material.CLAY));
         }
+    }
+
+    @Override
+    public boolean requiresRestart() {
+        return true;
+    }
+
+    @Override
+    public boolean hasTasks() {
+        return false;
+    }
+
+    @Override
+    public List<BukkitRunnable> getTasks() {
+        return null;
     }
 }

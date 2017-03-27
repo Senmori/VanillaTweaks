@@ -6,6 +6,7 @@ import net.senmori.vanillatweaks.VanillaTweaks;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class StonePickaxeController extends TweakController {
 
@@ -21,7 +22,7 @@ public class StonePickaxeController extends TweakController {
             List<ItemStack> ingredients = Lists.newArrayList(STONE, GRANITE, DIORITE, ANDESITE, new ItemStack(Material.FLINT));
 
             String[][] patterns = new String[][] {{"XXX", " # ", " # "}, {"X", "#", "#"}, {"XX", "X#", " #"}, {"XX", " #", " #"}, {"X", "X", "#"}};
-            ItemStack[] items = {new ItemStack(Material.STONE_PICKAXE), new ItemStack(Material.STONE_AXE), new ItemStack(Material.STONE_SPADE), new ItemStack(Material.STONE_HOE), new ItemStack(Material.STONE_SWORD)};
+            ItemStack[] items = {new ItemStack(Material.STONE_PICKAXE), new ItemStack(Material.STONE_SPADE), new ItemStack(Material.STONE_AXE), new ItemStack(Material.STONE_HOE), new ItemStack(Material.STONE_SWORD)};
 
             for(int i = 0; i < patterns.length; i++) {
                 for(ItemStack stack : ingredients) {
@@ -33,5 +34,20 @@ public class StonePickaxeController extends TweakController {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean requiresRestart() {
+        return true;
+    }
+
+    @Override
+    public boolean hasTasks() {
+        return false;
+    }
+
+    @Override
+    public List<BukkitRunnable> getTasks() {
+        return null;
     }
 }

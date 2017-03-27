@@ -17,7 +17,9 @@ clay-conversion: true
 stone-tool-variant: true
 # Can players edit signs by right-clicking on them
 editable-signs: true
-#Will this plugin suppress any STDOUT  messages that are output by other plugins
+# Will this plugin suppress any STDOUT  messages that are output by other plugins
 suppress-stdout: false
-#Will this plugin suppress any STDERR message that are output by other plugins
+# Will this plugin suppress any STDERR message that are output by other plugins
 suppress-stderr: false
+# Will baby zombies burn in the sunlight
+burn-baby-zombies: true

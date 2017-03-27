@@ -1,6 +1,7 @@
 package net.senmori.vanillatweaks.controllers;
 
 import com.google.common.collect.ImmutableList;
+import java.util.List;
 import net.senmori.vanillatweaks.VanillaTweaks;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -8,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * This controller dictates if grass/dirt turn into grass paths
@@ -18,6 +20,21 @@ public final class GrassPathController extends TweakController implements Listen
     public GrassPathController(VanillaTweaks plugin) {
         super(plugin);
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
+    }
+
+    @Override
+    public boolean requiresRestart() {
+        return false;
+    }
+
+    @Override
+    public boolean hasTasks() {
+        return false;
+    }
+
+    @Override
+    public List<BukkitRunnable> getTasks() {
+        return null;
     }
 
     @EventHandler

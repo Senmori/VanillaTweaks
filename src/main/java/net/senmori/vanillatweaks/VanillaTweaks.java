@@ -14,6 +14,8 @@
  */
 package net.senmori.vanillatweaks;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Logger;
 import net.senmori.vanillatweaks.commands.CommandManager;
 import net.senmori.vanillatweaks.controllers.ArmorStandController;
@@ -22,7 +24,8 @@ import net.senmori.vanillatweaks.controllers.DyedItemNamesController;
 import net.senmori.vanillatweaks.controllers.GrassConvertController;
 import net.senmori.vanillatweaks.controllers.GrassPathController;
 import net.senmori.vanillatweaks.controllers.GrassSpreadController;
-import net.senmori.vanillatweaks.controllers.MinecartController;
+import net.senmori.vanillatweaks.controllers.TweakController;
+import net.senmori.vanillatweaks.controllers.tasked.MinecartController;
 import net.senmori.vanillatweaks.controllers.PrintController;
 import net.senmori.vanillatweaks.controllers.SignEditController;
 import net.senmori.vanillatweaks.controllers.StackableItemsController;
@@ -37,9 +40,15 @@ public class VanillaTweaks extends JavaPlugin {
     private PluginDescriptionFile pdf;
     private CommandManager commandManager;
 
+    private Set<TweakController> controllers = new HashSet<>();
+
     @Override
     public void onDisable() {
+        getServer().getScheduler().cancelTasks(this);
 
+        this.getTweakConfig().save();
+        this.config = null;
+        instance = null;
     }
 
     @Override
@@ -60,17 +69,17 @@ public class VanillaTweaks extends JavaPlugin {
     }
 
     private void initControllers() {
-        new ArmorStandController(instance);
-        new GrassPathController(instance);
-        new GrassConvertController(instance);
-        new GrassSpreadController(instance);
-        new MinecartController(instance);
-        new StackableItemsController(instance);
-        new ConvertClayController(instance);
-        new StonePickaxeController(instance);
-        new SignEditController(instance);
-        new DyedItemNamesController(instance);
-        new PrintController(instance);
+        controllers.add(new ArmorStandController(instance));
+        controllers.add(new GrassPathController(instance));
+        controllers.add(new GrassConvertController(instance));
+        controllers.add(new GrassSpreadController(instance));
+        controllers.add(new MinecartController(instance));
+        controllers.add(new StackableItemsController(instance));
+        controllers.add(new ConvertClayController(instance));
+        controllers.add(new StonePickaxeController(instance));
+        controllers.add(new SignEditController(instance));
+        controllers.add(new DyedItemNamesController(instance));
+        controllers.add(new PrintController(instance));
     }
 
     public TweakConfig getTweakConfig() {

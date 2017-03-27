@@ -1,6 +1,8 @@
 package net.senmori.vanillatweaks.controllers;
 
+import java.util.List;
 import net.senmori.vanillatweaks.VanillaTweaks;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public abstract class TweakController {
     private VanillaTweaks plugin;
@@ -12,4 +14,10 @@ public abstract class TweakController {
     public VanillaTweaks getPlugin() {
         return plugin;
     }
+
+    public abstract boolean requiresRestart();
+
+    public abstract boolean hasTasks();
+
+    public abstract List<BukkitRunnable> getTasks();
 }

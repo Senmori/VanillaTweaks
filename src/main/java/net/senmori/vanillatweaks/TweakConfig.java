@@ -1,6 +1,7 @@
 package net.senmori.vanillatweaks;
 
 import java.io.File;
+import java.io.IOException;
 import net.senmori.vanillatweaks.util.FileUtil;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -24,6 +25,14 @@ public class TweakConfig {
             FileUtil.copyFile(plugin.getResource("config.yml"), file);
         }
         configuration = plugin.getConfig();
+    }
+
+    public void save() {
+        try {
+            configuration.save(new File(plugin.getDataFolder(), "config.yml"));
+        } catch(IOException e) {
+            plugin.getLogger().warning("Could not save configuration file for " + plugin.getName());
+        }
     }
 
     public boolean canAddArmorStandArms() {
@@ -64,5 +73,9 @@ public class TweakConfig {
 
     public boolean getSuppressErr() {
         return configuration.getBoolean("suppress-stderr", false);
+    }
+
+    public boolean getCanBabyZombiesBurn() {
+        return configuration.getBoolean("burn-baby-zombies", true);
     }
 }

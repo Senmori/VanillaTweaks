@@ -3,7 +3,9 @@ package net.senmori.vanillatweaks.controllers;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.List;
 import net.senmori.vanillatweaks.VanillaTweaks;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Consumer;
 
 public class PrintController extends TweakController {
@@ -15,6 +17,21 @@ public class PrintController extends TweakController {
         suppressOut = suppressError = false; // default to false;
         suppressOut = getPlugin().getTweakConfig().getSuppressOut();
         suppressError = getPlugin().getTweakConfig().getSuppressErr();
+    }
+
+    @Override
+    public boolean requiresRestart() {
+        return false;
+    }
+
+    @Override
+    public boolean hasTasks() {
+        return false;
+    }
+
+    @Override
+    public List<BukkitRunnable> getTasks() {
+        return null;
     }
 
     private void suppressOutput() {

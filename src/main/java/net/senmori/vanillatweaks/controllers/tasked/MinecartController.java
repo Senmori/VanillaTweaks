@@ -1,8 +1,12 @@
-package net.senmori.vanillatweaks.controllers;
+package net.senmori.vanillatweaks.controllers.tasked;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.WeakHashMap;
 import net.senmori.vanillatweaks.VanillaTweaks;
+import net.senmori.vanillatweaks.controllers.TweakController;
 import net.senmori.vanillatweaks.tasks.MinecartSpawnTask;
 import net.senmori.vanillatweaks.util.LogHandler;
 import org.bukkit.GameMode;
@@ -34,6 +38,21 @@ public class MinecartController extends TweakController implements Listener {
                                 .put(Material.TNT, EntityType.MINECART_TNT)
                                 .put(Material.COMMAND, EntityType.MINECART_COMMAND)
                                 .build();
+    }
+
+    @Override
+    public boolean requiresRestart() {
+        return false;
+    }
+
+    @Override
+    public boolean hasTasks() {
+        return true;
+    }
+
+    @Override
+    public List<BukkitRunnable> getTasks() {
+        return new ArrayList<>(tasks.values());
     }
 
     @EventHandler
