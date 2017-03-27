@@ -14,10 +14,4 @@ public abstract class TweakController {
     public VanillaTweaks getPlugin() {
         return plugin;
     }
-
-    public abstract boolean requiresRestart();
-
-    public abstract boolean hasTasks();
-
-    public abstract List<BukkitRunnable> getTasks();
 }

@@ -60,7 +60,7 @@ public class BurnZombieTask extends BukkitRunnable {
 
             if(flag) {
                 if(z.getFireTicks() <= 0) {
-                    ((CraftZombie)z).getHandle().setOnFire(1);
+                    ((CraftZombie)z).getHandle().setOnFire(fireTicks);
                 }
             }
         });

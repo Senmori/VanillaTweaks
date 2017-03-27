@@ -19,21 +19,6 @@ public class PrintController extends TweakController {
         suppressError = getPlugin().getTweakConfig().getSuppressErr();
     }
 
-    @Override
-    public boolean requiresRestart() {
-        return false;
-    }
-
-    @Override
-    public boolean hasTasks() {
-        return false;
-    }
-
-    @Override
-    public List<BukkitRunnable> getTasks() {
-        return null;
-    }
-
     private void suppressOutput() {
         getPlugin().getLogger().warning("VanillaTweaks print suppression is enabled. Important info might be missing.");
         getPlugin().getLogger().warning("Suppressing STDOUT=" + suppressOut + ", STDERR=" + suppressError);

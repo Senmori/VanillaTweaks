@@ -16,19 +16,4 @@ public class ConvertClayController extends TweakController {
             getPlugin().getServer().addRecipe(new ShapelessRecipe(new ItemStack(Material.CLAY_BALL, 4)).addIngredient(Material.CLAY));
         }
     }
-
-    @Override
-    public boolean requiresRestart() {
-        return true;
-    }
-
-    @Override
-    public boolean hasTasks() {
-        return false;
-    }
-
-    @Override
-    public List<BukkitRunnable> getTasks() {
-        return null;
-    }
 }

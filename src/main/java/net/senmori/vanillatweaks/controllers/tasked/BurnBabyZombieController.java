@@ -18,21 +18,6 @@ public class BurnBabyZombieController extends TweakController implements Listene
         if(!plugin.getTweakConfig().getCanBabyZombiesBurn()) {
             return;
         }
-        plugin.getServer().getWorlds().forEach(w -> new BurnZombieTask(plugin, 24, w));
-    }
-
-    @Override
-    public boolean requiresRestart() {
-        return false;
-    }
-
-    @Override
-    public boolean hasTasks() {
-        return true;
-    }
-
-    @Override
-    public List<BukkitRunnable> getTasks() {
-        return tasks.stream().filter(t -> t != null && t instanceof BukkitRunnable).collect(Collectors.toList());
+        plugin.getServer().getWorlds().forEach(w -> new BurnZombieTask(plugin, 1, w));
     }
 }

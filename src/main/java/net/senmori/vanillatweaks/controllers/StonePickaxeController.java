@@ -35,19 +35,4 @@ public class StonePickaxeController extends TweakController {
             }
         }
     }
-
-    @Override
-    public boolean requiresRestart() {
-        return true;
-    }
-
-    @Override
-    public boolean hasTasks() {
-        return false;
-    }
-
-    @Override
-    public List<BukkitRunnable> getTasks() {
-        return null;
-    }
 }

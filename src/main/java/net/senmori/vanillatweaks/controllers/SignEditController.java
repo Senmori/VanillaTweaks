@@ -25,21 +25,6 @@ public class SignEditController extends TweakController implements Listener {
         getPlugin().getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @Override
-    public boolean requiresRestart() {
-        return false;
-    }
-
-    @Override
-    public boolean hasTasks() {
-        return false;
-    }
-
-    @Override
-    public List<BukkitRunnable> getTasks() {
-        return null;
-    }
-
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         if(!getPlugin().getTweakConfig().canEditSigns()) return;

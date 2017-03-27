@@ -19,21 +19,6 @@ public final class GrassConvertController extends TweakController implements Lis
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @Override
-    public boolean requiresRestart() {
-        return false;
-    }
-
-    @Override
-    public boolean hasTasks() {
-        return false;
-    }
-
-    @Override
-    public List<BukkitRunnable> getTasks() {
-        return null;
-    }
-
     @EventHandler
     public void convertGrass(PlayerInteractEvent event) {
         if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;

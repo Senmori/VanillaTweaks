@@ -40,21 +40,6 @@ public class MinecartController extends TweakController implements Listener {
                                 .build();
     }
 
-    @Override
-    public boolean requiresRestart() {
-        return false;
-    }
-
-    @Override
-    public boolean hasTasks() {
-        return true;
-    }
-
-    @Override
-    public List<BukkitRunnable> getTasks() {
-        return new ArrayList<>(tasks.values());
-    }
-
     @EventHandler
     public void changeMinecart(PlayerInteractAtEntityEvent event) {
         if(!getPlugin().getTweakConfig().canModifyMinecarts()) return;

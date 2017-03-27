@@ -17,19 +17,4 @@ public class StackableItemsController extends TweakController {
         ImmutableSet.of(Items.MINECART, Items.CHEST_MINECART, Items.COMMAND_BLOCK_MINECART, Items.FURNACE_MINECART, Items.HOPPER_MINECART, Items.TNT_MINECART)
                             .forEach(item -> item.d(getPlugin().getTweakConfig().getMinecartStackSize()));
     }
-
-    @Override
-    public boolean requiresRestart() {
-        return true;
-    }
-
-    @Override
-    public boolean hasTasks() {
-        return false;
-    }
-
-    @Override
-    public List<BukkitRunnable> getTasks() {
-        return null;
-    }
 }

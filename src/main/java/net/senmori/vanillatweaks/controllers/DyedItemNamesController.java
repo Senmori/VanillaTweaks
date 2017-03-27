@@ -34,21 +34,6 @@ public class DyedItemNamesController extends TweakController implements Listener
         getPlugin().getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @Override
-    public boolean requiresRestart() {
-        return true;
-    }
-
-    @Override
-    public boolean hasTasks() {
-        return false;
-    }
-
-    @Override
-    public List<BukkitRunnable> getTasks() {
-        return null;
-    }
-
     @EventHandler
     public void onItemChange(PrepareAnvilEvent event) {
         ItemStack left = event.getInventory().getItem(0);

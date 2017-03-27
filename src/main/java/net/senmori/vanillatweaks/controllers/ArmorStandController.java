@@ -20,21 +20,6 @@ public final class ArmorStandController extends TweakController implements Liste
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @Override
-    public boolean requiresRestart() {
-        return false;
-    }
-
-    @Override
-    public boolean hasTasks() {
-        return false;
-    }
-
-    @Override
-    public List<BukkitRunnable> getTasks() {
-        return null;
-    }
-
     @EventHandler
     public void onEntitySpawn(EntitySpawnEvent event) {
         if(!event.getEntity().getType().equals(EntityType.ARMOR_STAND)) return;
