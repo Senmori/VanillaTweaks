@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import net.senmori.vanillatweaks.commands.CommandManager;
 import net.senmori.vanillatweaks.controllers.ArmorStandController;
 import net.senmori.vanillatweaks.controllers.ConvertClayController;
+import net.senmori.vanillatweaks.controllers.DragonBreathController;
 import net.senmori.vanillatweaks.controllers.DyedItemNamesController;
 import net.senmori.vanillatweaks.controllers.GrassConvertController;
 import net.senmori.vanillatweaks.controllers.GrassPathController;
@@ -46,6 +47,7 @@ public class VanillaTweaks extends JavaPlugin {
     @Override
     public void onDisable() {
         getServer().getScheduler().cancelTasks(this);
+        controllers.clear();
 
         this.getTweakConfig().save();
         this.config = null;
@@ -82,6 +84,7 @@ public class VanillaTweaks extends JavaPlugin {
         controllers.add(new DyedItemNamesController(instance));
         controllers.add(new PrintController(instance));
         controllers.add(new BurnBabyZombieController(instance));
+        controllers.add(new DragonBreathController(instance));
     }
 
     public TweakConfig getTweakConfig() {

@@ -23,3 +23,6 @@ suppress-stdout: false
 suppress-stderr: false
 # Will baby zombies burn in the sunlight
 burn-baby-zombies: true
+# Changes the dragon breath crafting recipe result to nothing.
+# Fixes the issue of using dragon's breath in brewing stands
+fix-dragon-breath: true

@@ -78,4 +78,8 @@ public class TweakConfig {
     public boolean getCanBabyZombiesBurn() {
         return configuration.getBoolean("burn-baby-zombies", true);
     }
+
+    public boolean shouldFixDragonBreath() {
+        return configuration.getBoolean("fix-dragon-breath", true);
+    }
 }
