@@ -22,7 +22,6 @@ import net.senmori.vanillatweaks.controllers.ArmorStandController;
 import net.senmori.vanillatweaks.controllers.ConvertClayController;
 import net.senmori.vanillatweaks.controllers.DispenserController;
 import net.senmori.vanillatweaks.controllers.DragonBreathController;
-import net.senmori.vanillatweaks.controllers.DyedItemNamesController;
 import net.senmori.vanillatweaks.controllers.GrassPathController;
 import net.senmori.vanillatweaks.controllers.PrintController;
 import net.senmori.vanillatweaks.controllers.QuickSwapController;
@@ -79,7 +78,6 @@ public class VanillaTweaks extends JavaPlugin {
         controllers.add(new ConvertClayController(instance));
         controllers.add(new StonePickaxeController(instance));
         controllers.add(new SignEditController(instance));
-        controllers.add(new DyedItemNamesController(instance));
         controllers.add(new PrintController(instance));
         controllers.add(new BurnBabyZombieController(instance));
         controllers.add(new DragonBreathController(instance));
