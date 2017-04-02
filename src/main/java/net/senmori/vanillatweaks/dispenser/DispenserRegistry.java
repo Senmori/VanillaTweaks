@@ -13,6 +13,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 public final class DispenserRegistry {
 
     public static final Map<ItemStack, DispenseBehaviour> REGISTRY = new HashMap<>();
+
+    private DispenserRegistry() {}
+
     static {
         load();
     }
