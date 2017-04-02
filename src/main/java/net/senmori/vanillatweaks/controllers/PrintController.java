@@ -20,8 +20,10 @@ public class PrintController extends TweakController {
     }
 
     private void suppressOutput() {
-        getPlugin().getLogger().info("VanillaTweaks print suppression is enabled. Important info might be missing.");
         getPlugin().getLogger().info("Suppressing STDOUT=" + suppressOut + ", STDERR=" + suppressError);
+        if(suppressOut || suppressError) {
+            getPlugin().getLogger().info("VanillaTweaks print suppression is enabled. Important info might be missing.");
+        }
 
         if(suppressOut)
             suppress(System::setOut);

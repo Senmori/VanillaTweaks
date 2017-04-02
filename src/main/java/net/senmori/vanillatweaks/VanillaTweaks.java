@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import net.senmori.vanillatweaks.commands.CommandManager;
 import net.senmori.vanillatweaks.controllers.ArmorStandController;
 import net.senmori.vanillatweaks.controllers.ConvertClayController;
+import net.senmori.vanillatweaks.controllers.DispenserController;
 import net.senmori.vanillatweaks.controllers.DragonBreathController;
 import net.senmori.vanillatweaks.controllers.DyedItemNamesController;
 import net.senmori.vanillatweaks.controllers.GrassPathController;
@@ -84,6 +85,7 @@ public class VanillaTweaks extends JavaPlugin {
         controllers.add(new DragonBreathController(instance));
         controllers.add(new QuickSwapController(instance));
         controllers.add(new VillagerController(instance));
+        controllers.add(new DispenserController(instance));
     }
 
     public TweakConfig getTweakConfig() {
