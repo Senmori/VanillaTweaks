@@ -1,3 +1,23 @@
+# Set if clay blocks can be turned into 4 clay balls
+clay-conversion: true
+
+# Set if stone tools should be craftable via the stone variants
+# (i.e. diorite, andesite, granite can all be used to craft stone tools)
+stone-tool-variant: true
+
+# Can players edit signs by right-clicking on them with an empty hand
+editable-signs: true
+
+# Can users convert dirt to grass paths?
+dirt-to-path: true
+
+minecart:
+  # Can users modify minecarts by right clicking on them with the appropriate blocks
+  # (i.e. right clicking with a chest will produce a minecart chest)
+  modification: true
+  # Set the stack size for minecarts
+  stack-size: 16
+
 armor-stand:
   # Armor Stands will add arms when shift right-clicked with a stick
   add-arms: true
@@ -9,29 +29,6 @@ armor-stand:
   quick-swap: true
   # Will the offhand slot get swapped as well
   offhand-swap: true
-
-# Can users convert dirt to grass paths?
-dirt-to-path: true
-
-# Can wheat seeds convert dirt to grass?
-seed-convert-grass: true
-
-minecart:
-  # Can users modify minecarts by right clicking on them with the appropriate blocks
-  # (i.e. right clicking with a chest will produce a minecart chest)
-  modification: true
-  # Set the stack size for minecarts
-  stack-size: 16
-
-# Set if clay blocks can be turned into 4 clay balls
-clay-conversion: true
-
-# Set if stone tools should be craftable via the stone variants
-# (i.e. diorite, andesite, granite can all be used to craft stone tools)
-stone-tool-variant: true
-
-# Can players edit signs by right-clicking on them with an empty hand
-editable-signs: true
 
 suppress-output:
   # Will this plugin suppress any STDOUT  messages that are output by other plugins

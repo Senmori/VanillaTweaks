@@ -54,6 +54,7 @@ public class TweakConfig {
         editableSigns = getBool("editable-signs", true);
 
         fixDragonBreath = getBool("fix-dragon-breath", true);
+
     }
 
     private void printDebug(String str) {
