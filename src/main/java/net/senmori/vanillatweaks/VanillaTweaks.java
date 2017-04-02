@@ -22,9 +22,7 @@ import net.senmori.vanillatweaks.controllers.ArmorStandController;
 import net.senmori.vanillatweaks.controllers.ConvertClayController;
 import net.senmori.vanillatweaks.controllers.DragonBreathController;
 import net.senmori.vanillatweaks.controllers.DyedItemNamesController;
-import net.senmori.vanillatweaks.controllers.GrassConvertController;
 import net.senmori.vanillatweaks.controllers.GrassPathController;
-import net.senmori.vanillatweaks.controllers.GrassSpreadController;
 import net.senmori.vanillatweaks.controllers.PrintController;
 import net.senmori.vanillatweaks.controllers.QuickSwapController;
 import net.senmori.vanillatweaks.controllers.SignEditController;
@@ -75,8 +73,6 @@ public class VanillaTweaks extends JavaPlugin {
     private void initControllers() {
         controllers.add(new ArmorStandController(instance));
         controllers.add(new GrassPathController(instance));
-        controllers.add(new GrassConvertController(instance));
-        controllers.add(new GrassSpreadController(instance));
         controllers.add(new MinecartController(instance));
         controllers.add(new StackableItemsController(instance));
         controllers.add(new ConvertClayController(instance));

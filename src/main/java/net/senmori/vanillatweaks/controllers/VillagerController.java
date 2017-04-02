@@ -3,6 +3,7 @@ package net.senmori.vanillatweaks.controllers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import net.minecraft.server.v1_11_R1.EntityVillager;
 import net.minecraft.server.v1_11_R1.Item;
 import net.minecraft.server.v1_11_R1.ItemStack;
@@ -27,6 +28,7 @@ public class VillagerController extends TweakController implements Listener {
     public VillagerController(VanillaTweaks plugin) {
         super(plugin);
 
+        if(!getPlugin().getTweakConfig().getVillagersShouldFollow()) return;
 
         String blockName = getPlugin().getTweakConfig().getVillagerFollowBlock();
         if(blockName.isEmpty()) return;
@@ -45,7 +47,7 @@ public class VillagerController extends TweakController implements Listener {
             public void run() {
                 loaded.clear();
             }
-        }.runTaskTimer(getPlugin(), 1L, 20L * 5);
+        }.runTaskTimer(getPlugin(), 1L, 20L * 5L);
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -103,7 +105,9 @@ public class VillagerController extends TweakController implements Listener {
         if(!getPlugin().getTweakConfig().getVillagersShouldFollow()) return;
 
         for(World world : getPlugin().getServer().getWorlds()) {
-            List<Villager> villagers = (List<Villager>)world.getEntitiesByClass(Villager.class);
+            List<Villager> villagers = world.getEntitiesByClass(Villager.class).stream()
+                                                               .filter(Villager::hasAI) // ignore villagers that don't have AI
+                                                               .collect(Collectors.toList());
 
             villagers.forEach(v -> {
                 setGoal(v, getPriority(), getGoal(v));

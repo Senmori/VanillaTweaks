@@ -4,18 +4,14 @@ import net.minecraft.server.v1_11_R1.EntityArmorStand;
 import net.minecraft.server.v1_11_R1.EntityPlayer;
 import net.minecraft.server.v1_11_R1.EnumItemSlot;
 import net.senmori.vanillatweaks.VanillaTweaks;
-import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftArmorStand;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
 
 public class QuickSwapController extends TweakController implements Listener {
 
@@ -51,6 +47,5 @@ public class QuickSwapController extends TweakController implements Listener {
 
         entPlayer.setSlot(slot, armorItem);
         armor.setSlot(slot, playerItem);
-        System.out.println("Swapped " + playerItem.getName() + " with " + armorItem.getName() + " on " + player.getName());
     }
 }

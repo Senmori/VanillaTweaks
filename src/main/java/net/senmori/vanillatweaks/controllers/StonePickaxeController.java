@@ -6,7 +6,6 @@ import net.senmori.vanillatweaks.VanillaTweaks;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class StonePickaxeController extends TweakController {
 

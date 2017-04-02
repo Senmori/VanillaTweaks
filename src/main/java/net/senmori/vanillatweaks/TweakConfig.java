@@ -30,53 +30,52 @@ public class TweakConfig {
         load();
     }
 
-    boolean canConvertDirt;
-    boolean clayConversion;
-    boolean stoneToolRecipes;
-    boolean editableSigns;
-    boolean fixDragonBreath;
-    boolean verbose;
+    private boolean canConvertDirt;
+    private boolean clayConversion;
+    private boolean stoneToolRecipes;
+    private boolean editableSigns;
+    private boolean fixDragonBreath;
+    private boolean verbose;
 
     private void load() {
         verbose = configuration.getBoolean("verbose", false);
         loadArmorStand();
-        loadGrassSpread();
         loadMinecarts();
         loadSuppressOutput();
         loadZombies();
         loadVillagers();
 
-        canConvertDirt = getBool("seed-convert-grass");
-        display("Can Convert Dirt: " + canConvertDirt);
+        canConvertDirt = getBool("dirt-to-path", true);
 
-        clayConversion = getBool("clay-conversion");
-        display("Can Convert Clay: " + clayConversion);
+        clayConversion = getBool("clay-conversion", true);
 
-        stoneToolRecipes = getBool("stone-tool-variant");
-        display("Stone Tool Recipes: " + stoneToolRecipes);
+        stoneToolRecipes = getBool("stone-tool-variant", true);
 
-        editableSigns = getBool("editable-signs");
-        display("Editable Signs: " + editableSigns);
+        editableSigns = getBool("editable-signs", true);
 
-        fixDragonBreath = getBool("fix-dragon-breath");
-        display("Fix Dragon Breath: " + fixDragonBreath);
+        fixDragonBreath = getBool("fix-dragon-breath", true);
     }
 
-    private void display(String str) {
+    private void printDebug(String str) {
         if(!verbose) return;
         plugin.getLogger().info(str);
     }
 
-    private String get(String path) {
-        return configuration.getString(path);
+    private String get(String path, Object defaultValue) {
+        if(!configuration.contains(path)) {
+            configuration.set(path, defaultValue);
+        }
+        String value = configuration.getString(path);
+        printDebug(path + " = " + value);
+        return value;
     }
 
-    private boolean getBool(String path) {
-        return Boolean.valueOf(get(path));
+    private boolean getBool(String path, boolean defaultValue) {
+        return Boolean.valueOf(get(path, defaultValue));
     }
 
-    private int getInt(String path) {
-        return Integer.valueOf(get(path));
+    private int getInt(String path, int defaultValue) {
+        return Integer.valueOf(get(path, defaultValue));
     }
 
     public boolean canConvertDirt() {
@@ -102,29 +101,25 @@ public class TweakConfig {
     /*
         ####### ARMOR STANDS #######
      */
-    boolean armorStandArms;
-    boolean armorStandPlate;
-    boolean canQuicklySwap;
-    boolean canSwapOffhand;
+    private boolean armorStandArms, armorStandPlate, canQuicklySwap, canSwapOffHand;
+    private boolean addPlate;
     private void loadArmorStand() {
-        armorStandArms = getBool("armor-stand.show-arms");
-        display("Show Armor Stand Arms: " + armorStandArms);
-
-        armorStandPlate = getBool("armor-stand.show-base-plate");
-        display("Show Armor Stand Plate: " + armorStandPlate);
-
-        canQuicklySwap = getBool("armor-stand.quick-swap");
-        display("Can Quickly Swap: " + canQuicklySwap);
-
-        canSwapOffhand = getBool("armor-stand.offhand-swap");
-        display("Can Swap Offhand: " + canSwapOffhand);
+        armorStandArms = getBool("armor-stand.add-arms", true);
+        armorStandPlate = getBool("armor-stand.hide-base-plate", true);
+        canQuicklySwap = getBool("armor-stand.quick-swap", true);
+        canSwapOffHand = getBool("armor-stand.offhand-swap", true);
+        addPlate = getBool("armor-stand.add-base-plate", true);
     }
-    public boolean showArmorStandArms() {
+    public boolean addArmorStandArms() {
         return armorStandArms;
     }
 
-    public boolean showArmorStandBasePlate() {
+    public boolean removeArmorStandBasePlate() {
         return armorStandPlate;
+    }
+
+    public boolean addArmorStandBasePlate() {
+        return addPlate;
     }
 
     public boolean canQuicklySwap() {
@@ -132,40 +127,17 @@ public class TweakConfig {
     }
 
     public boolean canSwapOffhand() {
-        return canSwapOffhand;
-    }
-
-    /*
-        ####### GRASS SPREAD #######
-     */
-    boolean canSpreadGrass;
-    int grassSpreadRadius;
-    private void loadGrassSpread() {
-        canSpreadGrass = getBool("grass-spread.enabled");
-        display("Can Spread Grass: " + canSpreadGrass);
-
-        grassSpreadRadius = getInt("grass-spread.radius");
-        display("Grass Spread Radius: " + grassSpreadRadius);
-    }
-    public boolean canSpreadGrass() {
-        return canSpreadGrass;
-    }
-
-    public int getGrassSpreadRadius() {
-        return grassSpreadRadius;
+        return canSwapOffHand;
     }
 
     /*
         ####### MINECARTS ######
      */
-    boolean minecartModification;
-    int minecartMaxStackSize;
+    private boolean minecartModification;
+    private int minecartMaxStackSize;
     private void loadMinecarts() {
-        minecartModification = getBool("minecart.modification");
-        display("Minecart Modification: " + minecartModification);
-
-        minecartMaxStackSize = getInt("minecart.stack-size");
-        display("Minecart Max Stack Size: " + minecartMaxStackSize);
+        minecartModification = getBool("minecart.modification", true);
+        minecartMaxStackSize = getInt("minecart.stack-size", 16);
     }
 
     public boolean canModifyMinecarts() {
@@ -179,14 +151,11 @@ public class TweakConfig {
     /*
         ####### SUPPRESS OUTPUT #######
      */
-    boolean suppressOut;
-    boolean suppressErr;
+    private boolean suppressOut;
+    private boolean suppressErr;
     private void loadSuppressOutput() {
-        suppressOut = getBool("suppress-output.stdout");
-        display("Suppress STDOUT: " + suppressOut);
-
-        suppressErr = getBool("suppress-output.stderr");
-        display("Suppress STDERR: " + suppressErr);
+        suppressOut = getBool("suppress-output.stdout", false);
+        suppressErr = getBool("suppress-output.stderr", false);
     }
 
     public boolean canSuppressOut() {
@@ -200,14 +169,11 @@ public class TweakConfig {
     /*
         ####### BABY ZOMBIES #######
      */
-    boolean burnBabyZombies;
-    int zombieBurnLength;
+    private boolean burnBabyZombies;
+    private int zombieBurnLength;
     private void loadZombies() {
-        burnBabyZombies = getBool("burn-baby-zombies.enabled");
-        display("Burn Baby Zombies: " + burnBabyZombies);
-
-        zombieBurnLength = getInt("burn-baby-zombies.length");
-        display("Baby Zombie Burn Length: " + zombieBurnLength);
+        burnBabyZombies = getBool("burn-baby-zombies.enabled", true);
+        zombieBurnLength = getInt("burn-baby-zombies.length", 1);
     }
 
     public boolean canBabyZombiesBurn() {
@@ -221,11 +187,11 @@ public class TweakConfig {
     /*
         ##### VILLAGERS ##########
      */
-    String followBlock;
-    boolean villagersCanFollow;
+    private String followBlock;
+    private boolean villagersCanFollow;
     private void loadVillagers() {
-        followBlock = get("villagers.follow-block");
-        villagersCanFollow = getBool("villagers.enabled");
+        followBlock = get("villagers.follow-block", "emerald_block");
+        villagersCanFollow = getBool("villagers.enabled", true);
     }
 
     public String getVillagerFollowBlock() {

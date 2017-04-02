@@ -1,7 +1,6 @@
 package net.senmori.vanillatweaks.controllers;
 
 import com.google.common.collect.ImmutableList;
-import java.util.List;
 import net.senmori.vanillatweaks.VanillaTweaks;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -9,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * This controller dictates if grass/dirt turn into grass paths
@@ -28,7 +26,7 @@ public final class GrassPathController extends TweakController implements Listen
         if(event.getItem() == null) return;
         if(!isSpade(event.getItem().getType())) return;
         if(!validMaterials.contains(event.getClickedBlock().getType())) return;
-        if(!getPlugin().config.canSpreadGrass()) return;
+        if(!getPlugin().getTweakConfig().canConvertDirt()) return;
 
         event.getClickedBlock().setType(Material.GRASS_PATH);
         ItemStack heldItem = event.getPlayer().getInventory().getItem(event.getPlayer().getInventory().getHeldItemSlot());

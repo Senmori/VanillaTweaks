@@ -1,51 +1,59 @@
 armor-stand:
-  # Armor Stands will show with arms when placed
-  show-arms: true
-  # Armor Stands will show with the base plate when placed
-  show-base-plate: true
+  # Armor Stands will add arms when shift right-clicked with a stick
+  add-arms: true
+  # Armor Stands will remove the base plate when shift right-clicked with a pair of shears
+  hide-base-plate: true
+  # Armor Stands will add the base plate(if removed) when shift right-clicked with a stone slab
+  add-base-plate: true
   # Can players quickly swap all armor quickly.
   quick-swap: true
   # Will the offhand slot get swapped as well
   offhand-swap: true
+
 # Can users convert dirt to grass paths?
 dirt-to-path: true
+
 # Can wheat seeds convert dirt to grass?
 seed-convert-grass: true
-grass-spread:
-  # Can bonemeal be used to force grass to spread within the given radius
-  enabled: true
-  # The radius to check for dirt blocks to convert
-  radius: 6
+
 minecart:
   # Can users modify minecarts by right clicking on them with the appropriate blocks
   # (i.e. right clicking with a chest will produce a minecart chest)
   modification: true
   # Set the stack size for minecarts
   stack-size: 16
+
 # Set if clay blocks can be turned into 4 clay balls
 clay-conversion: true
+
 # Set if stone tools should be craftable via the stone variants
 # (i.e. diorite, andesite, granite can all be used to craft stone tools)
 stone-tool-variant: true
+
 # Can players edit signs by right-clicking on them with an empty hand
 editable-signs: true
+
 suppress-output:
   # Will this plugin suppress any STDOUT  messages that are output by other plugins
   stdout: true
   #Will this plugin suppress any STDERR message that are output by other plugins
   stderr: true
+
 # Will baby zombies burn in the sunlight
 burn-baby-zombies:
   enabled: true
   # How long the baby zombies will burn for (in seconds)
+  # Zombies will be re-checked after this length to see if they should still be burning
   length: 1
+
 # Changes the dragon breath crafting recipe result to nothing.
 # Fixes the issue of using dragon's breath in brewing stands
 fix-dragon-breath: true
+
 villagers:
   # Should villagers follow players with the specified item
   enabled: true
   # What block villagers should follow
   follow-block: emerald_block
 # Will display all settings on loading
-verbose: true
+verbose: false
