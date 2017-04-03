@@ -29,7 +29,6 @@ public final class DispenserRegistry extends Registry<ItemStack, DispenseBehavio
         }
     }
 
-    @SuppressWarnings("deprecation")
     protected void load() {
         // water buckets fill up cauldrons
         super.register(new ItemStack(Material.WATER_BUCKET), new WaterBucketBehaviour());
