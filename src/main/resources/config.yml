@@ -11,6 +11,10 @@ editable-signs: true
 # Can users convert dirt to grass paths?
 dirt-to-path: true
 
+# The cost to dye item names in an anvil.
+# Set to -1 to disable.
+anvil-rename-cost: 3
+
 minecart:
   # Can users modify minecarts by right clicking on them with the appropriate blocks
   # (i.e. right clicking with a chest will produce a minecart chest)

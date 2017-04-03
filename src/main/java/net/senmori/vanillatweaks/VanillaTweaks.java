@@ -23,6 +23,7 @@ import net.senmori.vanillatweaks.controllers.ConvertClayController;
 import net.senmori.vanillatweaks.controllers.DispenserController;
 import net.senmori.vanillatweaks.controllers.DragonBreathController;
 import net.senmori.vanillatweaks.controllers.GrassPathController;
+import net.senmori.vanillatweaks.controllers.ItemFrameController;
 import net.senmori.vanillatweaks.controllers.PrintController;
 import net.senmori.vanillatweaks.controllers.QuickSwapController;
 import net.senmori.vanillatweaks.controllers.SignEditController;
@@ -32,21 +33,22 @@ import net.senmori.vanillatweaks.controllers.TweakController;
 import net.senmori.vanillatweaks.controllers.VillagerController;
 import net.senmori.vanillatweaks.controllers.tasked.BurnBabyZombieController;
 import net.senmori.vanillatweaks.controllers.tasked.MinecartController;
-import org.bukkit.plugin.PluginDescriptionFile;
+import net.senmori.vanillatweaks.registry.Registry;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class VanillaTweaks extends JavaPlugin {
     public static Logger logger;
     private static VanillaTweaks instance;
     public TweakConfig config;
-    private PluginDescriptionFile pdf;
     private CommandManager commandManager;
 
     private Set<TweakController> controllers = new HashSet<>();
+    private Set<Registry> registers = new HashSet<>();
 
     @Override
     public void onDisable() {
         getServer().getScheduler().cancelTasks(this);
+        registers.forEach(Registry::clearRegisters); // clear registers
         controllers.clear();
 
         this.config = null;
@@ -55,8 +57,6 @@ public class VanillaTweaks extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        pdf = getDescription();
-
         logger = getLogger();
         instance = this;
 
@@ -71,23 +71,32 @@ public class VanillaTweaks extends JavaPlugin {
     }
 
     private void initControllers() {
-        controllers.add(new ArmorStandController(instance));
-        controllers.add(new GrassPathController(instance));
-        controllers.add(new MinecartController(instance));
-        controllers.add(new StackableItemsController(instance));
-        controllers.add(new ConvertClayController(instance));
-        controllers.add(new StonePickaxeController(instance));
-        controllers.add(new SignEditController(instance));
-        controllers.add(new PrintController(instance));
-        controllers.add(new BurnBabyZombieController(instance));
-        controllers.add(new DragonBreathController(instance));
-        controllers.add(new QuickSwapController(instance));
-        controllers.add(new VillagerController(instance));
-        controllers.add(new DispenserController(instance));
+        new ArmorStandController(instance);
+        new GrassPathController(instance);
+        new MinecartController(instance);
+        new StackableItemsController(instance);
+        new ConvertClayController(instance);
+        new StonePickaxeController(instance);
+        new SignEditController(instance);
+        new PrintController(instance);
+        new BurnBabyZombieController(instance);
+        new DragonBreathController(instance);
+        new QuickSwapController(instance);
+        new VillagerController(instance);
+        new DispenserController(instance);
+        new ItemFrameController(instance);
     }
 
     public TweakConfig getTweakConfig() {
         return config;
+    }
+
+    public void addRegister(Registry registry) {
+        registers.add(registry);
+    }
+
+    public void addController(TweakController controller) {
+        controllers.add(controller);
     }
 
     public static VanillaTweaks getInstance() {
