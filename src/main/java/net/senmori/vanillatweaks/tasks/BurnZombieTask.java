@@ -21,7 +21,7 @@ public class BurnZombieTask extends BukkitRunnable {
         this.plugin = plugin;
         this.world = world;
         this.fireTicks = fireTicks;
-        this.runTaskTimer(plugin, 1L, 20L);
+        this.runTaskTimer(plugin, 1L, 20L * (fireTicks - 1));
     }
     @Override
     public void run() {
@@ -35,18 +35,22 @@ public class BurnZombieTask extends BukkitRunnable {
                                        .filter(z -> z.getWorld().getBlockAt(z.getLocation()).getLightFromSky() == 15)
                                        .collect(Collectors.toList());
         zombies.forEach(z -> {
-            boolean flag = true;
+            boolean flag = false;
             ItemStack helmet = z.getEquipment().getHelmet();
 
             if(helmet != null) {
-                if(helmet.getDurability() > 0 && ! helmet.getItemMeta().isUnbreakable()) {
+                if(helmet.getDurability() > 0 && !helmet.getItemMeta().isUnbreakable()) {
                     helmet.setDurability((short) ( helmet.getDurability() + rand.nextInt(2) ));
 
                     if(helmet.getDurability() >= helmet.getType().getMaxDurability()) {
                         helmet.setType(Material.AIR);
                     }
                     flag = false;
+                } else {
+                    flag = true; // helmet has no durability or it's not unbreakable
                 }
+            } else {
+                flag = true;
             }
 
 

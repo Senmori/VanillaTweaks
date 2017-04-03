@@ -13,26 +13,22 @@ public class DispenserController extends TweakController implements Listener {
 
     public DispenserController(VanillaTweaks plugin) {
         super(plugin);
-        REGISTRY = DispenserRegistry.getInstance();
+        if(REGISTRY == null) {
+            REGISTRY = new DispenserRegistry(getPlugin());
+        }
         getPlugin().getServer().getPluginManager().registerEvents(this, getPlugin());
     }
 
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDispense(BlockDispenseEvent event) {
-        if(REGISTRY.isRegistered(event.getItem())) {
+        if(getRegistry().isRegistered(event.getItem())) {
             event.setCancelled(true);
-            DispenserController.REGISTRY.dispense(event.getItem(), event.getBlock());
+            getRegistry().dispense(event.getItem(), event.getBlock());
         }
     }
 
-    @Override
-    public boolean hasRegistry() {
-        return true;
-    }
-
-    @Override
-    public DispenserRegistry getRegistry() {
+    private DispenserRegistry getRegistry() {
         return REGISTRY;
     }
 }

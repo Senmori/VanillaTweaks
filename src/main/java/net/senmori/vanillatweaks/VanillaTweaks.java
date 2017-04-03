@@ -33,7 +33,6 @@ import net.senmori.vanillatweaks.controllers.TweakController;
 import net.senmori.vanillatweaks.controllers.VillagerController;
 import net.senmori.vanillatweaks.controllers.tasked.BurnBabyZombieController;
 import net.senmori.vanillatweaks.controllers.tasked.MinecartController;
-import net.senmori.vanillatweaks.registry.Registry;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class VanillaTweaks extends JavaPlugin {
@@ -43,12 +42,10 @@ public class VanillaTweaks extends JavaPlugin {
     private CommandManager commandManager;
 
     private Set<TweakController> controllers = new HashSet<>();
-    private Set<Registry> registers = new HashSet<>();
 
     @Override
     public void onDisable() {
         getServer().getScheduler().cancelTasks(this);
-        registers.forEach(Registry::clearRegisters); // clear registers
         controllers.clear();
 
         this.config = null;
@@ -89,10 +86,6 @@ public class VanillaTweaks extends JavaPlugin {
 
     public TweakConfig getTweakConfig() {
         return config;
-    }
-
-    public void addRegister(Registry registry) {
-        registers.add(registry);
     }
 
     public void addController(TweakController controller) {

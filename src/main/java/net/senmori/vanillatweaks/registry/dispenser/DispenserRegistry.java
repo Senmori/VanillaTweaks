@@ -1,5 +1,7 @@
 package net.senmori.vanillatweaks.registry.dispenser;
 
+import java.util.HashMap;
+import java.util.Map;
 import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.registry.Registry;
 import net.senmori.vanillatweaks.registry.dispenser.behaviour.DispenseBehaviour;
@@ -8,19 +10,25 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
-public final class DispenserRegistry extends Registry<ItemStack, DispenseBehaviour> {
+public final class DispenserRegistry implements Registry<ItemStack, DispenseBehaviour>  {
 
-    private static DispenserRegistry INSTANCE = new DispenserRegistry(VanillaTweaks.getInstance());
-
-    private DispenserRegistry(VanillaTweaks plugin) {
-        super(plugin);
+    private static final Map<ItemStack, DispenseBehaviour> REGISTRY = new HashMap<>();
+    public DispenserRegistry(VanillaTweaks plugin) {
+        load();
     }
 
-    public static DispenserRegistry getInstance() {
-        if(INSTANCE == null) {
-            INSTANCE = new DispenserRegistry(VanillaTweaks.getInstance());
+    public boolean isRegistered(ItemStack stack) {
+        return REGISTRY.containsKey(stack);
+    }
+
+    public void register(ItemStack key, DispenseBehaviour behaviour) {
+        if(!isRegistered(key)) {
+            REGISTRY.put(key, behaviour);
         }
-        return INSTANCE;
+    }
+
+    public DispenseBehaviour get(ItemStack key) {
+        return REGISTRY.get(key);
     }
 
     public void dispense(ItemStack stack, Block sourceBlock) {
@@ -31,6 +39,6 @@ public final class DispenserRegistry extends Registry<ItemStack, DispenseBehavio
 
     protected void load() {
         // water buckets fill up cauldrons
-        super.register(new ItemStack(Material.WATER_BUCKET), new WaterBucketBehaviour());
+        register(new ItemStack(Material.WATER_BUCKET), new WaterBucketBehaviour());
     }
 }

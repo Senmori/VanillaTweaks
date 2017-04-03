@@ -2,20 +2,24 @@ package net.senmori.vanillatweaks.controllers;
 
 import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.registry.frame.ItemFrameRegistry;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class ItemFrameController extends TweakController implements Listener {
 
-    public static ItemFrameRegistry REGISTRY;
+    public static ItemFrameRegistry REGISTRY = null;
     public ItemFrameController(VanillaTweaks plugin) {
         super(plugin);
-        REGISTRY = ItemFrameRegistry.getInstance();
-        getPlugin().getServer().getPluginManager().registerEvents(this,getPlugin());
+        if(REGISTRY == null) {
+            REGISTRY = new ItemFrameRegistry(getPlugin());
+        }
+        getPlugin().getServer().getPluginManager().registerEvents(this, getPlugin());
     }
 
 
@@ -28,19 +32,20 @@ public class ItemFrameController extends TweakController implements Listener {
             return;
         }
 
-        if(frame.getItem() != null && REGISTRY.isRegistered(frame.getItem())) {
+        for(ItemStack key : ItemFrameRegistry.REGISTRY.keySet()) {
+            Bukkit.broadcastMessage("Key: " + key.getType().name().toLowerCase());
+        }
+
+        Bukkit.broadcastMessage("Item not null");
+        if(getRegistry().isRegistered(frame.getItem())) {
+            Bukkit.broadcastMessage("Test1");
             event.setCancelled(true);
-            ItemFrameController.REGISTRY.activate(frame.getItem(), frame, event.getPlayer(), event.getClickedPosition());
+            getRegistry().activate(frame.getItem(), frame, event.getPlayer(), event.getClickedPosition());
+            Bukkit.broadcastMessage("Post-activate");
         }
     }
 
-    @Override
-    public boolean hasRegistry() {
-        return true;
-    }
-
-    @Override
-    public ItemFrameRegistry getRegistry() {
+    private ItemFrameRegistry getRegistry() {
         return REGISTRY;
     }
 }
