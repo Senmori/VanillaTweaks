@@ -38,7 +38,7 @@ public class ItemFrameController extends TweakController implements Listener {
             Bukkit.broadcastMessage("Key: " + key.getType().name().toLowerCase());
         }
 
-        if(getRegistry().get(frame.getItem()) != null) {
+        if(getRegistry().isRegistered(frame.getItem())) {
             Bukkit.broadcastMessage("Test1");
             event.setCancelled(true);
             getRegistry().activate(frame.getItem(), frame, event.getPlayer(), event.getClickedPosition());
