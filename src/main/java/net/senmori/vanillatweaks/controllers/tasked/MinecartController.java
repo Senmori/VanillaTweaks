@@ -1,14 +1,10 @@
 package net.senmori.vanillatweaks.controllers.tasked;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.WeakHashMap;
 import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.controllers.TweakController;
 import net.senmori.vanillatweaks.tasks.MinecartSpawnTask;
-import net.senmori.vanillatweaks.util.LogHandler;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -46,7 +42,7 @@ public class MinecartController extends TweakController implements Listener {
         if(! (event.getRightClicked() instanceof Minecart) ) return;
         if(!event.getPlayer().isSneaking()) return;
         if(!event.getRightClicked().getPassengers().isEmpty()) return; // ignore if minecart has passengers
-        event.getPlayer().sendMessage("Test");
+
         ItemStack stack = event.getPlayer().getInventory().getItemInMainHand();
 
         if(stack != null && conversionMap.containsKey(stack.getType())) {

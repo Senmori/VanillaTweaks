@@ -51,6 +51,7 @@ villagers:
   # Should villagers follow players with the specified item
   enabled: true
   # What block villagers should follow
+  # This is the default minecraft name of the item
   follow-block: emerald_block
 # Will display all settings on loading
 verbose: false
