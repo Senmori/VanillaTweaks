@@ -21,7 +21,7 @@ public class BurnZombieTask extends BukkitRunnable {
         this.plugin = plugin;
         this.world = world;
         this.fireTicks = fireTicks;
-        this.runTaskTimer(plugin, 1L, 20L * (fireTicks - 1));
+        this.runTaskTimer(plugin, 1L, 20L * (fireTicks <= 1 ? 1 : (fireTicks -1)));
     }
     @Override
     public void run() {
