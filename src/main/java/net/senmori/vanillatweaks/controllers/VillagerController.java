@@ -46,6 +46,7 @@ public class VillagerController extends TweakController implements Listener {
             @Override
             public void run() {
                 loaded.clear();
+                setAllVillagers();
             }
         }.runTaskTimer(getPlugin(), 1L, 20L * 5L);
     }
