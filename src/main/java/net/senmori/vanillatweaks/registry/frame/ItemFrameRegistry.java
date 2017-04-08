@@ -16,7 +16,8 @@ public final class ItemFrameRegistry implements Registry<ItemStack, FrameBehavio
 
     public static final Map<ItemStack, FrameBehaviour> REGISTRY = new HashMap<>();
     public ItemFrameRegistry(VanillaTweaks plugin) {
-        load();
+
+        register(new ItemStack(Material.WRITTEN_BOOK), new WrittenBookBehaviour());
     }
 
     public boolean isRegistered(ItemStack stack) {
@@ -24,9 +25,7 @@ public final class ItemFrameRegistry implements Registry<ItemStack, FrameBehavio
     }
 
     public void register(ItemStack key, FrameBehaviour behaviour) {
-        if(!isRegistered(key)) {
-            REGISTRY.put(key, behaviour);
-        }
+        REGISTRY.put(key, behaviour);
     }
 
     public FrameBehaviour get(ItemStack key) {
@@ -34,14 +33,7 @@ public final class ItemFrameRegistry implements Registry<ItemStack, FrameBehavio
     }
 
     public void activate(ItemStack stack, ItemFrame frame, Player whoClicked, org.bukkit.util.Vector clickedPosition) {
-        if(isRegistered(stack)) {
-            get(stack).activate(frame, whoClicked, clickedPosition);
-            Bukkit.broadcastMessage("Post-Activate in Registry");
-        }
-    }
-
-    protected void load() {
-        // open book on right click
-        register(new ItemStack(Material.WRITTEN_BOOK), new WrittenBookBehaviour());
+        get(stack).activate(frame, whoClicked, clickedPosition);
+        Bukkit.broadcastMessage("Post-Activate in Registry");
     }
 }

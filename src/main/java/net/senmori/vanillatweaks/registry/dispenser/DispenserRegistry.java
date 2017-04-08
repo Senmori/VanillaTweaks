@@ -14,7 +14,7 @@ public final class DispenserRegistry implements Registry<ItemStack, DispenseBeha
 
     private static final Map<ItemStack, DispenseBehaviour> REGISTRY = new HashMap<>();
     public DispenserRegistry(VanillaTweaks plugin) {
-        load();
+        register(new ItemStack(Material.WATER_BUCKET), new WaterBucketBehaviour());
     }
 
     public boolean isRegistered(ItemStack stack) {
@@ -22,9 +22,7 @@ public final class DispenserRegistry implements Registry<ItemStack, DispenseBeha
     }
 
     public void register(ItemStack key, DispenseBehaviour behaviour) {
-        if(!isRegistered(key)) {
-            REGISTRY.put(key, behaviour);
-        }
+        REGISTRY.put(key, behaviour);
     }
 
     public DispenseBehaviour get(ItemStack key) {
@@ -32,13 +30,6 @@ public final class DispenserRegistry implements Registry<ItemStack, DispenseBeha
     }
 
     public void dispense(ItemStack stack, Block sourceBlock) {
-        if(isRegistered(stack)) {
-            get(stack).dispense(sourceBlock, stack);
-        }
-    }
-
-    protected void load() {
-        // water buckets fill up cauldrons
-        register(new ItemStack(Material.WATER_BUCKET), new WaterBucketBehaviour());
+        get(stack).dispense(sourceBlock, stack);
     }
 }
