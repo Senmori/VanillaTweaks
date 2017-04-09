@@ -63,7 +63,6 @@ public final class ItemFrameRegistry implements Registry<FrameBehaviour> {
     public boolean activate(ItemStack stack, ItemFrame frame, Player whoClicked, org.bukkit.util.Vector clickedPosition, EquipmentSlot handUsed) {
         FrameBehaviour beh = get(stack);
         if(beh != null) {
-            System.out.println("Behaviour: " + beh.getClass().getSimpleName());
             return beh.activate(frame, whoClicked, clickedPosition, handUsed);
         }
         return false;

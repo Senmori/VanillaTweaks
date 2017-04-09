@@ -34,7 +34,8 @@ public class ItemFrameController extends TweakController implements Listener {
         }
 
         if(getRegistry().isRegistered(frame.getItem())) {
-            event.setCancelled(getRegistry().activate(frame.getItem(), frame, event.getPlayer(), event.getClickedPosition(), event.getHand()));
+            event.setCancelled(true);
+            getRegistry().activate(frame.getItem(), frame, event.getPlayer(), event.getClickedPosition(), event.getHand());
         }
 
     }
