@@ -7,7 +7,6 @@ import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.registry.Registry;
 import net.senmori.vanillatweaks.registry.RegistryItemStack;
 import net.senmori.vanillatweaks.registry.dispenser.behaviour.DispenseBehaviour;
-import net.senmori.vanillatweaks.registry.dispenser.behaviour.WaterBucketBehaviour;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -15,8 +14,9 @@ import org.bukkit.inventory.ItemStack;
 public final class DispenserRegistry implements Registry<DispenseBehaviour>  {
 
     private static final Map<RegistryItemStack, DispenseBehaviour> REGISTRY = new HashMap<>();
+
+
     public DispenserRegistry(VanillaTweaks plugin) {
-        register(new ItemStack(Material.WATER_BUCKET), true, new WaterBucketBehaviour());
     }
 
     public boolean isRegistered(ItemStack stack) {
@@ -37,10 +37,34 @@ public final class DispenserRegistry implements Registry<DispenseBehaviour>  {
     }
 
     public DispenseBehaviour get(ItemStack key) {
-        return REGISTRY.get(key);
+        RegistryItemStack stack = getRegistryItemStack(key);
+
+        if(stack != null) {
+            return REGISTRY.get(stack);
+        }
+        return null;
+    }
+
+    private RegistryItemStack getRegistryItemStack(ItemStack key) {
+        if(key == null || !isRegistered(key)) {
+            return null;
+        }
+        Optional<RegistryItemStack> opt = REGISTRY.keySet().stream().findFirst().filter(i -> (i.getStack().getType() == key.getType()));
+
+        if(opt.isPresent()) {
+            if(!opt.get().doIgnoreMetadata()) {
+                return opt.get().getStack().equals(key) ? opt.get() : null;
+            }
+            return opt.get();
+        }
+        return null;
     }
 
     public boolean dispense(ItemStack stack, Block sourceBlock) {
-        return get(stack).dispense(sourceBlock, stack);
+        DispenseBehaviour beh = get(stack);
+        if(beh != null) {
+            return beh.dispense(sourceBlock, stack);
+        }
+        return false;
     }
 }
