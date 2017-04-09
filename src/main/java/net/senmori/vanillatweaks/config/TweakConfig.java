@@ -1,14 +1,9 @@
 package net.senmori.vanillatweaks.config;
 
-import java.io.File;
 import net.senmori.vanillatweaks.VanillaTweaks;
-import org.bukkit.configuration.file.FileConfiguration;
 
 public class TweakConfig extends Configuration {
     private VanillaTweaks plugin;
-
-    private FileConfiguration configuration;
-    private File file;
 
     public TweakConfig(VanillaTweaks plugin) {
         super(plugin);
@@ -29,7 +24,7 @@ public class TweakConfig extends Configuration {
     }
 
     public void load() {
-        verbose = configuration.getBoolean("verbose", false);
+        verbose = getConfig().getBoolean("verbose", false);
         loadArmorStand();
         loadMinecarts();
         loadSuppressOutput();
@@ -60,10 +55,10 @@ public class TweakConfig extends Configuration {
     }
 
     private String get(String path, Object defaultValue) {
-        if(!configuration.contains(path)) {
-            configuration.set(path, defaultValue);
+        if(!getConfig().contains(path)) {
+            getConfig().set(path, defaultValue);
         }
-        String value = configuration.getString(path);
+        String value = getConfig().getString(path);
         printDebug(path + " = " + value);
         return value;
     }
