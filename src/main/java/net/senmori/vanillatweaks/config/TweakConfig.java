@@ -1,33 +1,19 @@
-package net.senmori.vanillatweaks;
+package net.senmori.vanillatweaks.config;
 
 import java.io.File;
+import net.senmori.vanillatweaks.VanillaTweaks;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
-public class TweakConfig {
+public class TweakConfig extends Configuration {
     private VanillaTweaks plugin;
 
     private FileConfiguration configuration;
     private File file;
 
     public TweakConfig(VanillaTweaks plugin) {
-        this.plugin = plugin;
-        init();
-    }
-
-    private void init() {
-        if(!plugin.getDataFolder().exists()) {
-            plugin.getDataFolder().mkdirs();
-        }
-
-        file = new File(plugin.getDataFolder(), "config.yml");
-
-        if(!file.exists()) {
-            plugin.saveResource("config.yml", true);
-        }
-
-        configuration = YamlConfiguration.loadConfiguration(file);
-        load();
+        super(plugin);
+        init("config.yml");
+        update();
     }
 
     private boolean canConvertDirt;
@@ -37,7 +23,12 @@ public class TweakConfig {
     private boolean fixDragonBreath;
     private boolean verbose;
 
-    private void load() {
+    @Override
+    double getVersion() {
+        return 1.1;
+    }
+
+    public void load() {
         verbose = configuration.getBoolean("verbose", false);
         loadArmorStand();
         loadMinecarts();
@@ -56,9 +47,16 @@ public class TweakConfig {
         fixDragonBreath = getBool("fix-dragon-breath", true);
     }
 
+    @Override
+    void update() {
+        setNodeProtected("verbose");
+
+        deleteMarkedNodes();
+    }
+
     private void printDebug(String str) {
         if(!verbose) return;
-        plugin.getLogger().info(str);
+        plugin.getLogger().info("[DEBUG] " + str);
     }
 
     private String get(String path, Object defaultValue) {
@@ -76,6 +74,10 @@ public class TweakConfig {
 
     private int getInt(String path, int defaultValue) {
         return Integer.valueOf(get(path, defaultValue));
+    }
+
+    private double getDouble(String path, double defaultValue) {
+        return Double.parseDouble(get(path, defaultValue));
     }
 
     public boolean canConvertDirt() {

@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 import net.senmori.vanillatweaks.commands.CommandManager;
+import net.senmori.vanillatweaks.config.TweakConfig;
 import net.senmori.vanillatweaks.controllers.ArmorStandController;
 import net.senmori.vanillatweaks.controllers.ConvertClayController;
 import net.senmori.vanillatweaks.controllers.DispenserController;
