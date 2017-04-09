@@ -1,10 +1,9 @@
 package net.senmori.vanillatweaks.registry.dispenser.behaviour;
 
-import net.senmori.vanillatweaks.registry.Behaviour;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
-public interface DispenseBehaviour extends Behaviour {
+public interface DispenseBehaviour {
 
 
     /**

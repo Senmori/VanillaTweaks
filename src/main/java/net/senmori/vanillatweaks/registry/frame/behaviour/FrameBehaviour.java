@@ -1,12 +1,11 @@
 package net.senmori.vanillatweaks.registry.frame.behaviour;
 
-import net.senmori.vanillatweaks.registry.Behaviour;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.util.Vector;
 
-public interface FrameBehaviour extends Behaviour {
+public interface FrameBehaviour {
 
     /**
      * Called when an item frame is right clicked.<br>
