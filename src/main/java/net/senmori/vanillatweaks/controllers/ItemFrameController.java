@@ -2,6 +2,8 @@ package net.senmori.vanillatweaks.controllers;
 
 import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.registry.frame.ItemFrameRegistry;
+import net.senmori.vanillatweaks.registry.frame.behaviour.WrittenBookBehaviour;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.EventHandler;
@@ -16,7 +18,7 @@ public class ItemFrameController extends TweakController implements Listener {
         if(REGISTRY == null) {
             REGISTRY = new ItemFrameRegistry(getPlugin());
         }
-        //getRegistry().register(new ItemStack(Material.WRITTEN_BOOK), new WrittenBookBehaviour());
+        getRegistry().register(Material.WRITTEN_BOOK, new WrittenBookBehaviour());
         getPlugin().getServer().getPluginManager().registerEvents(this, getPlugin());
     }
 
@@ -32,7 +34,7 @@ public class ItemFrameController extends TweakController implements Listener {
         }
 
         if(getRegistry().isRegistered(frame.getItem())) {
-            event.setCancelled(getRegistry().activate(frame.getItem(), frame, event.getPlayer(), event.getClickedPosition()));
+            event.setCancelled(getRegistry().activate(frame.getItem(), frame, event.getPlayer(), event.getClickedPosition(), event.getHand()));
         }
 
     }

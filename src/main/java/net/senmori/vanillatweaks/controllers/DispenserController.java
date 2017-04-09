@@ -2,6 +2,8 @@ package net.senmori.vanillatweaks.controllers;
 
 import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.registry.dispenser.DispenserRegistry;
+import net.senmori.vanillatweaks.registry.dispenser.behaviour.WaterBucketBehaviour;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -16,6 +18,7 @@ public class DispenserController extends TweakController implements Listener {
         if(REGISTRY == null) {
             REGISTRY = new DispenserRegistry(getPlugin());
         }
+        getRegistry().register(Material.WATER_BUCKET, new WaterBucketBehaviour());
         getPlugin().getServer().getPluginManager().registerEvents(this, getPlugin());
     }
 

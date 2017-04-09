@@ -2,11 +2,11 @@ package net.senmori.vanillatweaks.registry.frame.behaviour;
 
 import net.minecraft.server.v1_11_R1.EnumHand;
 import net.senmori.vanillatweaks.VanillaTweaks;
-import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -14,16 +14,13 @@ import org.bukkit.util.Vector;
 public class WrittenBookBehaviour implements FrameBehaviour {
 
     @Override
-    public boolean activate(ItemFrame frame, Player whoClicked, Vector clickedPosition) {
-        Bukkit.broadcastMessage("whoClicked: " + whoClicked.getName());
+    public boolean activate(ItemFrame frame, Player whoClicked, Vector clickedPosition, EquipmentSlot handUsed) {
         ItemStack book = frame.getItem().clone();
 
 
         int slot = whoClicked.getInventory().getHeldItemSlot();
         ItemStack held = whoClicked.getInventory().getItem(slot);
-        EnumHand hand = whoClicked.getInventory().getItemInMainHand().equals(held) ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND;
-        Bukkit.broadcastMessage("HeldItem: " + whoClicked.getInventory().getItem(slot).getType().name().toLowerCase());
-
+        EnumHand hand = handUsed == EquipmentSlot.HAND ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND;
         whoClicked.getInventory().setItem(slot, book);
 
 
@@ -32,7 +29,6 @@ public class WrittenBookBehaviour implements FrameBehaviour {
             public void run() {
                 ((CraftPlayer)whoClicked).getHandle().a(CraftItemStack.asNMSCopy(book), hand);
                 whoClicked.getInventory().setItem(slot, held);
-                Bukkit.broadcastMessage("OldItem: " + held.getType().name().toLowerCase());
             }
         }.runTaskLater(VanillaTweaks.getInstance(), 1L);
 

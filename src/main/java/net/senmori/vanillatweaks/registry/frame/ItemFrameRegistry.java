@@ -7,17 +7,16 @@ import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.registry.Registry;
 import net.senmori.vanillatweaks.registry.RegistryItemStack;
 import net.senmori.vanillatweaks.registry.frame.behaviour.FrameBehaviour;
-import net.senmori.vanillatweaks.registry.frame.behaviour.WrittenBookBehaviour;
 import org.bukkit.Material;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 public final class ItemFrameRegistry implements Registry<FrameBehaviour> {
 
     public static final Map<RegistryItemStack, FrameBehaviour> REGISTRY = new HashMap<>();
     public ItemFrameRegistry(VanillaTweaks plugin) {
-        register(new ItemStack(Material.WRITTEN_BOOK), true, new WrittenBookBehaviour());
     }
 
     public boolean isRegistered(ItemStack stack) {
@@ -38,13 +37,34 @@ public final class ItemFrameRegistry implements Registry<FrameBehaviour> {
     }
 
     public FrameBehaviour get(ItemStack key) {
-        return REGISTRY.get(key);
+        RegistryItemStack stack = getRegistryItemStack(key);
+
+        if(stack != null) {
+            return REGISTRY.get(stack);
+        }
+        return null;
     }
 
-    public boolean activate(ItemStack stack, ItemFrame frame, Player whoClicked, org.bukkit.util.Vector clickedPosition) {
+    private RegistryItemStack getRegistryItemStack(ItemStack key) {
+        if(key == null || !isRegistered(key)) {
+            return null;
+        }
+        Optional<RegistryItemStack> opt = REGISTRY.keySet().stream().findFirst().filter(i -> (i.getStack().getType() == key.getType()));
+
+        if(opt.isPresent()) {
+            if(!opt.get().doIgnoreMetadata()) {
+                return opt.get().getStack().equals(key) ? opt.get() : null;
+            }
+            return opt.get();
+        }
+        return null;
+    }
+
+    public boolean activate(ItemStack stack, ItemFrame frame, Player whoClicked, org.bukkit.util.Vector clickedPosition, EquipmentSlot handUsed) {
         FrameBehaviour beh = get(stack);
         if(beh != null) {
-            return beh.activate(frame, whoClicked, clickedPosition);
+            System.out.println("Behaviour: " + beh.getClass().getSimpleName());
+            return beh.activate(frame, whoClicked, clickedPosition, handUsed);
         }
         return false;
     }
