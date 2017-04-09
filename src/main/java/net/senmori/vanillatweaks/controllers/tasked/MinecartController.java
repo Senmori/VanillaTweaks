@@ -62,6 +62,7 @@ public class MinecartController extends TweakController implements Listener {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void spawn(Location loc, EntityType type) {
         if(!tasks.containsKey(loc)) {
             tasks.put(loc, new MinecartSpawnTask(getPlugin(), loc, type));

@@ -2,10 +2,10 @@ package net.senmori.vanillatweaks.controllers;
 
 import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.registry.dispenser.DispenserRegistry;
+import net.senmori.vanillatweaks.registry.dispenser.behaviour.FillBottleBehaviour;
 import net.senmori.vanillatweaks.registry.dispenser.behaviour.WaterBucketBehaviour;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
 
@@ -19,11 +19,12 @@ public class DispenserController extends TweakController implements Listener {
             REGISTRY = new DispenserRegistry(getPlugin());
         }
         getRegistry().register(Material.WATER_BUCKET, new WaterBucketBehaviour());
+        getRegistry().register(Material.GLASS_BOTTLE, new FillBottleBehaviour());
         getPlugin().getServer().getPluginManager().registerEvents(this, getPlugin());
     }
 
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler
     public void onDispense(BlockDispenseEvent event) {
         if(getRegistry().isRegistered(event.getItem())) {
             event.setCancelled(true);

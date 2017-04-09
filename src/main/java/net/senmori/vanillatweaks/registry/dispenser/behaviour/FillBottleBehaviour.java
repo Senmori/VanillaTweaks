@@ -4,11 +4,14 @@ import net.senmori.vanillatweaks.VanillaTweaks;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.material.Cauldron;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 @SuppressWarnings("deprecation")
-public class WaterBucketBehaviour implements DispenseBehaviour {
+public class FillBottleBehaviour implements DispenseBehaviour {
 
     @Override
     public boolean dispense(Block sourceBlock, ItemStack dispensedItem) {
@@ -18,9 +21,13 @@ public class WaterBucketBehaviour implements DispenseBehaviour {
 
         Block cBlock = sourceBlock.getRelative(dispMat.getFacing());
 
-        if(cBlock.getType() == Material.CAULDRON && cBlock.getData() < 3) {
+        if(cBlock.getType() == Material.CAULDRON) {
             Cauldron caul = (Cauldron)cBlock.getState().getData();
-            cBlock.setData((byte)3);
+            byte level = cBlock.getData();
+            if(level <= 0) {
+                return false;
+            }
+            cBlock.setData((level <= 0 ? 0 : (--level)));
             cBlock.getState().update();
 
             new BukkitRunnable() {
@@ -28,8 +35,16 @@ public class WaterBucketBehaviour implements DispenseBehaviour {
                 public void run() {
                     for(int i = 0; i < dispBlock.getInventory().getSize(); i++) {
                         ItemStack stack = dispBlock.getInventory().getItem(i);
-                        if(stack != null && stack.getType() == Material.WATER_BUCKET) {
-                            stack.setType(Material.BUCKET);
+                        if(stack != null && stack.getType() == Material.GLASS_BOTTLE) {
+                            //check for more than 1
+                            if(stack.getAmount() >= 1) {
+                                stack.setAmount(stack.getAmount() - 1);
+                                ItemStack potion = new ItemStack(Material.POTION);
+                                PotionMeta meta = (PotionMeta)potion.getItemMeta();
+                                meta.setBasePotionData(new PotionData(PotionType.WATER, false, false));
+                                potion.setItemMeta(meta);
+                                dispBlock.getInventory().addItem(new ItemStack(Material.POTION));
+                            }
                             return;
                         }
                     }

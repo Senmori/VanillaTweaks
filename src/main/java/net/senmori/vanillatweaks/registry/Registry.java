@@ -1,26 +1,48 @@
 package net.senmori.vanillatweaks.registry;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public interface Registry<V> {
+public abstract class Registry<V> {
 
-    boolean isRegistered(ItemStack key);
+    protected final Map<Material, V> REGISTRY = new HashMap<>();
+    protected final JavaPlugin plugin;
+
+    protected Registry(JavaPlugin plugin) {
+        this.plugin = plugin;
+    }
+
+    public boolean isRegistered(ItemStack stack) {
+        Optional<Material> opt = REGISTRY.keySet().stream().findFirst().filter(i -> (i== stack.getType()));
+
+        return opt.map(mat -> (mat != Material.AIR)).orElse(false);
+    }
 
     /**
      * Register a new behaviour.<br>
-     * @param key - the {@link ItemStack} to use as a key
-     * @param ignoreMetadata - if the behaviour should ignore the {@link ItemStack}'s metadata
-     * @param value - the behaviour to run
+     * @param key the {@link ItemStack} to use as a key
+     * @param behaviour the behaviour to run
      */
-    void register(ItemStack key, boolean ignoreMetadata, V value);
+    public void register(ItemStack key, V behaviour) {
+        register(key.getType(), behaviour);
+    }
 
     /**
      * Register a new behaviour that automatically ignores metadata<br>
-     * @param material - the {@link Material} to register
-     * @param value - the behaviour to run
+     * @param material the {@link Material} to register
+     * @param behaviour the behaviour to run
      */
-    void register(Material material, V value);
+    public void register(Material material, V behaviour) {
+        REGISTRY.put(material, behaviour);
+    }
 
-    V get(ItemStack key);
+    public abstract V get(ItemStack key);
+
+    public Map<Material, V> getRegistry() {
+        return REGISTRY;
+    }
 }

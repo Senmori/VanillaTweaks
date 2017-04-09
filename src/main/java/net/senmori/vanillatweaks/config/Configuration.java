@@ -1,6 +1,5 @@
 package net.senmori.vanillatweaks.config;
 
-import com.sun.istack.internal.NotNull;
 import java.io.File;
 import java.util.HashSet;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -41,27 +40,27 @@ public abstract class Configuration {
     abstract void update();
 
 
-    public void setNodeProtected(@NotNull String node) {
+    public void setNodeProtected(String node) {
         if(node != null && !node.isEmpty()) {
             protectedNodes.add(node);
         }
     }
 
-    public boolean isNodeProtected(@NotNull String node) {
+    public boolean isNodeProtected(String node) {
         return protectedNodes.contains(node);
     }
 
-    public void markNodeForDeletection(@NotNull String node) {
+    public void markNodeForDeletection(String node) {
         if(node != null && !node.isEmpty()) {
             marked.add(node);
         }
     }
 
-    public boolean isNodeMarkedForDeletion(@NotNull String node) {
+    public boolean isNodeMarkedForDeletion(String node) {
         return marked.contains(node);
     }
 
-    protected void deleteNode(@NotNull String node) {
+    protected void deleteNode(String node) {
         if(isNodeMarkedForDeletion(node) && !isNodeProtected(node) && getConfig().contains(node)) {
             getConfig().set(node, null);
         }

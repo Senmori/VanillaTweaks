@@ -27,6 +27,9 @@ public class BurnBabyZombieController extends TweakController implements Listene
 
     @EventHandler
     public void onWorldLoad(WorldLoadEvent event) {
+        if(!getPlugin().getTweakConfig().canBabyZombiesBurn()) {
+            tasks.forEach(BukkitRunnable::cancel);
+        }
         if(tasks.stream().noneMatch(w -> w.getWorldUUID().equals(event.getWorld().getUID()))) {
             tasks.add(new BurnZombieTask(getPlugin(), getPlugin().getTweakConfig().getZombieBurnLength(), event.getWorld()));
         }

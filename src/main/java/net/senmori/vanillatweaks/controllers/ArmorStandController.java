@@ -70,6 +70,7 @@ public final class ArmorStandController extends TweakController implements Liste
                condition;
     }
 
+    @SuppressWarnings("deprecation")
     private boolean doActivate(Player player, ItemStack stack, int reqAmount, boolean condition) {
         return condition &&
            player.isSneaking() &&

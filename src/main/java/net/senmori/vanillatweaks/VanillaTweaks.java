@@ -64,6 +64,8 @@ public class VanillaTweaks extends JavaPlugin {
         commandManager = new CommandManager(this);
         commandManager.setCommandPrefix("vt");
 
+        instance = this;
+
         // init tweak controllers
         initControllers();
     }
