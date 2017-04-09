@@ -2,13 +2,11 @@ package net.senmori.vanillatweaks.controllers;
 
 import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.registry.frame.ItemFrameRegistry;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class ItemFrameController extends TweakController implements Listener {
 
@@ -33,16 +31,8 @@ public class ItemFrameController extends TweakController implements Listener {
             return;
         }
 
-        Bukkit.broadcastMessage("Frame Item: " + frame.getItem().getType().name().toLowerCase());
-        for(ItemStack key : ItemFrameRegistry.REGISTRY.keySet()) {
-            Bukkit.broadcastMessage("Key: " + key.getType().name().toLowerCase());
-        }
-
         if(getRegistry().isRegistered(frame.getItem())) {
-            Bukkit.broadcastMessage("Test1");
-            event.setCancelled(true);
-            getRegistry().activate(frame.getItem(), frame, event.getPlayer(), event.getClickedPosition());
-            Bukkit.broadcastMessage("Post-activate");
+            event.setCancelled(getRegistry().activate(frame.getItem(), frame, event.getPlayer(), event.getClickedPosition()));
         }
 
     }

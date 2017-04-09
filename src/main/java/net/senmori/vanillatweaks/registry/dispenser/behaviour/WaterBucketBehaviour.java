@@ -10,7 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class WaterBucketBehaviour implements DispenseBehaviour {
 
     @Override
-    public void dispense(Block sourceBlock, ItemStack dispensedItem) {
+    public boolean dispense(Block sourceBlock, ItemStack dispensedItem) {
 
         org.bukkit.block.Dispenser dispBlock = (org.bukkit.block.Dispenser)sourceBlock.getState();
         org.bukkit.material.Dispenser dispMat = (org.bukkit.material.Dispenser)dispBlock.getData();
@@ -36,6 +36,8 @@ public class WaterBucketBehaviour implements DispenseBehaviour {
                     }
                 }.runTaskLater(VanillaTweaks.getInstance(), 1L);
             }
+            return true;
         }
+        return false;
     }
 }

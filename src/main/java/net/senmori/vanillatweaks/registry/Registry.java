@@ -1,10 +1,26 @@
 package net.senmori.vanillatweaks.registry;
 
-public interface Registry<K,V> {
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
-    boolean isRegistered(K key);
+public interface Registry<V> {
 
-    void register(K key, V value);
+    boolean isRegistered(ItemStack key);
 
-    V get(K key);
+    /**
+     * Register a new behaviour.<br>
+     * @param key - the {@link ItemStack} to use as a key
+     * @param ignoreMetadata - if the behaviour should ignore the {@link ItemStack}'s metadata
+     * @param value - the behaviour to run
+     */
+    void register(ItemStack key, boolean ignoreMetadata, V value);
+
+    /**
+     * Register a new behaviour that automatically ignores metadata<br>
+     * @param material - the {@link Material} to register
+     * @param value - the behaviour to run
+     */
+    void register(Material material, V value);
+
+    V get(ItemStack key);
 }

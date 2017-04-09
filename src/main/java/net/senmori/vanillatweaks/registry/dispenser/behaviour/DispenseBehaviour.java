@@ -12,5 +12,5 @@ public interface DispenseBehaviour extends Behaviour {
      *
      * @param event - the event that was fired
      */
-    void dispense(Block sourceBlock, ItemStack dispensedItem);
+    boolean dispense(Block sourceBlock, ItemStack dispensedItem);
 }

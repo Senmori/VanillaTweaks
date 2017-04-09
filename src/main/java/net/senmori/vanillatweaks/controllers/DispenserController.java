@@ -23,8 +23,7 @@ public class DispenserController extends TweakController implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDispense(BlockDispenseEvent event) {
         if(getRegistry().isRegistered(event.getItem())) {
-            event.setCancelled(true);
-            getRegistry().dispense(event.getItem(), event.getBlock());
+            event.setCancelled(getRegistry().dispense(event.getItem(), event.getBlock()));
         }
     }
 

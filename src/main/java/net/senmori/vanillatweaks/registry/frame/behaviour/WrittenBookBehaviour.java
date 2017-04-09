@@ -14,7 +14,7 @@ import org.bukkit.util.Vector;
 public class WrittenBookBehaviour implements FrameBehaviour {
 
     @Override
-    public void activate(ItemFrame frame, Player whoClicked, Vector clickedPosition) {
+    public boolean activate(ItemFrame frame, Player whoClicked, Vector clickedPosition) {
         Bukkit.broadcastMessage("whoClicked: " + whoClicked.getName());
         ItemStack book = frame.getItem().clone();
 
@@ -35,5 +35,7 @@ public class WrittenBookBehaviour implements FrameBehaviour {
                 Bukkit.broadcastMessage("OldItem: " + held.getType().name().toLowerCase());
             }
         }.runTaskLater(VanillaTweaks.getInstance(), 1L);
+
+        return true;
     }
 }

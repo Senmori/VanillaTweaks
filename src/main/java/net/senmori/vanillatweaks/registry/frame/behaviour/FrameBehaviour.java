@@ -13,5 +13,5 @@ public interface FrameBehaviour extends Behaviour {
      * @param whoClicked - the {@link Player} who clicked the item frame
      * @param clickedPosition - where the player clicked this item frame {@link Vector}
      */
-    void activate(ItemFrame frame, Player whoClicked, Vector clickedPosition);
+    boolean activate(ItemFrame frame, Player whoClicked, Vector clickedPosition);
 }
