@@ -16,6 +16,7 @@ public class TweakConfig extends Configuration {
     private boolean stoneToolRecipes;
     private boolean editableSigns;
     private boolean fixDragonBreath;
+
     private boolean verbose;
 
     @Override
@@ -30,6 +31,7 @@ public class TweakConfig extends Configuration {
         loadSuppressOutput();
         loadZombies();
         loadVillagers();
+        loadSponge();
 
         canConvertDirt = getBool("dirt-to-path", true);
 
@@ -197,5 +199,23 @@ public class TweakConfig extends Configuration {
 
     public boolean getVillagersShouldFollow() {
         return villagersCanFollow;
+    }
+
+    /*
+        ###### SPONGE ##########
+     */
+    private boolean spongeDriesInNether;
+    private int spongeDryChance;
+    public void loadSponge() {
+        spongeDriesInNether = getBool("sponge.enabled", true);
+        spongeDryChance = getInt("sponge.dry-chance", 7);
+    }
+
+    public boolean canSpongeDryInNether() {
+        return spongeDriesInNether;
+    }
+
+    public int getSpongeDryChance() {
+        return spongeDryChance;
     }
 }
