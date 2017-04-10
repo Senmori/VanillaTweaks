@@ -43,7 +43,7 @@ public class MinecartController extends TweakController implements Listener {
         if(!event.getPlayer().isSneaking()) return;
         if(!event.getRightClicked().getPassengers().isEmpty()) return; // ignore if minecart has passengers
 
-        ItemStack stack = event.getPlayer().getInventory().getItemInMainHand();
+        ItemStack stack = event.getPlayer().getInventory().getItem(event.getPlayer().getInventory().getHeldItemSlot());
 
         if(stack != null && conversionMap.containsKey(stack.getType())) {
             event.setCancelled(true);
@@ -52,10 +52,10 @@ public class MinecartController extends TweakController implements Listener {
             spawn(loc, conversionMap.getOrDefault(stack.getType(), EntityType.MINECART));
 
             if(event.getPlayer().getGameMode() != GameMode.CREATIVE) {
-                event.getPlayer().getInventory().getItemInMainHand().setAmount(stack.getAmount() - 1);
+                stack.setAmount(stack.getAmount() - 1);
 
                 if(stack.getAmount() <= 0) {
-                    event.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR)); // remove itemstack
+                    stack.setType(Material.AIR); // remove itemstack
                 }
             }
 
