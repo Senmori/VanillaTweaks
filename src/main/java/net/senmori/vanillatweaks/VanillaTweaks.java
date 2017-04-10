@@ -28,6 +28,7 @@ import net.senmori.vanillatweaks.controllers.ItemFrameController;
 import net.senmori.vanillatweaks.controllers.PrintController;
 import net.senmori.vanillatweaks.controllers.QuickSwapController;
 import net.senmori.vanillatweaks.controllers.SignEditController;
+import net.senmori.vanillatweaks.controllers.SpongeController;
 import net.senmori.vanillatweaks.controllers.StackableItemsController;
 import net.senmori.vanillatweaks.controllers.StonePickaxeController;
 import net.senmori.vanillatweaks.controllers.TweakController;
@@ -85,6 +86,7 @@ public class VanillaTweaks extends JavaPlugin {
         new VillagerController(instance);
         new DispenserController(instance);
         new ItemFrameController(instance);
+        new SpongeController(instance);
     }
 
     public TweakConfig getTweakConfig() {

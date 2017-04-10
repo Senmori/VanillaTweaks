@@ -11,6 +11,13 @@ editable-signs: true
 # Can users convert dirt to grass paths?
 dirt-to-path: true
 
+# Can sponges become dry in the nether?
+sponge:
+  enabled: true
+  # The chance this sponge will dry in the nether.
+  # This value means the sponge will have a 1 in X chance to become dry
+  dry-chance: 7
+
 minecart:
   # Can users modify minecarts by right clicking on them with the appropriate blocks
   # (i.e. right clicking with a chest will produce a minecart chest)
