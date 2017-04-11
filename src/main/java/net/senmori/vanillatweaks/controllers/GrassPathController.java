@@ -51,14 +51,16 @@ public final class GrassPathController extends TweakController implements Listen
         BlockPosition pos = new BlockPosition(event.getPlayer().getLocation().getX(),event.getPlayer().getLocation().getY(),event.getPlayer().getLocation().getZ());
         nmsWorld.a(human, pos, SoundEffects.fy, SoundCategory.BLOCKS, 1.0F, 1.0F); // play appropriate sounds
 
-
         event.getClickedBlock().setType(Material.GRASS_PATH);
 
         net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(event.getItem());
-       nmsStack.damage(1, human); // apply damage,and increase statistics as appropriate
+        nmsStack.damage(1, human); // apply damage,and increase statistics as appropriate
 
-        int slot = event.getPlayer().getInventory().getHeldItemSlot();
-        event.getPlayer().getInventory().setItem(slot, CraftItemStack.asBukkitCopy(nmsStack));
+        if(event.getHand() == EquipmentSlot.HAND) {
+            event.getPlayer().getInventory().setItemInMainHand(CraftItemStack.asBukkitCopy(nmsStack));
+        } else {
+            event.getPlayer().getInventory().setItemInOffHand(CraftItemStack.asBukkitCopy(nmsStack));
+        }
     }
 
 

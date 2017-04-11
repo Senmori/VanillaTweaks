@@ -16,6 +16,7 @@ public class TweakConfig extends Configuration {
     private boolean stoneToolRecipes;
     private boolean editableSigns;
     private boolean fixDragonBreath;
+    private boolean canShaveSnow;
 
     private boolean verbose;
 
@@ -42,6 +43,8 @@ public class TweakConfig extends Configuration {
         editableSigns = getBool("editable-signs", true);
 
         fixDragonBreath = getBool("fix-dragon-breath", true);
+
+        canShaveSnow = getBool("shave-snow", true);
     }
 
     @Override
@@ -95,6 +98,10 @@ public class TweakConfig extends Configuration {
 
     public boolean fixDragonBreath() {
         return fixDragonBreath;
+    }
+
+    public boolean canShaveSnow() {
+        return canShaveSnow;
     }
 
     /*

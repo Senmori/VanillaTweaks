@@ -27,6 +27,7 @@ import net.senmori.vanillatweaks.controllers.GrassPathController;
 import net.senmori.vanillatweaks.controllers.ItemFrameController;
 import net.senmori.vanillatweaks.controllers.PrintController;
 import net.senmori.vanillatweaks.controllers.QuickSwapController;
+import net.senmori.vanillatweaks.controllers.ShaveSnowController;
 import net.senmori.vanillatweaks.controllers.SignEditController;
 import net.senmori.vanillatweaks.controllers.SpongeController;
 import net.senmori.vanillatweaks.controllers.StackableItemsController;
@@ -87,6 +88,7 @@ public class VanillaTweaks extends JavaPlugin {
         new DispenserController(instance);
         new ItemFrameController(instance);
         new SpongeController(instance);
+        new ShaveSnowController(instance);
     }
 
     public TweakConfig getTweakConfig() {

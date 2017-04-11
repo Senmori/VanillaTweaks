@@ -11,6 +11,9 @@ editable-signs: true
 # Can users convert dirt to grass paths?
 dirt-to-path: true
 
+# Can players right click with a shovel and shave a layer of snow off of snow blocks?
+shave-snow: true
+
 # Can sponges become dry in the nether?
 sponge:
   enabled: true
@@ -37,6 +40,8 @@ armor-stand:
   # Will the offhand slot get swapped as well
   offhand-swap: true
 
+# This will also suppress all chat to the console! Use this with extreme caution!
+# There are no guarantees that chat will be logged if this is false.
 suppress-output:
   # Will this plugin suppress any STDOUT  messages that are output by other plugins
   stdout: true
