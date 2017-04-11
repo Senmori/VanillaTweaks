@@ -19,7 +19,7 @@ public class DrySpongeTask extends BukkitRunnable {
         this.sponge = sponge;
         this.chance = chance;
 
-        this.runTaskTimer(plugin, 1L, 20 * 1L);
+        this.runTaskTimer(plugin, 1L, 10L); // run twice every second
     }
     @Override
     public void run() {
