@@ -7,7 +7,7 @@
     <groupId>net.senmori</groupId>
     <artifactId>vanillatweaks</artifactId>
     <name>VanillaTweaks</name>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.Class>${project.groupId}.${project.artifactId}.${project.name}</main.Class>

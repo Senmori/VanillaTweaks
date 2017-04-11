@@ -19,6 +19,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class VillagerController extends TweakController implements Listener {
@@ -51,7 +53,7 @@ public class VillagerController extends TweakController implements Listener {
         }.runTaskTimer(getPlugin(), 1L, 20L * 5L);
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onSpawn(EntitySpawnEvent event) {
         if(!getPlugin().getTweakConfig().getVillagersShouldFollow()) return;
         if(followStack.isEmpty()) return;
@@ -79,6 +81,21 @@ public class VillagerController extends TweakController implements Listener {
         if(!loaded.containsKey(event.getPlayer().getWorld().getName()) || !loaded.get(event.getPlayer().getWorld().getName())) {
             setAllVillagers();
             loaded.put(event.getPlayer().getWorld().getName(), true);
+        }
+    }
+
+    @EventHandler
+    public void onLoadWorld(WorldLoadEvent event) {
+        if(!loaded.containsKey(event.getWorld().getName()) || !loaded.get(event.getWorld().getName())) {
+            setAllVillagers();
+            loaded.put(event.getWorld().getName(), true);
+        }
+    }
+
+    @EventHandler
+    public void onUnload(WorldUnloadEvent event) {
+        if(loaded.containsKey(event.getWorld().getName()) || loaded.get(event.getWorld().getName())) {
+            loaded.remove(event.getWorld().getName());
         }
     }
 
