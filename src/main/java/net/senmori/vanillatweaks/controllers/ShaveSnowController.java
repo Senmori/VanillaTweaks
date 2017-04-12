@@ -69,9 +69,6 @@ public class ShaveSnowController extends TweakController implements Listener {
                 }
             }.runTaskLater(getPlugin(), 1L); // run after the shave snow task has completed
         } else {
-            if(tasks.get(loc) != null) {
-                tasks.get(loc).cancel();
-            }
             tasks.remove(loc);
         }
     }
