@@ -27,12 +27,6 @@ public class TweakConfig extends Configuration {
 
     public void load() {
         verbose = getConfig().getBoolean("verbose", false);
-        loadArmorStand();
-        loadMinecarts();
-        loadSuppressOutput();
-        loadZombies();
-        loadVillagers();
-        loadSponge();
 
         canConvertDirt = getBool("dirt-to-path", true);
 
@@ -45,6 +39,13 @@ public class TweakConfig extends Configuration {
         fixDragonBreath = getBool("fix-dragon-breath", true);
 
         canShaveSnow = getBool("shave-snow", true);
+
+        loadArmorStand();
+        loadMinecarts();
+        loadSuppressOutput();
+        loadZombies();
+        loadVillagers();
+        loadSponge();
     }
 
     @Override
