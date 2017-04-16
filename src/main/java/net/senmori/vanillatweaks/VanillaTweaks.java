@@ -36,6 +36,8 @@ import net.senmori.vanillatweaks.controllers.TweakController;
 import net.senmori.vanillatweaks.controllers.VillagerController;
 import net.senmori.vanillatweaks.controllers.tasked.BurnBabyZombieController;
 import net.senmori.vanillatweaks.controllers.tasked.MinecartController;
+import net.senmori.vanillatweaks.enchantment.AbstractEnchantment;
+import net.senmori.vanillatweaks.enchantment.EnchantmentRegistry;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class VanillaTweaks extends JavaPlugin {
@@ -89,6 +91,12 @@ public class VanillaTweaks extends JavaPlugin {
         new ItemFrameController(instance);
         new SpongeController(instance);
         new ShaveSnowController(instance);
+    }
+
+    private void initEnchantments() {
+        if(getTweakConfig().isTreeFellerEnabled()) {
+            EnchantmentRegistry.registerEnchant(AbstractEnchantment.TREE_FELLER.getIdentifier(), AbstractEnchantment.TREE_FELLER, ++AbstractEnchantment.START_ID);
+        }
     }
 
     public TweakConfig getTweakConfig() {

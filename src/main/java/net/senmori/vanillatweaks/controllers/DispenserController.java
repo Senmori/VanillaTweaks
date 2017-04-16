@@ -3,6 +3,7 @@ package net.senmori.vanillatweaks.controllers;
 import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.registry.dispenser.DispenserRegistry;
 import net.senmori.vanillatweaks.registry.dispenser.behaviour.FillBottleBehaviour;
+import net.senmori.vanillatweaks.registry.dispenser.behaviour.RecordBehaviour;
 import net.senmori.vanillatweaks.registry.dispenser.behaviour.WaterBucketBehaviour;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -20,6 +21,11 @@ public class DispenserController extends TweakController implements Listener {
         }
         getRegistry().register(Material.WATER_BUCKET, new WaterBucketBehaviour());
         getRegistry().register(Material.GLASS_BOTTLE, new FillBottleBehaviour());
+        for(Material material : Material.values()) {
+            if(material.isRecord()) {
+                getRegistry().register(material, new RecordBehaviour());
+            }
+        }
         getPlugin().getServer().getPluginManager().registerEvents(this, getPlugin());
     }
 

@@ -65,5 +65,23 @@ villagers:
   # What block villagers should follow
   # This is the default minecraft name of the item
   follow-block: emerald_block
+
+# This section dictates how certain enchantments work
+enchantment:
+  tree_feller:
+    # Add this enchantment or not
+    # This will only take effect on restarts and the behaviour is undefined if the enchantment was
+    # already on items
+    enabled: true
+    # If blocks break sounds should not be played when this enchantment takes effect
+    muted: false
+    # Does this enchantment require the player is sneaking to activate?
+    require-sneaking: false
+    # How often a block should be broken, in ticks
+    period: 5
+    # Should this enchantment ignore log variants when looking at a tree
+    ignore_log_variants: false
+    # Should this enchantment ignore leaf variants when looking a a tree
+    ignore_leaf_variants: false
 # Will display all settings on loading
 verbose: false
