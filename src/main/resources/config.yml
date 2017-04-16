@@ -44,9 +44,9 @@ armor-stand:
 # There are no guarantees that chat will be logged if this is false.
 suppress-output:
   # Will this plugin suppress any STDOUT  messages that are output by other plugins
-  stdout: true
+  stdout: false
   #Will this plugin suppress any STDERR message that are output by other plugins
-  stderr: true
+  stderr: false
 
 # Will baby zombies burn in the sunlight
 burn-baby-zombies:

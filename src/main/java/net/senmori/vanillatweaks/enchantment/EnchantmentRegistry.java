@@ -32,9 +32,7 @@ public class EnchantmentRegistry {
                 registrationField.setAccessible(true);
                 registrationField.set(null, Boolean.TRUE);
                 VanillaTweaks.getInstance().getLogger().info("Enchantment Accepting Registrations: " + org.bukkit.enchantments.Enchantment.isAcceptingRegistrations());
-            } catch(NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch(IllegalAccessException e) {
+            } catch(NoSuchFieldException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
