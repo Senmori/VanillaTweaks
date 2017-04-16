@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public final class ArmorStandController extends TweakController implements Listener {
 
-    private final ItemStack STEP = new ItemStack(Material.STEP, 1, (byte)0);
+    private final ItemStack STONE_SLAB = new ItemStack(Material.STEP, 1, (byte)0);
     public ArmorStandController(VanillaTweaks plugin) {
         super(plugin);
 
@@ -47,7 +47,7 @@ public final class ArmorStandController extends TweakController implements Liste
         }
 
         // add base plate
-        if(doActivate(event.getPlayer(), STEP, 1, getPlugin().getTweakConfig().addArmorStandBasePlate())) {
+        if(doActivate(event.getPlayer(), STONE_SLAB, 1, getPlugin().getTweakConfig().addArmorStandBasePlate())) {
             if(!stand.hasBasePlate()) {
                 addPlate(stand, event.getPlayer());
             }

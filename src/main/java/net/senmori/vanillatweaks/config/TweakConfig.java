@@ -69,15 +69,15 @@ public class TweakConfig extends Configuration {
         return value;
     }
 
-    private boolean getBool(String path, boolean defaultValue) {
+    public boolean getBool(String path, boolean defaultValue) {
         return Boolean.valueOf(get(path, defaultValue));
     }
 
-    private int getInt(String path, int defaultValue) {
+    public int getInt(String path, int defaultValue) {
         return Integer.valueOf(get(path, defaultValue));
     }
 
-    private double getDouble(String path, double defaultValue) {
+    public double getDouble(String path, double defaultValue) {
         return Double.parseDouble(get(path, defaultValue));
     }
 
