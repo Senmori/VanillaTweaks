@@ -226,4 +226,44 @@ public class TweakConfig extends Configuration {
     public int getSpongeDryChance() {
         return spongeDryChance;
     }
+
+
+    /*
+     ######## TREE FELLER #######
+     */
+    private boolean treeFellerEnabled, treeFellerMuted, treeFellerSneak, treeFellerIgnoreLog, treefellerIgnoreLeaf;
+    private long treeFellerPeriod;
+
+    public void loadTreeFeller() {
+        this.treeFellerEnabled = getBool("enchantment.tree_feller.enabled", true);
+        this.treeFellerMuted = getBool("enchantment.tree_feller.muted", false);
+        this.treeFellerSneak = getBool("enchantment.tree_feller.require-sneaking", false);
+        this.treefellerIgnoreLeaf = getBool("enchantment.tree_feller.ignore_leaf_variants", false);
+        this.treeFellerIgnoreLog = getBool("enchantment.tree_feller.ignore_log_variants", false);
+        this.treeFellerPeriod = (long)getInt("enchantment.tree_feller.period", 5);
+    }
+
+    public boolean isTreeFellerEnabled() {
+        return treeFellerEnabled;
+    }
+
+    public boolean isTreeFellerMuted() {
+        return treeFellerMuted;
+    }
+
+    public boolean treeFellerSneakRequired() {
+        return treeFellerSneak;
+    }
+
+    public boolean treeFellerIgnoreLeaf() {
+        return treefellerIgnoreLeaf;
+    }
+
+    public boolean treeFellerIgnoreLog() {
+        return treeFellerIgnoreLog;
+    }
+
+    public long getTreeFellerPeriod() {
+        return treeFellerPeriod;
+    }
 }

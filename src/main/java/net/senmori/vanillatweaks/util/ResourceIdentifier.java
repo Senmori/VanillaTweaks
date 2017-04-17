@@ -4,11 +4,12 @@ import java.util.Locale;
 import org.apache.commons.lang3.Validate;
 
 public class ResourceIdentifier {
+    private static final String DEFAULT_DOMAIN = "vanillatweaks";
     protected final String resourceDomain;
     protected final String resourcePath;
 
     protected ResourceIdentifier(int unused, String... resourceName) {
-        this.resourceDomain = org.apache.commons.lang3.StringUtils.isEmpty(resourceName[0]) ? "minecraft" : resourceName[0].toLowerCase(Locale.ROOT);
+        this.resourceDomain = org.apache.commons.lang3.StringUtils.isEmpty(resourceName[0]) ? DEFAULT_DOMAIN : resourceName[0].toLowerCase(Locale.ROOT);
         this.resourcePath = resourceName[1].toLowerCase(Locale.ROOT);
         Validate.notNull(this.resourcePath);
     }
@@ -26,7 +27,7 @@ public class ResourceIdentifier {
      * length 2. If no colon is present in the passed value the returned array will contain {null, toSplit}.
      */
     protected static String[] splitObjectName(String toSplit) {
-        String[] astring = new String[] {"minecraft", toSplit};
+        String[] astring = new String[] {DEFAULT_DOMAIN, toSplit};
         int i = toSplit.indexOf(58);
 
         if(i >= 0) {
@@ -40,7 +41,7 @@ public class ResourceIdentifier {
         return astring;
     }
 
-    public String getResourcePath() {
+    public String getResourceIdentifier() {
         return this.resourcePath;
     }
 

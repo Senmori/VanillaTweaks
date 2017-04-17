@@ -21,6 +21,7 @@ import net.senmori.vanillatweaks.commands.CommandManager;
 import net.senmori.vanillatweaks.config.TweakConfig;
 import net.senmori.vanillatweaks.controllers.ArmorStandController;
 import net.senmori.vanillatweaks.controllers.ConvertClayController;
+import net.senmori.vanillatweaks.controllers.DebugController;
 import net.senmori.vanillatweaks.controllers.DispenserController;
 import net.senmori.vanillatweaks.controllers.DragonBreathController;
 import net.senmori.vanillatweaks.controllers.GrassPathController;
@@ -91,12 +92,11 @@ public class VanillaTweaks extends JavaPlugin {
         new ItemFrameController(instance);
         new SpongeController(instance);
         new ShaveSnowController(instance);
+        new DebugController(instance);
     }
 
     private void initEnchantments() {
-        if(getTweakConfig().isTreeFellerEnabled()) {
-            EnchantmentRegistry.registerEnchant(AbstractEnchantment.TREE_FELLER.getIdentifier(), AbstractEnchantment.TREE_FELLER, ++AbstractEnchantment.START_ID);
-        }
+        EnchantmentRegistry.registerEnchant(AbstractEnchantment.TREE_FELLER.getIdentifier(), AbstractEnchantment.TREE_FELLER, ++AbstractEnchantment.START_ID);
     }
 
     public TweakConfig getTweakConfig() {

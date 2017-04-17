@@ -1,28 +1,20 @@
 package net.senmori.vanillatweaks.enchantment;
 
 import java.lang.reflect.Field;
-import net.minecraft.server.v1_11_R1.Enchantment;
-import net.minecraft.server.v1_11_R1.MinecraftKey;
 import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.util.ResourceIdentifier;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentWrapper;
 
 public class EnchantmentRegistry {
 
-    public static int getID(AbstractEnchantment enchant) {
-        return Enchantment.getId(enchant);
-    }
-
-    public static Enchantment getEnchant(String name) {
-        return Enchantment.b(name);
-    }
-
     public static void registerEnchant(ResourceIdentifier identifier, AbstractEnchantment enchant, int id) {
-        Enchantment.enchantments.a(id, new MinecraftKey(identifier.toString()), enchant);
+        //Enchantment.enchantments.a(id, new MinecraftKey(identifier.toString()), enchant);
 
         // set Bukkit Enchantment to accepting registrations
         startAcceptingRegistrations();
         org.bukkit.enchantments.Enchantment.registerEnchantment(new EnchantmentWrapper(id));
+        Enchantment.stopAcceptingRegistrations();
     }
 
     private static void startAcceptingRegistrations() {
