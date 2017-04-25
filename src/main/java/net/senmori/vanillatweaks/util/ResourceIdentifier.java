@@ -4,22 +4,22 @@ import java.util.Locale;
 import org.apache.commons.lang3.Validate;
 
 public class ResourceIdentifier {
-    private static final String DEFAULT_DOMAIN = "vanillatweaks";
+    private static final String DEFAULT_DOMAIN = "minecraft";
     protected final String resourceDomain;
     protected final String resourcePath;
 
-    protected ResourceIdentifier(int unused, String... resourceName) {
+    protected ResourceIdentifier(String... resourceName) {
         this.resourceDomain = org.apache.commons.lang3.StringUtils.isEmpty(resourceName[0]) ? DEFAULT_DOMAIN : resourceName[0].toLowerCase(Locale.ROOT);
         this.resourcePath = resourceName[1].toLowerCase(Locale.ROOT);
         Validate.notNull(this.resourcePath);
     }
 
     public ResourceIdentifier(String resourceName) {
-        this(0, splitObjectName(resourceName));
+        this(splitObjectName(resourceName));
     }
 
     public ResourceIdentifier(String resourceDomainIn, String resourcePathIn) {
-        this(0, resourceDomainIn, resourcePathIn);
+        this(new String[]{resourceDomainIn, resourcePathIn});
     }
 
     /**
@@ -53,14 +53,14 @@ public class ResourceIdentifier {
         return this.resourceDomain + ':' + this.resourcePath;
     }
 
-    public boolean equals(Object p_equals_1_) {
-        if(this == p_equals_1_) {
+    public boolean equals(Object other) {
+        if(this == other) {
             return true;
         } else
-            if(! ( p_equals_1_ instanceof ResourceIdentifier )) {
+            if(! ( other instanceof ResourceIdentifier )) {
                 return false;
             } else {
-                ResourceIdentifier resourcelocation = (ResourceIdentifier) p_equals_1_;
+                ResourceIdentifier resourcelocation = (ResourceIdentifier) other;
                 return this.resourceDomain.equals(resourcelocation.resourceDomain) && this.resourcePath.equals(resourcelocation.resourcePath);
             }
     }

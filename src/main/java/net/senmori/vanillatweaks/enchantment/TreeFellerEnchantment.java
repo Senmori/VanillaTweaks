@@ -1,40 +1,46 @@
 package net.senmori.vanillatweaks.enchantment;
 
-import net.senmori.vanillatweaks.VanillaTweaks;
-import net.senmori.vanillatweaks.tasks.TreeFellerTask;
-import org.bukkit.Location;
+import net.senmori.vanillatweaks.util.ResourceIdentifier;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
-import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 
-public class TreeFellerEnchantment extends AbstractEnchantment {
+public class TreeFellerEnchantment extends VanillaEnchantment {
 
-    public TreeFellerEnchantment(String name, int id, int maxLevel) {
-        super(name, id, maxLevel);
+    public TreeFellerEnchantment(String unlocalizedName, ResourceIdentifier identifier, EnchantmentRarity rarity, EnchantmentTarget itemTarget, EquipmentSlot[] validSlots) {
+        super(unlocalizedName, identifier, rarity, itemTarget, validSlots);
     }
 
     @Override
-    public boolean canEnchantItem(org.bukkit.inventory.ItemStack item) {
-        return isAxe(item.getType());
+    public int getMaxLevel() {
+        return 1;
     }
 
     @Override
-    public boolean conflictsWith(org.bukkit.enchantments.Enchantment enchant) {
-        return enchant == Enchantment.MENDING || enchant.isCursed();
+    public int getStartLevel() {
+        return 1;
     }
 
     @Override
-    public EnchantmentTarget getItemTarget() {
-        return EnchantmentTarget.TOOL;
-    }
-
     public boolean isTreasure() {
         return true;
     }
 
-    public static void activate(Player user, Location location, int level) {
-        new TreeFellerTask(VanillaTweaks.getInstance(), VanillaTweaks.getInstance().getTweakConfig().getTreeFellerPeriod(), location, user, AbstractEnchantment.TREE_FELLER, level);
+    @Override
+    public boolean isCursed() {
+        return false;
+    }
+
+    @Override
+    public boolean conflictsWith(Enchantment enchantment) {
+        return enchantment == Enchantment.MENDING || enchantment.isCursed();
+    }
+
+    @Override
+    public boolean canEnchantItem(ItemStack itemStack) {
+        return isAxe(itemStack.getType());
     }
 
     private static boolean isAxe(Material material) {

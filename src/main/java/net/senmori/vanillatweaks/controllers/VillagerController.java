@@ -3,6 +3,7 @@ package net.senmori.vanillatweaks.controllers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import net.minecraft.server.v1_11_R1.EntityVillager;
 import net.minecraft.server.v1_11_R1.Item;
@@ -25,7 +26,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class VillagerController extends TweakController implements Listener {
 
-    private Map<String,Boolean> loaded = new HashMap<>();
+    private Map<UUID,Boolean> loaded = new HashMap<>();
     private ItemStack followStack = ItemStack.a;
     public VillagerController(VanillaTweaks plugin) {
         super(plugin);
@@ -59,9 +60,9 @@ public class VillagerController extends TweakController implements Listener {
         if(followStack.isEmpty()) return;
         if(event.getEntity().getType() != EntityType.VILLAGER) return;
 
-        if(!loaded.containsKey(event.getEntity().getWorld().getName()) || !loaded.get(event.getEntity().getWorld().getName())) {
+        if(!loaded.containsKey(event.getEntity().getWorld().getUID()) || !loaded.get(event.getEntity().getWorld().getUID())) {
             setAllVillagers();
-            loaded.put(event.getEntity().getWorld().getName(), true);
+            loaded.put(event.getEntity().getWorld().getUID(), true);
         }
 
         Villager villager = (Villager)event.getEntity();
@@ -70,32 +71,32 @@ public class VillagerController extends TweakController implements Listener {
 
     @EventHandler
     public void loadVillagers(PlayerJoinEvent event) {
-        if(!loaded.containsKey(event.getPlayer().getWorld().getName()) || !loaded.get(event.getPlayer().getWorld().getName())) {
+        if(!loaded.containsKey(event.getPlayer().getWorld().getUID()) || !loaded.get(event.getPlayer().getWorld().getUID())) {
             setAllVillagers();
-            loaded.put(event.getPlayer().getWorld().getName(), true);
+            loaded.put(event.getPlayer().getWorld().getUID(), true);
         }
     }
 
     @EventHandler
     public void loadVillagers(PlayerChangedWorldEvent event) {
-        if(!loaded.containsKey(event.getPlayer().getWorld().getName()) || !loaded.get(event.getPlayer().getWorld().getName())) {
+        if(!loaded.containsKey(event.getPlayer().getWorld().getUID()) || !loaded.get(event.getPlayer().getWorld().getUID())) {
             setAllVillagers();
-            loaded.put(event.getPlayer().getWorld().getName(), true);
+            loaded.put(event.getPlayer().getWorld().getUID(), true);
         }
     }
 
     @EventHandler
     public void onLoadWorld(WorldLoadEvent event) {
-        if(!loaded.containsKey(event.getWorld().getName()) || !loaded.get(event.getWorld().getName())) {
+        if(!loaded.containsKey(event.getWorld().getUID()) || !loaded.get(event.getWorld().getUID())) {
             setAllVillagers();
-            loaded.put(event.getWorld().getName(), true);
+            loaded.put(event.getWorld().getUID(), true);
         }
     }
 
     @EventHandler
     public void onUnload(WorldUnloadEvent event) {
-        if(loaded.containsKey(event.getWorld().getName()) || loaded.get(event.getWorld().getName())) {
-            loaded.remove(event.getWorld().getName());
+        if(loaded.containsKey(event.getWorld().getUID()) && loaded.get(event.getWorld().getUID())) {
+            loaded.remove(event.getWorld().getUID());
         }
     }
 

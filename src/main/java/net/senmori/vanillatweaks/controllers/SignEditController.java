@@ -1,7 +1,6 @@
 package net.senmori.vanillatweaks.controllers;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import net.minecraft.server.v1_11_R1.TileEntitySign;
 import net.senmori.vanillatweaks.VanillaTweaks;
@@ -13,7 +12,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class SignEditController extends TweakController implements Listener {
 
@@ -30,6 +28,7 @@ public class SignEditController extends TweakController implements Listener {
         if(!getPlugin().getTweakConfig().canEditSigns()) return;
         if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if(!mats.contains(event.getClickedBlock().getType())) return;
+        if(event.getPlayer().getInventory().getItemInMainHand() != null) return;
         if(event.getPlayer().getInventory().getItemInMainHand().getType() != Material.AIR) return;
 
         Location loc = event.getClickedBlock().getLocation();

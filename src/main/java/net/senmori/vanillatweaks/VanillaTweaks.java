@@ -37,8 +37,7 @@ import net.senmori.vanillatweaks.controllers.TweakController;
 import net.senmori.vanillatweaks.controllers.VillagerController;
 import net.senmori.vanillatweaks.controllers.tasked.BurnBabyZombieController;
 import net.senmori.vanillatweaks.controllers.tasked.MinecartController;
-import net.senmori.vanillatweaks.enchantment.AbstractEnchantment;
-import net.senmori.vanillatweaks.enchantment.EnchantmentRegistry;
+import net.senmori.vanillatweaks.enchantment.Enchantments;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class VanillaTweaks extends JavaPlugin {
@@ -73,6 +72,7 @@ public class VanillaTweaks extends JavaPlugin {
 
         // init tweak controllers
         initControllers();
+        initEnchantments();
     }
 
     private void initControllers() {
@@ -96,7 +96,7 @@ public class VanillaTweaks extends JavaPlugin {
     }
 
     private void initEnchantments() {
-        EnchantmentRegistry.registerEnchant(AbstractEnchantment.TREE_FELLER.getIdentifier(), AbstractEnchantment.TREE_FELLER, ++AbstractEnchantment.START_ID);
+        Enchantments.init();
     }
 
     public TweakConfig getTweakConfig() {

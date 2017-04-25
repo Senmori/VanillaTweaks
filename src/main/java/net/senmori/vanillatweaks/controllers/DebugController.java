@@ -1,7 +1,7 @@
 package net.senmori.vanillatweaks.controllers;
 
-import net.minecraft.server.v1_11_R1.MinecraftKey;
 import net.senmori.vanillatweaks.VanillaTweaks;
+import net.senmori.vanillatweaks.enchantment.Enchantments;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class DebugController extends TweakController implements Listener {
     private final boolean debug = true;
@@ -24,10 +25,11 @@ public class DebugController extends TweakController implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         if(!debug) return;
 
-        if(doActivate(event.getPlayer(), Material.DIAMOND_SWORD, event.getAction(), Action.RIGHT_CLICK_BLOCK)) {
-            for(MinecraftKey entry : net.minecraft.server.v1_11_R1.Enchantment.enchantments.keySet()) {
-                event.getPlayer().sendMessage("Enchant: " + entry.toString());
-            }
+        if(doActivate(event.getPlayer(), Material.DIAMOND_AXE, event.getAction(), Action.RIGHT_CLICK_BLOCK)) {
+            ItemMeta meta = event.getPlayer().getInventory().getItemInMainHand().getItemMeta();
+
+            meta.addEnchant(Enchantments.TREE_FELLER, 1, false);
+            event.getPlayer().getInventory().getItemInMainHand().setItemMeta(meta);
         }
     }
 
