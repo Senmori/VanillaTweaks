@@ -8,7 +8,7 @@ import org.bukkit.util.Consumer;
 
 public class PrintController extends TweakController {
 
-    boolean suppressOut, suppressError;
+    private boolean suppressOut, suppressError;
 
     public PrintController(VanillaTweaks plugin) {
         super(plugin);

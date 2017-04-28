@@ -18,7 +18,7 @@ shave-snow: true
 sponge:
   enabled: true
   # The chance this sponge will dry in the nether.
-  # This value means the sponge will have a 1 in X chance to become dry
+  # This value means the sponge will have a 1 in 'X' chance to become dry
   dry-chance: 7
 
 minecart:
@@ -41,7 +41,7 @@ armor-stand:
   offhand-swap: true
 
 # This will also suppress all chat to the console! Use this with extreme caution!
-# There are no guarantees that chat will be logged if this is false.
+# There are no guarantees that chat will be logged if this is true.
 suppress-output:
   # Will this plugin suppress any STDOUT  messages that are output by other plugins
   stdout: false
