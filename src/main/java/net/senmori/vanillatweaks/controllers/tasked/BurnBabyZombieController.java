@@ -7,6 +7,7 @@ import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.config.ConfigOption;
 import net.senmori.vanillatweaks.controllers.TweakController;
 import net.senmori.vanillatweaks.tasks.BurnZombieTask;
+import net.senmori.vanillatweaks.util.LogHandler;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldLoadEvent;
@@ -20,7 +21,7 @@ public class BurnBabyZombieController extends TweakController implements Listene
         super(plugin);
 
         if(!ConfigOption.BABY_ZOMBIE_BURN_ENABLED.getValue()) {
-            tasks.clear();
+            LogHandler.debug("Baby Zombies disabled");
             return;
         }
         getPlugin().getServer().getWorlds().forEach(w -> new BurnZombieTask(plugin, ConfigOption.BABY_ZOMBIE_BURN_LENGTH.getValue(), w));

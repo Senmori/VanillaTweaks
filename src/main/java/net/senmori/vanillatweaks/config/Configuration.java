@@ -86,8 +86,6 @@ public abstract class Configuration {
         }
 
         config = YamlConfiguration.loadConfiguration(file);
-        load();
-        update();
     }
 
     public File getFile() {

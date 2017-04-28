@@ -3,7 +3,9 @@ package net.senmori.vanillatweaks.config;
 import java.util.Optional;
 
 public class ConfigOption<T> {
-    public static final ConfigOption<Optional> DEFAULT_OPTION = new ConfigOption<Optional>("__null__", null, false);
+    public static final ConfigOption<Optional> DEFAULT_OPTION = new ConfigOption<Optional>("__null__", null);
+
+
 
     public static final ConfigOption<Boolean> VERBOSE = new ConfigOption<Boolean>("verbose", false);
 
@@ -19,6 +21,8 @@ public class ConfigOption<T> {
 
     public static final ConfigOption<Boolean> SHAVE_SNOW = new ConfigOption<Boolean>("shave-snow", true);
 
+
+
     public static final ConfigOption<Boolean> ARMOR_STAND_ADD_ARMS = new ConfigOption<Boolean>("armor-stand", "add-arms", true);
 
     public static final ConfigOption<Boolean> ARMOR_STAND_ADD_PLATE = new ConfigOption<Boolean>("armor-stand", "add-base-plate", true);
@@ -29,17 +33,25 @@ public class ConfigOption<T> {
 
     public static final ConfigOption<Boolean> ARMOR_STAND_OFFHAND_SWAMP = new ConfigOption<Boolean>("armor-stand", "offhand-swap", true);
 
+
+
     public static final ConfigOption<Boolean> MINECART_MODIFICATIONS = new ConfigOption<Boolean>("minecart", "modifications", true);
 
     public static final ConfigOption<Integer> MINECART_STACK_SIZE = new ConfigOption<Integer>("minecart", "stack-size", 16);
+
+
 
     public static final ConfigOption<Boolean> BABY_ZOMBIE_BURN_ENABLED = new ConfigOption<Boolean>("burn-baby-zombies", "enabled", true);
 
     public static final ConfigOption<Integer> BABY_ZOMBIE_BURN_LENGTH = new ConfigOption<Integer>("burn-baby-zombies", "length", 1);
 
+
+
     public static final ConfigOption<String> VILLAGER_FOLLOW_BLOCK = new ConfigOption<String>("villagers", "follow-block", "emerald_block");
 
     public static final ConfigOption<Boolean> VILLAGER_FOLLOW_ENABLED = new ConfigOption<Boolean>("villagers", "enabled", true);
+
+
 
     public static final ConfigOption<Boolean> SPONGE_DRY_ENABLED = new ConfigOption<Boolean>("sponge", "enabled", true);
 
@@ -54,25 +66,13 @@ public class ConfigOption<T> {
     public ConfigOption(String parent, String child, T defaultValue) {
         this.nodePath = parent;
         if(child != null && !child.isEmpty()) {
-            nodePath += "." + child;
+            nodePath = parent + "." + child;
         }
         this.value = defaultValue;
-        ConfigOptions.addOption(this);
-    }
-
-    private ConfigOption(String parent, T defaultValue, boolean register) {
-        this(parent, "", defaultValue);
-        if(!register) {
-            ConfigOptions.removeOption(this);
-        }
     }
 
     public void set(T value) {
         this.value = value;
-    }
-
-    public void set(String value) {
-        this.value = (T)value;
     }
 
     public String getNode() {

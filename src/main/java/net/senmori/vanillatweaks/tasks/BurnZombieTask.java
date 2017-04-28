@@ -35,23 +35,25 @@ public class BurnZombieTask extends BukkitRunnable {
         World world = Bukkit.getWorld(getWorldUUID());
         if(world == null) {
             this.cancel(); // world isn't loaded; cancel this runnable
+            return;
         }
-        if(world.getTime() < 1000 || world.getTime() > 24000) {
-            return; // ignore all this during nighttime
+        if(world.getTime() > 13000) {
+            return; // nighttime; ignore
         }
         List<Zombie> zombies = world.getEntitiesByClass(Zombie.class).stream()
+                                       .filter(z -> z.getHealth() > 0.0D) // only get zombies who are alive
                                        .filter(Zombie::isBaby)
                                        .filter(z -> !z.getWorld().hasStorm()) // ignore if the world has a storm
                                        .filter(z -> !((CraftZombie)z).getHandle().isInWater()) // ignore zombies in water
                                        .filter(z -> z.getWorld().getBlockAt(z.getLocation()).getLightFromSky() == 15) // and only if they can see the sky
                                        .collect(Collectors.toList());
         zombies.forEach(z -> {
-            boolean damage = false;
+            boolean damage = true;
             ItemStack helmet = z.getEquipment().getHelmet();
 
-            if(helmet != null) {
-                if(helmet.getDurability() > 0 && !helmet.getItemMeta().isUnbreakable()) {
-                    helmet.setDurability((short) ( helmet.getDurability() + rand.nextInt(2) ));
+            if(helmet != null && helmet.getItemMeta() != null && !helmet.getItemMeta().isUnbreakable()) {
+                if(helmet.getDurability() < helmet.getType().getMaxDurability()) {
+                    helmet.setDurability((short) (helmet.getDurability() + rand.nextInt(2)));
 
                     if(helmet.getDurability() >= helmet.getType().getMaxDurability()) {
                         helmet.setType(Material.AIR);
@@ -59,15 +61,12 @@ public class BurnZombieTask extends BukkitRunnable {
                     damage = false;
                 }
                 // if the helmet is not damageable, or it's unbreakable then they can't take damage from the sun
-            } else {
-                damage = true;
             }
 
             if(damage) {
                 ((CraftZombie)z).getHandle().setOnFire(fireTicks);
             }
         });
-
         zombies.clear();
     }
 }

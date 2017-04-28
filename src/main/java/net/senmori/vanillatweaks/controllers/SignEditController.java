@@ -26,7 +26,7 @@ public class SignEditController extends TweakController implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        if(! ConfigOption.EDITABLE_SIGNS.getValue()) return;
+        if(!ConfigOption.EDITABLE_SIGNS.getValue()) return;
         if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if(!mats.contains(event.getClickedBlock().getType())) return;
         if(event.getPlayer().getInventory().getItemInMainHand() != null) return;

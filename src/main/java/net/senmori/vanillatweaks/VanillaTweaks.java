@@ -39,6 +39,7 @@ import net.senmori.vanillatweaks.controllers.tasked.MinecartController;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class VanillaTweaks extends JavaPlugin {
+    private static final boolean DEV = true;
     public static Logger logger;
     private static VanillaTweaks instance;
     public TweakConfig config;
@@ -104,5 +105,9 @@ public class VanillaTweaks extends JavaPlugin {
 
     public static VanillaTweaks getInstance() {
         return instance;
+    }
+
+    public static boolean isDevMode() {
+        return DEV;
     }
 }

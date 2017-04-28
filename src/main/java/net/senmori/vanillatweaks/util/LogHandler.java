@@ -29,6 +29,12 @@ public class LogHandler {
         log(Level.INFO, message);
     }
 
+    public static void debug(String message) {
+        if(VanillaTweaks.isDevMode()) {
+            log(Level.INFO, message);
+        }
+    }
+
     public static void fine(String message) {
         log(Level.FINE, message);
     }
