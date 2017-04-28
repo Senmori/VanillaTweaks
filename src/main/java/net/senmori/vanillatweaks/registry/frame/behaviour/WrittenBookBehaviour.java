@@ -17,12 +17,10 @@ public class WrittenBookBehaviour implements FrameBehaviour {
     public boolean activate(ItemFrame frame, Player whoClicked, Vector clickedPosition, EquipmentSlot handUsed) {
         ItemStack book = frame.getItem().clone();
 
-
         int slot = whoClicked.getInventory().getHeldItemSlot();
         ItemStack held = whoClicked.getInventory().getItem(slot);
         EnumHand hand = handUsed == EquipmentSlot.HAND ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND;
         whoClicked.getInventory().setItem(slot, book);
-
 
         new BukkitRunnable() {
             @Override

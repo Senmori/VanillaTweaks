@@ -35,7 +35,7 @@ public class FillBottleBehaviour implements DispenseBehaviour {
                 public void run() {
                     for(int i = 0; i < dispBlock.getInventory().getSize(); i++) {
                         ItemStack stack = dispBlock.getInventory().getItem(i);
-                        if(stack != null && stack.getType() == Material.GLASS_BOTTLE) {
+                        if(stack != null && stack.getType() == dispensedItem.getType()) {
                             //check for more than 1
                             if(stack.getAmount() >= 1) {
                                 stack.setAmount(stack.getAmount() - 1);
@@ -43,7 +43,7 @@ public class FillBottleBehaviour implements DispenseBehaviour {
                                 PotionMeta meta = (PotionMeta)potion.getItemMeta();
                                 meta.setBasePotionData(new PotionData(PotionType.WATER, false, false));
                                 potion.setItemMeta(meta);
-                                dispBlock.getInventory().addItem(new ItemStack(Material.POTION));
+                                dispBlock.getInventory().addItem(potion); // water
                             }
                             return;
                         }

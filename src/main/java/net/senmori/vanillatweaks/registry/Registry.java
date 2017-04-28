@@ -2,7 +2,6 @@ package net.senmori.vanillatweaks.registry;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,9 +16,7 @@ public abstract class Registry<V> {
     }
 
     public boolean isRegistered(ItemStack stack) {
-        Optional<Material> opt = REGISTRY.keySet().stream().findFirst().filter(i -> (i== stack.getType()));
-
-        return opt.map(mat -> (mat != Material.AIR)).orElse(false);
+        return stack != null && REGISTRY.get(stack.getType()) != null;
     }
 
     /**

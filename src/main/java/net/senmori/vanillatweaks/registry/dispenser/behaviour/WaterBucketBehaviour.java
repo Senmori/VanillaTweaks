@@ -12,27 +12,24 @@ public class WaterBucketBehaviour implements DispenseBehaviour {
 
     @Override
     public boolean dispense(Block sourceBlock, ItemStack dispensedItem) {
-
         org.bukkit.block.Dispenser dispBlock = (org.bukkit.block.Dispenser)sourceBlock.getState();
         org.bukkit.material.Dispenser dispMat = (org.bukkit.material.Dispenser)dispBlock.getData();
 
         Block cBlock = sourceBlock.getRelative(dispMat.getFacing());
 
-        if(cBlock.getType() == Material.CAULDRON && cBlock.getData() < 3) {
+        if(cBlock.getType() == Material.CAULDRON) {
             Cauldron caul = (Cauldron)cBlock.getState().getData();
-            cBlock.setData((byte)3);
+            if(caul.isFull()) {
+                return false;
+            }
+            cBlock.setData((byte)3); // full
             cBlock.getState().update();
 
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    for(int i = 0; i < dispBlock.getInventory().getSize(); i++) {
-                        ItemStack stack = dispBlock.getInventory().getItem(i);
-                        if(stack != null && stack.getType() == Material.WATER_BUCKET) {
-                            stack.setType(Material.BUCKET);
-                            return;
-                        }
-                    }
+                    int slot = dispBlock.getInventory().first(dispensedItem.getType());
+                    dispBlock.getInventory().getItem(slot).setType(Material.BUCKET);
                 }
             }.runTaskLater(VanillaTweaks.getInstance(), 1L);
             return true;
