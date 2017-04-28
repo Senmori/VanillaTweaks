@@ -11,6 +11,7 @@ import net.minecraft.server.v1_11_R1.ItemStack;
 import net.minecraft.server.v1_11_R1.MinecraftKey;
 import net.minecraft.server.v1_11_R1.PathfinderGoalTempt;
 import net.senmori.vanillatweaks.VanillaTweaks;
+import net.senmori.vanillatweaks.config.ConfigOption;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftVillager;
 import org.bukkit.entity.EntityType;
@@ -31,9 +32,9 @@ public class VillagerController extends TweakController implements Listener {
     public VillagerController(VanillaTweaks plugin) {
         super(plugin);
 
-        if(!getPlugin().getTweakConfig().getVillagersShouldFollow()) return;
+        if(!ConfigOption.VILLAGER_FOLLOW_ENABLED.getValue()) return;
 
-        String blockName = getPlugin().getTweakConfig().getVillagerFollowBlock();
+        String blockName = ConfigOption.VILLAGER_FOLLOW_BLOCK.getValue();
         if(blockName.isEmpty()) return;
 
         Item item = Item.REGISTRY.get(new MinecraftKey(blockName));
@@ -56,7 +57,7 @@ public class VillagerController extends TweakController implements Listener {
 
     @EventHandler
     public void onSpawn(EntitySpawnEvent event) {
-        if(!getPlugin().getTweakConfig().getVillagersShouldFollow()) return;
+        if(!ConfigOption.VILLAGER_FOLLOW_ENABLED.getValue()) return;
         if(followStack.isEmpty()) return;
         if(event.getEntity().getType() != EntityType.VILLAGER) return;
 
@@ -121,7 +122,7 @@ public class VillagerController extends TweakController implements Listener {
     }
 
     private void setAllVillagers() {
-        if(!getPlugin().getTweakConfig().getVillagersShouldFollow()) return;
+        if(!ConfigOption.VILLAGER_FOLLOW_ENABLED.getValue()) return;
 
         for(World world : getPlugin().getServer().getWorlds()) {
             List<Villager> villagers = world.getEntitiesByClass(Villager.class).stream()

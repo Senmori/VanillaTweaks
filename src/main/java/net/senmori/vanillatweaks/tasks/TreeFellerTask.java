@@ -1,6 +1,5 @@
 package net.senmori.vanillatweaks.tasks;
 
-import net.senmori.vanillatweaks.VanillaTweaks;
 import org.bukkit.Location;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -14,9 +13,6 @@ public class TreeFellerTask extends BukkitRunnable {
     private final int enchantLevel;
     private final Enchantment enchant;
     private final JavaPlugin plugin;
-    private final boolean muted = VanillaTweaks.getInstance().getTweakConfig().isTreeFellerMuted();
-    private final boolean ignoreLogVariants = VanillaTweaks.getInstance().getTweakConfig().treeFellerIgnoreLog();
-    private final boolean ignoreLeafVariants = VanillaTweaks.getInstance().getTweakConfig().treeFellerIgnoreLeaf();
 
     public TreeFellerTask(JavaPlugin plugin, long period, Location startLocation, Player user, Enchantment enchant, int enchantLevel) {
         this.startLocation = startLocation;

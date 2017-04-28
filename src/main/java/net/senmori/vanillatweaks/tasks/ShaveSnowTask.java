@@ -10,10 +10,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class ShaveSnowTask extends BukkitRunnable {
 
-    private JavaPlugin plugin;
     private Block block;
     public ShaveSnowTask(JavaPlugin plugin, Block block) {
-        this.plugin = plugin;
         this.block = block;
 
         this.runTaskLater(plugin, 1L);

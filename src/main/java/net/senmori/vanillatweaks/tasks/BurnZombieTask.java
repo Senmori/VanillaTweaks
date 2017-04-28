@@ -16,9 +16,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class BurnZombieTask extends BukkitRunnable {
     private static final Random rand = new Random();
 
-    final JavaPlugin plugin;
-    final UUID worldUUID;
-    final int fireTicks;
+    private final JavaPlugin plugin;
+    private final UUID worldUUID;
+    private final int fireTicks;
     public BurnZombieTask(JavaPlugin plugin, int fireTicks, World world) {
         this.plugin = plugin;
         this.worldUUID = world.getUID();

@@ -17,7 +17,6 @@ package net.senmori.vanillatweaks;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
-import net.senmori.vanillatweaks.commands.CommandManager;
 import net.senmori.vanillatweaks.config.TweakConfig;
 import net.senmori.vanillatweaks.controllers.ArmorStandController;
 import net.senmori.vanillatweaks.controllers.ConvertClayController;
@@ -37,14 +36,12 @@ import net.senmori.vanillatweaks.controllers.TweakController;
 import net.senmori.vanillatweaks.controllers.VillagerController;
 import net.senmori.vanillatweaks.controllers.tasked.BurnBabyZombieController;
 import net.senmori.vanillatweaks.controllers.tasked.MinecartController;
-import net.senmori.vanillatweaks.enchantment.Enchantments;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class VanillaTweaks extends JavaPlugin {
     public static Logger logger;
     private static VanillaTweaks instance;
     public TweakConfig config;
-    private CommandManager commandManager;
 
     private Set<TweakController> controllers = new HashSet<>();
 
@@ -64,9 +61,7 @@ public class VanillaTweaks extends JavaPlugin {
 
         config = new TweakConfig(this);
 
-        // commands
-        commandManager = new CommandManager(this);
-        commandManager.setCommandPrefix("vt");
+        // commands - use Aikar's ACF
 
         instance = this;
 
@@ -96,7 +91,7 @@ public class VanillaTweaks extends JavaPlugin {
     }
 
     private void initEnchantments() {
-        Enchantments.init();
+        //Enchantments.init();
     }
 
     public TweakConfig getTweakConfig() {

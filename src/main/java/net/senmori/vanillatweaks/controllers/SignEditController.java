@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import net.minecraft.server.v1_11_R1.TileEntitySign;
 import net.senmori.vanillatweaks.VanillaTweaks;
+import net.senmori.vanillatweaks.config.ConfigOption;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
@@ -25,7 +26,7 @@ public class SignEditController extends TweakController implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        if(!getPlugin().getTweakConfig().canEditSigns()) return;
+        if(! ConfigOption.EDITABLE_SIGNS.getValue()) return;
         if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if(!mats.contains(event.getClickedBlock().getType())) return;
         if(event.getPlayer().getInventory().getItemInMainHand() != null) return;

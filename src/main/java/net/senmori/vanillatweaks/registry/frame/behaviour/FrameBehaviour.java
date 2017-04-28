@@ -9,6 +9,7 @@ public interface FrameBehaviour {
 
     /**
      * Called when an item frame is right clicked.<br>
+     *
      * @param frame - the {@link ItemFrame} clicked
      * @param whoClicked - the {@link Player} who clicked the item frame
      * @param clickedPosition - where the player clicked this item frame {@link Vector}

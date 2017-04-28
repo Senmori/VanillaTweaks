@@ -12,10 +12,8 @@ public class DrySpongeTask extends BukkitRunnable {
 
     private int chance;
     private Block sponge;
-    private JavaPlugin plugin;
 
     public DrySpongeTask(JavaPlugin plugin, Block sponge, int chance) {
-        this.plugin = plugin;
         this.sponge = sponge;
         this.chance = chance;
 
@@ -23,12 +21,10 @@ public class DrySpongeTask extends BukkitRunnable {
     }
     @Override
     public void run() {
-        if(rand.nextInt(chance + 1) == chance) {
-            if(!isDry()) {
-                sponge.setData((byte)0);
-                sponge.getWorld().playSound(sponge.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 2.4F);
-                this.cancel();
-            }
+        if(rand.nextInt(chance + 1) == chance && !isDry()) {
+            sponge.setData((byte)0);
+            sponge.getWorld().playSound(sponge.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 2.4F);
+            this.cancel();
         }
     }
 

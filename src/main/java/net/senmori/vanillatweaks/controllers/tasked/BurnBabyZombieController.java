@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import net.senmori.vanillatweaks.VanillaTweaks;
+import net.senmori.vanillatweaks.config.ConfigOption;
 import net.senmori.vanillatweaks.controllers.TweakController;
 import net.senmori.vanillatweaks.tasks.BurnZombieTask;
 import org.bukkit.event.EventHandler;
@@ -18,30 +19,33 @@ public class BurnBabyZombieController extends TweakController implements Listene
     public BurnBabyZombieController(VanillaTweaks plugin) {
         super(plugin);
 
-        if(!getPlugin().getTweakConfig().canBabyZombiesBurn()) {
+        if(!ConfigOption.BABY_ZOMBIE_BURN_ENABLED.getValue()) {
+            tasks.clear();
             return;
         }
-        getPlugin().getServer().getWorlds().forEach(w -> new BurnZombieTask(plugin, getPlugin().getTweakConfig().getZombieBurnLength(), w));
+        getPlugin().getServer().getWorlds().forEach(w -> new BurnZombieTask(plugin, ConfigOption.BABY_ZOMBIE_BURN_LENGTH.getValue(), w));
     }
 
 
     @EventHandler
     public void onWorldLoad(WorldLoadEvent event) {
-        if(!getPlugin().getTweakConfig().canBabyZombiesBurn()) {
+        if(!ConfigOption.BABY_ZOMBIE_BURN_ENABLED.getValue()) {
             tasks.forEach(BukkitRunnable::cancel);
+            tasks.clear();
         }
         if(tasks.stream().noneMatch(w -> w.getWorldUUID().equals(event.getWorld().getUID()))) {
-            tasks.add(new BurnZombieTask(getPlugin(), getPlugin().getTweakConfig().getZombieBurnLength(), event.getWorld()));
+            tasks.add(new BurnZombieTask(getPlugin(), ConfigOption.BABY_ZOMBIE_BURN_LENGTH.getValue(), event.getWorld()));
         }
     }
 
     @EventHandler
     public void onWorldUnload(WorldUnloadEvent event) {
-        if(!getPlugin().getTweakConfig().canBabyZombiesBurn()) {
+        if(!ConfigOption.BABY_ZOMBIE_BURN_ENABLED.getValue()) {
             tasks.forEach(BukkitRunnable::cancel);
+            tasks.clear();
         }
-        if(tasks.stream().anyMatch(w -> w.getWorldUUID().equals(event.getWorld().getUID()))) {
-            tasks.stream().filter(w -> w.getWorldUUID().equals(event.getWorld().getUID())).collect(Collectors.toList()).forEach(BukkitRunnable::cancel);
-        }
+        tasks.stream().filter(w -> w.getWorldUUID().equals(event.getWorld().getUID()))
+                      .collect(Collectors.toList())
+                      .forEach(BukkitRunnable::cancel);
     }
 }

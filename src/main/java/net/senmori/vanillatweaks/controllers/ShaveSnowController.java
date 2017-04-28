@@ -7,6 +7,7 @@ import net.minecraft.server.v1_11_R1.ItemStack;
 import net.minecraft.server.v1_11_R1.PacketPlayOutAnimation;
 import net.minecraft.server.v1_11_R1.WorldServer;
 import net.senmori.vanillatweaks.VanillaTweaks;
+import net.senmori.vanillatweaks.config.ConfigOption;
 import net.senmori.vanillatweaks.tasks.ShaveSnowTask;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -34,7 +35,7 @@ public class ShaveSnowController extends TweakController implements Listener {
 
     @EventHandler
     public void onShave(PlayerInteractEvent event) {
-        if(!getPlugin().getTweakConfig().canShaveSnow()) return;
+        if(! ConfigOption.SHAVE_SNOW.getValue()) return;
         if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if(event.getClickedBlock().getType() != Material.SNOW_BLOCK && event.getClickedBlock().getType() != Material.SNOW) return;
         if(event.getBlockFace() != BlockFace.UP) return;

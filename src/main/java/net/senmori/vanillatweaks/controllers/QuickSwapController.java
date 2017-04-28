@@ -4,6 +4,7 @@ import net.minecraft.server.v1_11_R1.EntityArmorStand;
 import net.minecraft.server.v1_11_R1.EntityPlayer;
 import net.minecraft.server.v1_11_R1.EnumItemSlot;
 import net.senmori.vanillatweaks.VanillaTweaks;
+import net.senmori.vanillatweaks.config.ConfigOption;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftArmorStand;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
@@ -22,7 +23,7 @@ public class QuickSwapController extends TweakController implements Listener {
 
     @EventHandler
     public void onSwap(PlayerInteractAtEntityEvent event) {
-        if(!getPlugin().getTweakConfig().canQuicklySwap()) return;
+        if(! ConfigOption.ARMOR_STAND_QUICK_SWAP.getValue()) return;
         if(event.getRightClicked().getType() != EntityType.ARMOR_STAND) return;
         if(!event.getPlayer().isSneaking()) return;
         event.setCancelled(true);
@@ -33,7 +34,7 @@ public class QuickSwapController extends TweakController implements Listener {
         swapSlot(player, stand, EnumItemSlot.CHEST);
         swapSlot(player, stand, EnumItemSlot.LEGS);
         swapSlot(player, stand, EnumItemSlot.FEET);
-        if(getPlugin().getTweakConfig().canSwapOffhand()) {
+        if(ConfigOption.ARMOR_STAND_OFFHAND_SWAMP.getValue()) {
             swapSlot(player, stand, EnumItemSlot.OFFHAND);
         }
     }

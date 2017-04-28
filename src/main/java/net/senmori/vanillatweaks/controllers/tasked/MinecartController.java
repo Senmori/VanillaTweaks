@@ -3,6 +3,7 @@ package net.senmori.vanillatweaks.controllers.tasked;
 import com.google.common.collect.ImmutableMap;
 import java.util.WeakHashMap;
 import net.senmori.vanillatweaks.VanillaTweaks;
+import net.senmori.vanillatweaks.config.ConfigOption;
 import net.senmori.vanillatweaks.controllers.TweakController;
 import net.senmori.vanillatweaks.tasks.MinecartSpawnTask;
 import org.bukkit.GameMode;
@@ -38,8 +39,8 @@ public class MinecartController extends TweakController implements Listener {
 
     @EventHandler
     public void changeMinecart(PlayerInteractAtEntityEvent event) {
-        if(!getPlugin().getTweakConfig().canModifyMinecarts()) return;
-        if(! (event.getRightClicked() instanceof Minecart) ) return;
+        if(!ConfigOption.MINECART_MODIFICATIONS.getValue()) return;
+        if(!(event.getRightClicked() instanceof Minecart)) return;
         if(!event.getPlayer().isSneaking()) return;
         if(!event.getRightClicked().getPassengers().isEmpty()) return; // ignore if minecart has passengers
 
