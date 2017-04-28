@@ -29,7 +29,6 @@ public class WrittenBookBehaviour implements FrameBehaviour {
                 whoClicked.getInventory().setItem(slot, held);
             }
         }.runTaskLater(VanillaTweaks.getInstance(), 1L);
-
         return true;
     }
 }
