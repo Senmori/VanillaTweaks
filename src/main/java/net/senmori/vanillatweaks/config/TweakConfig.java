@@ -1,5 +1,6 @@
 package net.senmori.vanillatweaks.config;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import java.util.Set;
 import net.senmori.vanillatweaks.VanillaTweaks;
@@ -55,7 +56,7 @@ public class TweakConfig extends Configuration {
         ConfigOption.VILLAGER_FOLLOW_ENABLED.set(getBool(ConfigOption.VILLAGER_FOLLOW_ENABLED.getNode(), ConfigOption.VILLAGER_FOLLOW_ENABLED.getValue()));
         addOption(ConfigOption.VILLAGER_FOLLOW_ENABLED);
 
-        ConfigOption.VILLAGER_FOLLOW_BLOCK.set(get(ConfigOption.VILLAGER_FOLLOW_BLOCK.getNode(), ConfigOption.VILLAGER_FOLLOW_BLOCK.getValue()));
+        ConfigOption.VILLAGER_FOLLOW_BLOCK.set(getString(ConfigOption.VILLAGER_FOLLOW_BLOCK.getNode(), ConfigOption.VILLAGER_FOLLOW_BLOCK.getValue()));
         addOption(ConfigOption.VILLAGER_FOLLOW_BLOCK);
 
         // Baby Zombies
@@ -87,7 +88,6 @@ public class TweakConfig extends Configuration {
 
         ConfigOption.ARMOR_STAND_OFFHAND_SWAMP.set(getBool(ConfigOption.ARMOR_STAND_OFFHAND_SWAMP.getNode(), ConfigOption.ARMOR_STAND_OFFHAND_SWAMP.getValue()));
         addOption(ConfigOption.ARMOR_STAND_OFFHAND_SWAMP);
-
     }
 
     @Override
@@ -105,8 +105,8 @@ public class TweakConfig extends Configuration {
         Bukkit.getLogger().info("[DEBUG] " + str);
     }
 
-    private String get(String path, Object defaultValue) {
-        if(!getConfig().contains(path)) {
+    public String getString(String path, Object defaultValue) {
+        if(!getConfig().contains(path) && defaultValue != null) {
             getConfig().set(path, defaultValue);
         }
         String value = getConfig().getString(path);
@@ -115,18 +115,22 @@ public class TweakConfig extends Configuration {
     }
 
     public boolean getBool(String path, boolean defaultValue) {
-        return Boolean.valueOf(get(path, defaultValue));
+        return Boolean.valueOf(getString(path, defaultValue));
     }
 
     public int getInt(String path, int defaultValue) {
-        return Integer.valueOf(get(path, defaultValue));
+        return Integer.valueOf(getString(path, defaultValue));
     }
 
     public double getDouble(String path, double defaultValue) {
-        return Double.parseDouble(get(path, defaultValue));
+        return Double.parseDouble(getString(path, defaultValue));
     }
 
     public boolean addOption(ConfigOption option) {
         return OPTIONS.add(option);
+    }
+
+    public Set<ConfigOption> getOptions() {
+        return ImmutableSet.copyOf(OPTIONS);
     }
 }

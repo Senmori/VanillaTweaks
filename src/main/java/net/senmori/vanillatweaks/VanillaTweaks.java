@@ -14,6 +14,8 @@
  */
 package net.senmori.vanillatweaks;
 
+import co.aikar.commands.ACF;
+import co.aikar.commands.CommandManager;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -42,9 +44,13 @@ public class VanillaTweaks extends JavaPlugin {
     private static final boolean DEV = true;
     public static Logger logger;
     private static VanillaTweaks instance;
+
+
     public TweakConfig config;
 
     private Set<TweakController> controllers = new HashSet<>();
+
+    CommandManager commandManager;
 
     @Override
     public void onDisable() {
@@ -63,6 +69,8 @@ public class VanillaTweaks extends JavaPlugin {
         config = new TweakConfig(this);
 
         // commands - use Aikar's ACF
+        commandManager = ACF.createManager(this);
+        //commandManager.registerCommand(new DefaultCommand());
 
         instance = this;
 
