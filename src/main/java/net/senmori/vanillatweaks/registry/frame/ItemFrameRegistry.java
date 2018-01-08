@@ -16,7 +16,7 @@ public final class ItemFrameRegistry extends Registry<FrameBehaviour> {
 
     public FrameBehaviour get(ItemStack key) {
         if(key != null) {
-            return REGISTRY.get(key.getType());
+            return REGISTRY.get(key.getData());
         }
         return null;
     }
