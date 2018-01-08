@@ -1,20 +1,21 @@
 package net.senmori.vanillatweaks.controllers;
 
 import java.util.WeakHashMap;
-import net.minecraft.server.v1_11_R1.EntityPlayer;
-import net.minecraft.server.v1_11_R1.EnumHand;
-import net.minecraft.server.v1_11_R1.ItemStack;
-import net.minecraft.server.v1_11_R1.PacketPlayOutAnimation;
-import net.minecraft.server.v1_11_R1.WorldServer;
+
+import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_12_R1.EnumHand;
+import net.minecraft.server.v1_12_R1.ItemStack;
+import net.minecraft.server.v1_12_R1.PacketPlayOutAnimation;
+import net.minecraft.server.v1_12_R1.WorldServer;
 import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.config.ConfigOption;
 import net.senmori.vanillatweaks.tasks.ShaveSnowTask;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

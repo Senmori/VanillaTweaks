@@ -1,7 +1,7 @@
 package net.senmori.vanillatweaks.controllers;
 
 import com.google.common.collect.ImmutableSet;
-import net.minecraft.server.v1_11_R1.Items;
+import net.minecraft.server.v1_12_R1.Items;
 import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.config.ConfigOption;
 

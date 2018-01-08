@@ -1,12 +1,12 @@
 package net.senmori.vanillatweaks.controllers;
 
-import net.minecraft.server.v1_11_R1.EntityArmorStand;
-import net.minecraft.server.v1_11_R1.EntityPlayer;
-import net.minecraft.server.v1_11_R1.EnumItemSlot;
+import net.minecraft.server.v1_12_R1.EntityArmorStand;
+import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_12_R1.EnumItemSlot;
 import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.config.ConfigOption;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftArmorStand;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftArmorStand;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -43,8 +43,8 @@ public class QuickSwapController extends TweakController implements Listener {
         EntityPlayer entPlayer = ((CraftPlayer)player).getHandle();
         EntityArmorStand armor = ((CraftArmorStand)stand).getHandle();
 
-        net.minecraft.server.v1_11_R1.ItemStack playerItem = entPlayer.getEquipment(slot);
-        net.minecraft.server.v1_11_R1.ItemStack armorItem = armor.getEquipment(slot);
+        net.minecraft.server.v1_12_R1.ItemStack playerItem = entPlayer.getEquipment(slot);
+        net.minecraft.server.v1_12_R1.ItemStack armorItem = armor.getEquipment(slot);
 
         entPlayer.setSlot(slot, armorItem);
         armor.setSlot(slot, playerItem);

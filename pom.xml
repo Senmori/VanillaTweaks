@@ -9,8 +9,8 @@
     <name>VanillaTweaks</name>
     <version>1.0</version>
     <properties>
-        <spigotVersion>1.11.2-R0.1-SNAPSHOT</spigotVersion>
-        <acfVersion>0.3.0-SNAPSHOT</acfVersion>
+        <spigotVersion>1.12.2-R0.1-SNAPSHOT</spigotVersion>
+        <acfVersion>0.5.0-SNAPSHOT</acfVersion>
         <bStatsVersion>1.1</bStatsVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.Class>${project.groupId}.${project.artifactId}.${project.name}</main.Class>
@@ -38,7 +38,7 @@
         </dependency>
         <dependency>
             <groupId>co.aikar</groupId>
-            <artifactId>acf-core</artifactId>
+            <artifactId>acf-bukkit</artifactId>
             <version>${acfVersion}</version>
         </dependency>
         <dependency>

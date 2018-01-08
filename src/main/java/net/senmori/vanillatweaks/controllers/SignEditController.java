@@ -2,13 +2,14 @@ package net.senmori.vanillatweaks.controllers;
 
 import java.util.HashSet;
 import java.util.Set;
-import net.minecraft.server.v1_11_R1.TileEntitySign;
+
+import net.minecraft.server.v1_12_R1.TileEntitySign;
 import net.senmori.vanillatweaks.VanillaTweaks;
 import net.senmori.vanillatweaks.config.ConfigOption;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;

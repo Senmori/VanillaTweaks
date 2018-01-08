@@ -32,9 +32,11 @@ public class StonePickaxeController extends TweakController {
                 .build();
 
         if(ConfigOption.STONE_TOOL_RECIPES.getValue()) {
+            int recipeUniqueIndex = 0;
             for(ItemStack stack : ingredients) {
                 recipeMap.forEach( (mat, shape) -> {
-                    ShapedRecipe recipe = new ShapedRecipe(new ItemStack(mat));
+                    // name should equate to <material_name>_<data_value>
+                    ShapedRecipe recipe = new ShapedRecipe(plugin.newKey(mat.name().toLowerCase() + "_" + stack.getData().getData() + "_"), new ItemStack(mat));
                     recipe.shape(shape[0], shape[1], shape[2]);
                     recipe.setIngredient('X', stack.getData());
                     recipe.setIngredient('#', Material.STICK);

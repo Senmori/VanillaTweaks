@@ -12,7 +12,7 @@ public class ConvertClayController extends TweakController {
         super(plugin);
 
         if(ConfigOption.CONVERT_CLAY.getValue()) {
-            getPlugin().getServer().addRecipe(new ShapelessRecipe(new ItemStack(Material.CLAY_BALL, 4)).addIngredient(Material.CLAY));
+            getPlugin().getServer().addRecipe(new ShapelessRecipe(plugin.newKey("clay-conversion"), new ItemStack(Material.CLAY_BALL, 4)).addIngredient(Material.CLAY));
         }
     }
 }

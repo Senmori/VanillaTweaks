@@ -14,7 +14,6 @@
  */
 package net.senmori.vanillatweaks;
 
-import co.aikar.commands.ACF;
 import co.aikar.commands.CommandManager;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +21,6 @@ import java.util.logging.Logger;
 import net.senmori.vanillatweaks.config.TweakConfig;
 import net.senmori.vanillatweaks.controllers.ArmorStandController;
 import net.senmori.vanillatweaks.controllers.ConvertClayController;
-import net.senmori.vanillatweaks.controllers.DebugController;
 import net.senmori.vanillatweaks.controllers.DispenserController;
 import net.senmori.vanillatweaks.controllers.DragonBreathController;
 import net.senmori.vanillatweaks.controllers.GrassPathController;
@@ -38,6 +36,7 @@ import net.senmori.vanillatweaks.controllers.TweakController;
 import net.senmori.vanillatweaks.controllers.VillagerController;
 import net.senmori.vanillatweaks.controllers.tasked.BurnBabyZombieController;
 import net.senmori.vanillatweaks.controllers.tasked.MinecartController;
+import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class VanillaTweaks extends JavaPlugin {
@@ -69,7 +68,7 @@ public class VanillaTweaks extends JavaPlugin {
         config = new TweakConfig(this);
 
         // commands - use Aikar's ACF
-        commandManager = ACF.createManager(this);
+        //commandManager = ACF.createManager(this);
         //commandManager.registerCommand(new DefaultCommand());
 
         instance = this;
@@ -96,11 +95,14 @@ public class VanillaTweaks extends JavaPlugin {
         new ItemFrameController(instance);
         new SpongeController(instance);
         new ShaveSnowController(instance);
-        new DebugController(instance);
     }
 
     private void initEnchantments() {
         //Enchantments.init();
+    }
+
+    public NamespacedKey newKey(String key) {
+        return new NamespacedKey(this, key);
     }
 
     public TweakConfig getTweakConfig() {
