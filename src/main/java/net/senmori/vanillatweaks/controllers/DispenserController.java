@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class DispenserController extends TweakController implements Listener {
 
@@ -19,11 +20,11 @@ public class DispenserController extends TweakController implements Listener {
         if(REGISTRY == null) {
             REGISTRY = new DispenserRegistry(getPlugin());
         }
-        getRegistry().register(Material.WATER_BUCKET, new WaterBucketBehaviour());
-        getRegistry().register(Material.GLASS_BOTTLE, new FillBottleBehaviour());
+        getRegistry().register(new ItemStack(Material.WATER_BUCKET), new WaterBucketBehaviour());
+        getRegistry().register(new ItemStack(Material.GLASS_BOTTLE), new FillBottleBehaviour());
         for(Material material : Material.values()) {
             if(material.isRecord()) {
-                getRegistry().register(material, new RecordBehaviour());
+                getRegistry().register(new ItemStack(material), new RecordBehaviour());
             }
         }
         getPlugin().getServer().getPluginManager().registerEvents(this, getPlugin());

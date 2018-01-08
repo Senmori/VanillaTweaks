@@ -61,5 +61,5 @@ villagers:
   # This is the default minecraft name of the item
   follow-block: emerald_block
 
-# Will display all settings on loading
+# Will display many extra warnings. This could cause spam! Use caution if enabling this.
 verbose: false

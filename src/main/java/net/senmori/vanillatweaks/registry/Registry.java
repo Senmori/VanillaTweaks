@@ -4,11 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class Registry<V> {
 
-    protected final Map<Material, V> REGISTRY = new HashMap<>();
+    protected final Map<MaterialData, V> REGISTRY = new HashMap<>();
     protected final JavaPlugin plugin;
 
     protected Registry(JavaPlugin plugin) {
@@ -25,7 +26,7 @@ public abstract class Registry<V> {
      * @param behaviour the behaviour to run
      */
     public void register(ItemStack key, V behaviour) {
-        register(key.getType(), behaviour);
+        register(key.getData(), behaviour);
     }
 
     /**
@@ -33,13 +34,13 @@ public abstract class Registry<V> {
      * @param material the {@link Material} to register
      * @param behaviour the behaviour to run
      */
-    public void register(Material material, V behaviour) {
+    public void register(MaterialData material, V behaviour) {
         REGISTRY.put(material, behaviour);
     }
 
     public abstract V get(ItemStack key);
 
-    public Map<Material, V> getRegistry() {
+    public Map<MaterialData, V> getRegistry() {
         return REGISTRY;
     }
 }

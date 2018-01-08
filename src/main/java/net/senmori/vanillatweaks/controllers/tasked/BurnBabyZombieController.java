@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import net.senmori.vanillatweaks.VanillaTweaks;
-import net.senmori.vanillatweaks.config.ConfigOption;
+import net.senmori.vanillatweaks.config.SettingsManager;
 import net.senmori.vanillatweaks.controllers.TweakController;
 import net.senmori.vanillatweaks.tasks.BurnZombieTask;
-import net.senmori.vanillatweaks.util.LogHandler;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldLoadEvent;
@@ -17,31 +16,33 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class BurnBabyZombieController extends TweakController implements Listener {
 
     private List<BurnZombieTask> tasks = new ArrayList<>();
+    private SettingsManager settings;
     public BurnBabyZombieController(VanillaTweaks plugin) {
         super(plugin);
 
-        if(!ConfigOption.BABY_ZOMBIE_BURN_ENABLED.getValue()) {
-            LogHandler.debug("Baby Zombies disabled");
+        if(!plugin.getSettingsManager().BABY_ZOMBIE.ENABLED.getValue()) {
+            VanillaTweaks.debug("Baby Zombies disabled");
             return;
         }
-        getPlugin().getServer().getWorlds().forEach(w -> new BurnZombieTask(plugin, ConfigOption.BABY_ZOMBIE_BURN_LENGTH.getValue(), w));
+        this.settings = plugin.getSettingsManager();
+        getPlugin().getServer().getWorlds().forEach(w -> new BurnZombieTask(plugin, settings.BABY_ZOMBIE.FIRE_TICKS.getValue().intValue(), w));
     }
 
 
     @EventHandler
     public void onWorldLoad(WorldLoadEvent event) {
-        if(!ConfigOption.BABY_ZOMBIE_BURN_ENABLED.getValue()) {
+        if(!settings.BABY_ZOMBIE.ENABLED.getValue()) {
             tasks.forEach(BukkitRunnable::cancel);
             tasks.clear();
         }
         if(tasks.stream().noneMatch(w -> w.getWorldUUID().equals(event.getWorld().getUID()))) {
-            tasks.add(new BurnZombieTask(getPlugin(), ConfigOption.BABY_ZOMBIE_BURN_LENGTH.getValue(), event.getWorld()));
+            tasks.add(new BurnZombieTask(getPlugin(), settings.BABY_ZOMBIE.FIRE_TICKS.getValue().intValue(), event.getWorld()));
         }
     }
 
     @EventHandler
     public void onWorldUnload(WorldUnloadEvent event) {
-        if(!ConfigOption.BABY_ZOMBIE_BURN_ENABLED.getValue()) {
+        if(!settings.BABY_ZOMBIE.ENABLED.getValue()) {
             tasks.forEach(BukkitRunnable::cancel);
             tasks.clear();
         }

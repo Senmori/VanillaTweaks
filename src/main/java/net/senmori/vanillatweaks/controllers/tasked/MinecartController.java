@@ -1,11 +1,19 @@
 package net.senmori.vanillatweaks.controllers.tasked;
 
 import com.google.common.collect.ImmutableMap;
-import java.util.WeakHashMap;
+
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import net.senmori.vanillatweaks.VanillaTweaks;
-import net.senmori.vanillatweaks.config.ConfigOption;
+import net.senmori.vanillatweaks.config.SettingsManager;
 import net.senmori.vanillatweaks.controllers.TweakController;
 import net.senmori.vanillatweaks.tasks.MinecartSpawnTask;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,15 +24,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scheduler.BukkitTask;
 
 public class MinecartController extends TweakController implements Listener {
 
     private final ImmutableMap<Material, EntityType> conversionMap;
-    private final WeakHashMap<Location, MinecartSpawnTask> tasks = new WeakHashMap<>();
+    private final Set<MinecartSpawnTask> tasks = Sets.newHashSet();
+    private SettingsManager settings;
 
     public MinecartController(VanillaTweaks plugin) {
         super(plugin);
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        this.settings = plugin.getSettingsManager();
 
         conversionMap = new ImmutableMap.Builder<Material,EntityType>()
                                 .put(Material.CHEST, EntityType.MINECART_CHEST)
@@ -39,7 +51,7 @@ public class MinecartController extends TweakController implements Listener {
 
     @EventHandler
     public void changeMinecart(PlayerInteractAtEntityEvent event) {
-        if(!ConfigOption.MINECART_MODIFICATIONS.getValue()) return;
+        if(!settings.MINECART.MODIFICATIONS.getValue()) return;
         if(!(event.getRightClicked() instanceof Minecart)) return;
         if(!event.getPlayer().isSneaking()) return;
         if(!event.getRightClicked().getPassengers().isEmpty()) return; // ignore if minecart has passengers
@@ -65,16 +77,15 @@ public class MinecartController extends TweakController implements Listener {
 
     @SuppressWarnings("deprecation")
     private void spawn(Location loc, EntityType type) {
-        if(!tasks.containsKey(loc)) {
-            tasks.put(loc, new MinecartSpawnTask(getPlugin(), loc, type));
-            getPlugin().getServer().getScheduler().runTaskLater(getPlugin(), new BukkitRunnable() {
-                @Override
-                public void run() {
-                    tasks.remove(loc);
-                }
-            }, 1);
-        } else {
-            tasks.remove(loc);
-        }
+        tasks.add(new MinecartSpawnTask(getPlugin(), loc, type));
+        new BukkitRunnable() {
+            @Override
+            public void run() { // remove all tasks that are not running, not queued, and/or cancelled
+                tasks.stream()
+                     .filter(BukkitRunnable::isCancelled)
+                     .collect(Collectors.toList())
+                     .forEach(tasks::remove);
+            }
+        }.runTaskLater(VanillaTweaks.getInstance(), 1L);
     }
 }

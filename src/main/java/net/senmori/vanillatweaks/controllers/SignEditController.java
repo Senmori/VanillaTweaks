@@ -5,7 +5,6 @@ import java.util.Set;
 
 import net.minecraft.server.v1_12_R1.TileEntitySign;
 import net.senmori.vanillatweaks.VanillaTweaks;
-import net.senmori.vanillatweaks.config.ConfigOption;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -27,7 +26,7 @@ public class SignEditController extends TweakController implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        if(!ConfigOption.EDITABLE_SIGNS.getValue()) return;
+        if(!getSettings().EDITABLE_SIGNS.getValue()) return;
         if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if(!mats.contains(event.getClickedBlock().getType())) return;
         if(event.getPlayer().getInventory().getItemInMainHand() != null) return;
@@ -35,9 +34,9 @@ public class SignEditController extends TweakController implements Listener {
 
         Location loc = event.getClickedBlock().getLocation();
         CraftWorld world = (CraftWorld)loc.getWorld();
-        CraftPlayer cp = (CraftPlayer)event.getPlayer();
+        CraftPlayer craftPlayer = (CraftPlayer)event.getPlayer();
         TileEntitySign teSign = (TileEntitySign)world.getTileEntityAt(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
         teSign.isEditable = true;
-        cp.getHandle().openSign(teSign);
+        craftPlayer.getHandle().openSign(teSign);
     }
 }

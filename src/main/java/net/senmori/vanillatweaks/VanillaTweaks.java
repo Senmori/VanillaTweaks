@@ -14,11 +14,12 @@
  */
 package net.senmori.vanillatweaks;
 
-import co.aikar.commands.CommandManager;
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
-import net.senmori.vanillatweaks.config.TweakConfig;
+
+import net.senmori.vanillatweaks.config.SettingsManager;
 import net.senmori.vanillatweaks.controllers.ArmorStandController;
 import net.senmori.vanillatweaks.controllers.ConvertClayController;
 import net.senmori.vanillatweaks.controllers.DispenserController;
@@ -40,23 +41,18 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class VanillaTweaks extends JavaPlugin {
-    private static final boolean DEV = true;
+    private static final boolean DEBUG = Boolean.parseBoolean(System.getProperty("vtDebug", "false"));
     public static Logger logger;
     private static VanillaTweaks instance;
 
 
-    public TweakConfig config;
-
-    private Set<TweakController> controllers = new HashSet<>();
-
-    CommandManager commandManager;
+    private SettingsManager settingsManager;
 
     @Override
     public void onDisable() {
         getServer().getScheduler().cancelTasks(this);
-        controllers.clear();
 
-        this.config = null;
+        this.settingsManager.saveConfig();
         instance = null;
     }
 
@@ -65,17 +61,10 @@ public class VanillaTweaks extends JavaPlugin {
         logger = getLogger();
         instance = this;
 
-        config = new TweakConfig(this);
-
-        // commands - use Aikar's ACF
-        //commandManager = ACF.createManager(this);
-        //commandManager.registerCommand(new DefaultCommand());
-
-        instance = this;
+        settingsManager = new SettingsManager(this, new File(getDataFolder(), "config.yml"));
 
         // init tweak controllers
         initControllers();
-        initEnchantments();
     }
 
     private void initControllers() {
@@ -97,27 +86,25 @@ public class VanillaTweaks extends JavaPlugin {
         new ShaveSnowController(instance);
     }
 
-    private void initEnchantments() {
-        //Enchantments.init();
-    }
-
     public NamespacedKey newKey(String key) {
         return new NamespacedKey(this, key);
     }
 
-    public TweakConfig getTweakConfig() {
-        return config;
-    }
-
-    public void addController(TweakController controller) {
-        controllers.add(controller);
+    public SettingsManager getSettingsManager() {
+        return settingsManager;
     }
 
     public static VanillaTweaks getInstance() {
         return instance;
     }
 
-    public static boolean isDevMode() {
-        return DEV;
+    public static boolean isDebugMode() {
+        return DEBUG;
+    }
+
+    public static void debug(String message) {
+        if(isDebugMode()) {
+            logger.info("[Debug] " + message);
+        }
     }
 }

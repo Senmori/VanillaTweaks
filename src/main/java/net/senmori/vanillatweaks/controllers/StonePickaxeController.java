@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableMap;
 import java.util.List;
 import java.util.Map;
 import net.senmori.vanillatweaks.VanillaTweaks;
-import net.senmori.vanillatweaks.config.ConfigOption;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -31,12 +30,12 @@ public class StonePickaxeController extends TweakController {
                 .add(new ItemStack(Material.FLINT))
                 .build();
 
-        if(ConfigOption.STONE_TOOL_RECIPES.getValue()) {
+        if(getSettings().STONE_TOOL_RECIPES.getValue()) {
             int recipeUniqueIndex = 0;
             for(ItemStack stack : ingredients) {
                 recipeMap.forEach( (mat, shape) -> {
                     // name should equate to <material_name>_<data_value>
-                    ShapedRecipe recipe = new ShapedRecipe(plugin.newKey(mat.name().toLowerCase() + "_" + stack.getData().getData() + "_"), new ItemStack(mat));
+                    ShapedRecipe recipe = new ShapedRecipe(plugin.newKey(mat.name().toLowerCase() + "_variant_" + stack.getData().getData()), new ItemStack(mat));
                     recipe.shape(shape[0], shape[1], shape[2]);
                     recipe.setIngredient('X', stack.getData());
                     recipe.setIngredient('#', Material.STICK);

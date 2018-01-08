@@ -12,6 +12,7 @@
         <spigotVersion>1.12.2-R0.1-SNAPSHOT</spigotVersion>
         <acfVersion>0.5.0-SNAPSHOT</acfVersion>
         <bStatsVersion>1.1</bStatsVersion>
+        <senLibVersion>1.0-SNAPSHOT</senLibVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.Class>${project.groupId}.${project.artifactId}.${project.name}</main.Class>
         <author>Senmori</author>
@@ -45,6 +46,11 @@
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
             <version>${bStatsVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.senmori</groupId>
+            <artifactId>senlib</artifactId>
+            <version>${senLibVersion}</version>
         </dependency>
     </dependencies>
     <!-- Maven build parameters -->

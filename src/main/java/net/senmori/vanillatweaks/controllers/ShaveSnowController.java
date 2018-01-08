@@ -1,14 +1,15 @@
 package net.senmori.vanillatweaks.controllers;
 
-import java.util.WeakHashMap;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import com.google.common.collect.Sets;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.EnumHand;
 import net.minecraft.server.v1_12_R1.ItemStack;
 import net.minecraft.server.v1_12_R1.PacketPlayOutAnimation;
 import net.minecraft.server.v1_12_R1.WorldServer;
 import net.senmori.vanillatweaks.VanillaTweaks;
-import net.senmori.vanillatweaks.config.ConfigOption;
 import net.senmori.vanillatweaks.tasks.ShaveSnowTask;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,7 +27,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class ShaveSnowController extends TweakController implements Listener {
 
-    private WeakHashMap<Location, ShaveSnowTask> tasks = new WeakHashMap<Location, ShaveSnowTask>();
+    private Set<ShaveSnowTask> tasks = Sets.newHashSet();
 
     public ShaveSnowController(VanillaTweaks plugin) {
         super(plugin);
@@ -36,7 +37,7 @@ public class ShaveSnowController extends TweakController implements Listener {
 
     @EventHandler
     public void onShave(PlayerInteractEvent event) {
-        if(! ConfigOption.SHAVE_SNOW.getValue()) return;
+        if(!getSettings().SHAVE_SNOW.getValue()) return;
         if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if(event.getClickedBlock().getType() != Material.SNOW_BLOCK && event.getClickedBlock().getType() != Material.SNOW) return;
         if(event.getBlockFace() != BlockFace.UP) return;
@@ -62,17 +63,18 @@ public class ShaveSnowController extends TweakController implements Listener {
     }
 
     private void addTask(Location loc, ShaveSnowTask task) {
-        if(!tasks.containsKey(loc)) {
-            tasks.put(loc, task);
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    tasks.remove(loc);
-                }
-            }.runTaskLater(getPlugin(), 1L); // run after the shave snow task has completed
-        } else {
-            tasks.remove(loc);
+        if(!tasks.contains(task)) {
+            tasks.add(task);
         }
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                tasks.stream()
+                     .filter(BukkitRunnable::isCancelled)
+                     .collect(Collectors.toList())
+                     .forEach(tasks::remove);
+            }
+        }.runTaskLater(getPlugin(), 1L);
     }
 
 

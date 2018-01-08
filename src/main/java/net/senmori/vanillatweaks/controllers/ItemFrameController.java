@@ -9,6 +9,7 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class ItemFrameController extends TweakController implements Listener {
 
@@ -18,7 +19,7 @@ public class ItemFrameController extends TweakController implements Listener {
         if(REGISTRY == null) {
             REGISTRY = new ItemFrameRegistry(getPlugin());
         }
-        getRegistry().register(Material.WRITTEN_BOOK, new WrittenBookBehaviour());
+        getRegistry().register(new ItemStack(Material.WRITTEN_BOOK), new WrittenBookBehaviour());
         getPlugin().getServer().getPluginManager().registerEvents(this, getPlugin());
     }
 

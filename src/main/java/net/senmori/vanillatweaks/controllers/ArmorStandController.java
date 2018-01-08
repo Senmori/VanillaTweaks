@@ -1,7 +1,7 @@
 package net.senmori.vanillatweaks.controllers;
 
 import net.senmori.vanillatweaks.VanillaTweaks;
-import net.senmori.vanillatweaks.config.ConfigOption;
+import net.senmori.vanillatweaks.config.SettingsManager;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 public final class ArmorStandController extends TweakController implements Listener {
 
     private static final ItemStack STONE_SLAB = new ItemStack(Material.STEP, 1, (byte)0);
+    private SettingsManager settings;
     public ArmorStandController(VanillaTweaks plugin) {
         super(plugin);
 
@@ -34,21 +35,21 @@ public final class ArmorStandController extends TweakController implements Liste
         ArmorStand stand = (ArmorStand)event.getRightClicked();
 
         // add arms to armor stand
-        if(doActivate(event.getPlayer(), Material.STICK, 2, ConfigOption.ARMOR_STAND_ADD_ARMS.getValue())) {
+        if(doActivate(event.getPlayer(), Material.STICK, 2, getSettings().ARMOR_STAND.ADD_ARMS.getValue())) {
             if(!stand.hasArms()) {
                 addArms(stand, event.getPlayer(), 2);
             }
         }
 
         // remove base plate
-        if(doActivate(event.getPlayer(), Material.SHEARS, 1, ConfigOption.ARMOR_STAND_REMOVE_PLATE.getValue())) {
+        if(doActivate(event.getPlayer(), Material.SHEARS, 1, getSettings().ARMOR_STAND.REMOVE_PLATE.getValue())) {
             if(stand.hasBasePlate()) {
                 removePlate(stand, event.getPlayer());
             }
         }
 
         // add base plate
-        if(doActivate(event.getPlayer(), STONE_SLAB, 1, ConfigOption.ARMOR_STAND_ADD_PLATE.getValue())) {
+        if(doActivate(event.getPlayer(), STONE_SLAB, 1, getSettings().ARMOR_STAND.ADD_PLATE.getValue())) {
             if(!stand.hasBasePlate()) {
                 addPlate(stand, event.getPlayer());
             }

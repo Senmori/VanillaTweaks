@@ -9,7 +9,6 @@ import net.minecraft.server.v1_12_R1.SoundCategory;
 import net.minecraft.server.v1_12_R1.SoundEffects;
 import net.minecraft.server.v1_12_R1.WorldServer;
 import net.senmori.vanillatweaks.VanillaTweaks;
-import net.senmori.vanillatweaks.config.ConfigOption;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -40,7 +39,7 @@ public final class GrassPathController extends TweakController implements Listen
         if(event.getItem() == null) return;
         if(!isSpade(event.getItem().getType())) return;
         if(!validMaterials.contains(event.getClickedBlock().getType())) return;
-        if(! ConfigOption.CONVERT_DIRT.getValue()) return;
+        if(!getPlugin().getSettingsManager().CONVERT_DIRT.getValue()) return;
 
         EnumHand hand = event.getHand() == EquipmentSlot.HAND ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND;
         WorldServer wServer = ((CraftWorld)event.getPlayer().getWorld()).getHandle();
